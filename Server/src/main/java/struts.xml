@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<!-- 配置了系列常量 -->
+	<constant name="struts.custom.i18n.resources" value="resource" />
+	<constant name="struts.i18n.encoding" value="GBK" />
+	<constant name="struts.devMode" value="true" />
+	<package name="default" extends="struts-default">
+		<interceptors>
+			<interceptor name="empAuth"
+				class="www.justnd.hrsystem.action.authority.EmpAuthorityInterceptor" />
+			<interceptor name="mgrAuth"
+				class="www.justnd.hrsystem.action.authority.MgrAuthorityInterceptor" />
+			<interceptor-stack name="empStack">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="empAuth" />
+			</interceptor-stack>
+			<interceptor-stack name="mgrStack">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="mgrAuth" />
+			</interceptor-stack>
+		</interceptors>
+
+
+		<!-- 登陆Action -->
+		<action name="processLogin" class="www.justnd.hrsystem.action.LoginAction">
+			<result name="input">/WEB-INF/content/login.jsp</result>
+			<result name="mgr">/WEB-INF/content/manager/index.jsp</result>
+			<result name="emp">/WEB-INF/content/employee/index.jsp</result>
+			<result name="error">/WEB-INF/content/login.jsp</result>
+		</action>
+
+		<action name="*Punch" class="www.justnd.hrsystem.action.PunchAction">
+			<interceptor-ref name="empStack" />
+			<result>/WEB-INF/content/{1}/punch.jsp</result>
+		</action>
+
+		<action name="*Come" method="come"
+			class="www.justnd.hrsystem.action.ProcessPunchAction">
+			<interceptor-ref name="empStack" />
+			<result>/WEB-INF/content/{1}/index.jsp</result>
+		</action>
+
+		<action name="*Leave" method="leave"
+			class="www.justnd.hrsystem.action.ProcessPunchAction">
+			<interceptor-ref name="empStack" />
+			<result>/WEB-INF/content/{1}/index.jsp</result>
+		</action>
+
+		<action name="appChange" class="www.justnd.hrsystem.action.AppChangeAction">
+			<interceptor-ref name="store">
+				<param name="operationMode">RETRIEVE</param>
+			</interceptor-ref>
+			<interceptor-ref name="basicStack" />
+			<interceptor-ref name="empAuth" />
+			<result>/WEB-INF/content/employee/appChange.jsp</result>
+		</action>
+
+		<action name="processApp" class="www.justnd.hrsystem.action.ProcessAppAction">
+			<interceptor-ref name="store">
+				<param name="operationMode">STORE</param>
+			</interceptor-ref>
+			<interceptor-ref name="empStack" />
+			<result name="input" type="redirect">
+				/appChange.action?attId=${attId}
+			</result>
+			<result>/WEB-INF/content/employee/index.jsp</result>
+		</action>
+
+		<action name="*">
+			<result>/WEB-INF/content/{1}.jsp</result>
+		</action>
+
+	</package>
+</struts>    
