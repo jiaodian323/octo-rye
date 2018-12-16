@@ -22,16 +22,6 @@ import com.justnd.octoryeserver.domain.Author;
 */
 public interface ArticleDao extends BaseDao<Article> {
 	/** 
-	* @Title: findById 
-	* @Description: TODO 根据ID查询文章
-	* @param @param articleId
-	* @param @return
-	* @return Article
-	* @throws 
-	*/
-	Article findById(Integer articleId);
-	
-	/** 
 	* @Title: findByAuthor 
 	* @Description: TODO 根据作者查询文章列表
 	* @param @param author

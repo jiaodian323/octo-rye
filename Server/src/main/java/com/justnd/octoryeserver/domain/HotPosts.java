@@ -62,7 +62,7 @@ public class HotPosts implements Serializable{
 	@JoinTable(name="hotPost_article",
 			joinColumns=@JoinColumn(name="hotPost_id",referencedColumnName="hotPost_id"),
 			inverseJoinColumns=@JoinColumn(name="article_id", referencedColumnName="article_id"))
-	private Set<Article> hotPosts;
+	private Set<Article> posts;
 
 	/**
 	 * @return the id
@@ -96,14 +96,14 @@ public class HotPosts implements Serializable{
 	 * @return the hotPosts
 	 */
 	public Set<Article> getHotPosts() {
-		return hotPosts;
+		return posts;
 	}
 
 	/**
 	 * @param hotPosts the hotPosts to set
 	 */
 	public void setHotPosts(Set<Article> hotPosts) {
-		this.hotPosts = hotPosts;
+		this.posts = hotPosts;
 	}
 
 }

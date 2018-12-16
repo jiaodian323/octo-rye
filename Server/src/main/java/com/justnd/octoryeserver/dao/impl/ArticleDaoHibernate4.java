@@ -22,23 +22,6 @@ import com.justnd.octoryeserver.domain.Author;
  * 
  */
 public class ArticleDaoHibernate4 extends BaseDaoHibernate4<Article> implements ArticleDao {
-
-	/**
-	 * Title: findById Description: 根据文章ID检索文章
-	 * 
-	 * @param articleId
-	 * @return
-	 */
-	@Override
-	public Article findById(Integer articleId) {
-		List<Article> articles = find("select p from Article p where p.id=?0", articleId);
-		if (articles != null && articles.size() >= 1) {
-			return articles.get(0);
-		}
-		
-		return null;
-	}
-
 	/**
 	 * Title: findByAuthor Description: 根据作者查找该作者名下的所有文章
 	 * 
@@ -63,8 +46,11 @@ public class ArticleDaoHibernate4 extends BaseDaoHibernate4<Article> implements 
 	 */
 	@Override
 	public List<Article> findByTags(String tag) {
-		// TODO Auto-generated method stub
+		List<Article> articles = find("select p from Article p where p.tags like " + tag + "%");
+		if (articles != null && articles.size() >= 1) {
+			return articles;
+		}
+		
 		return null;
 	}
-
 }

@@ -37,14 +37,14 @@ public class Author implements Serializable{
 	/** 
 	* @Fields id : TODO 作者ID
 	*/ 
-	@Id @Column(name="author_id")
+	@Id @Column(name="id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	
 	/** 
 	* @Fields authorName : TODO 作者笔名
 	*/ 
-	@Column(name="authorName", nullable=false, unique=true)
+	@Column(name="authorName", nullable=false)
 	private String authorName;
 	
 	/** 
@@ -69,8 +69,8 @@ public class Author implements Serializable{
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(Integer id) {
-		this.id = id;
+	public void setId(Integer author_id) {
+		this.id = author_id;
 	}
 
 	/**

@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="GBK"?>
-<!-- Ö¸¶¨SpringÅäÖÃÎÄ¼şµÄSchemaĞÅÏ¢ -->
+<!-- æŒ‡å®šSpringé…ç½®æ–‡ä»¶çš„Schemaä¿¡æ¯ -->
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
-	<!-- ¶¨ÒåÊı¾İÔ´Bean£¬Ê¹ÓÃC3P0Êı¾İÔ´ÊµÏÖ -->
-	<!-- ²¢ÉèÖÃÁ¬½ÓÊı¾İ¿âµÄÇı¶¯¡¢URL¡¢ÓÃ»§Ãû¡¢ÃÜÂë£¬ Á¬½Ó³Ø×î´óÁ¬½ÓÊı¡¢×îĞ¡Á¬½ÓÊı¡¢³õÊ¼Á¬½ÓÊıµÈ²ÎÊı -->
+	<!-- å®šä¹‰æ•°æ®æºBeanï¼Œä½¿ç”¨C3P0æ•°æ®æºå®ç° -->
+	<!-- å¹¶è®¾ç½®è¿æ¥æ•°æ®åº“çš„é©±åŠ¨ã€URLã€ç”¨æˆ·åã€å¯†ç ï¼Œ è¿æ¥æ± æœ€å¤§è¿æ¥æ•°ã€æœ€å°è¿æ¥æ•°ã€åˆå§‹è¿æ¥æ•°ç­‰å‚æ•° -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close" p:driverClass="com.mysql.jdbc.Driver"
-		p:jdbcUrl="jdbc:mysql://localhost:3306/hrSystem?useUnicode=true&amp;characterEncoding=UTF-8" p:user="root"
-		p:password="8979" p:maxPoolSize="200" p:minPoolSize="2"
+		p:jdbcUrl="jdbc:mysql://localhost:3306/hrsystem?useUnicode=true&amp;characterEncoding=UTF-8"
+		p:user="root" p:password="8979" p:maxPoolSize="200" p:minPoolSize="2"
 		p:initialPoolSize="2" p:maxIdleTime="20" />
 
-	<!-- ¶¨ÒåHibernateµÄSessionFactory£¬²¢ÒÀÀµ×¢ÈëÊı¾İÔ´£¬×¢ÈëÉÏÃæ¶¨ÒåµÄdataSource -->
+	<!-- å®šä¹‰Hibernateçš„SessionFactoryï¼Œå¹¶ä¾èµ–æ³¨å…¥æ•°æ®æºï¼Œæ³¨å…¥ä¸Šé¢å®šä¹‰çš„dataSource -->
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
 		p:dataSource-ref="dataSource">
-		<!-- annotatedClassesÊôĞÔÓÃÓÚÁĞ³öÈ«²¿³Ö¾Ã»¯Àà -->
+		<!-- annotatedClasseså±æ€§ç”¨äºåˆ—å‡ºå…¨éƒ¨æŒä¹…åŒ–ç±» -->
 		<property name="annotatedClasses">
 			<list>
-				<!-- ÒÔÏÂÓÃÀ´ÁĞ³öËùÓĞµÄPOÀà -->
+				<!-- ä»¥ä¸‹ç”¨æ¥åˆ—å‡ºæ‰€æœ‰çš„POç±» -->
 				<value>com.justnd.octoryeserver.domain.Application</value>
 				<value>com.justnd.octoryeserver.domain.Attend</value>
 				<value>com.justnd.octoryeserver.domain.AttendType</value>
@@ -34,23 +34,23 @@
 				<value>com.justnd.octoryeserver.domain.HotPosts</value>
 			</list>
 		</property>
-		<!-- ¶¨ÒåHibernateµÄSessionFactoryµÄÊôĞÔ -->
+		<!-- å®šä¹‰Hibernateçš„SessionFactoryçš„å±æ€§ -->
 		<property name="hibernateProperties">
-			<!-- Ö¸¶¨Êı¾İ¿â·½ÑÔ¡¢ÊÇ·ñ×Ô¶¯½¨±í¡¢ÊÇ·ñÉú³ÉSQLÓï¾äµÈ -->
+			<!-- æŒ‡å®šæ•°æ®åº“æ–¹è¨€ã€æ˜¯å¦è‡ªåŠ¨å»ºè¡¨ã€æ˜¯å¦ç”ŸæˆSQLè¯­å¥ç­‰ -->
 			<value>
 				hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect
 				hibernate.hbm2ddl.auto=update
 				hibernate.show_sql=true
 				hibernate.format_sql=true
-				#¿ªÆô¶ş¼¶»º´æ
+				#å¼€å¯äºŒçº§ç¼“å­˜
 				hibernate.cache.use_second_level_cache=true
-				#ÉèÖÃ¶ş¼¶»º´æµÄÌá¹©Õß
+				#è®¾ç½®äºŒçº§ç¼“å­˜çš„æä¾›è€…
 				hibernate.cache.region.factory_class=org.hibernate.cache.ehcache.EhCacheRegionFactory
 			</value>
 		</property>
 	</bean>
 
-	<!-- ÅäÖÃDAO×é¼şµÄÄ£°å -->
+	<!-- é…ç½®DAOç»„ä»¶çš„æ¨¡æ¿ -->
 	<bean id="daoTemplate" abstract="true" lazy-init="true"
 		p:sessionFactory-ref="sessionFactory" />
 
@@ -63,19 +63,28 @@
 	<bean id="attendDao" class="com.justnd.octoryeserver.dao.impl.AttendDaoHibernate4"
 		parent="daoTemplate" />
 
-	<bean id="attendTypeDao" class="com.justnd.octoryeserver.dao.impl.AttendTypeDaoHibernate4"
+	<bean id="attendTypeDao"
+		class="com.justnd.octoryeserver.dao.impl.AttendTypeDaoHibernate4"
 		parent="daoTemplate" />
 
-	<bean id="appDao" class="com.justnd.octoryeserver.dao.impl.ApplicationDaoHibernate4"
+	<bean id="appDao"
+		class="com.justnd.octoryeserver.dao.impl.ApplicationDaoHibernate4"
 		parent="daoTemplate" />
 
-	<bean id="checkDao" class="com.justnd.octoryeserver.dao.impl.CheckBackDaoHibernate4"
+	<bean id="checkDao"
+		class="com.justnd.octoryeserver.dao.impl.CheckBackDaoHibernate4"
 		parent="daoTemplate" />
 
 	<bean id="payDao" class="com.justnd.octoryeserver.dao.impl.PaymentDaoHibernate4"
 		parent="daoTemplate" />
 
-	<bean id="userDao" class="com.justnd.octoryeserver.dao.impl.UserDaoHibernate4"
+	<bean id="userDao" name="userDaoN" class="com.justnd.octoryeserver.dao.impl.UserDaoHibernate4"
 		parent="daoTemplate" />
+	<bean id="articleDao" name="articleDaoN" class="com.justnd.octoryeserver.dao.impl.ArticleDaoHibernate4"
+		parent="daoTemplate"></bean>
+	<bean id="authorDao" name="authorDaoN" class="com.justnd.octoryeserver.dao.impl.AuthorDaoHibernate4"
+		parent="daoTemplate"></bean>
+	<bean id="hotPostsDao" name="hotPostsDaoN" class="com.justnd.octoryeserver.dao.impl.HotPostsDaoHibernate4"
+		parent="daoTemplate"></bean>
 
 </beans>

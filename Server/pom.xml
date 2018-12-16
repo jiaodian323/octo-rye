@@ -1,11 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>HRSystemM</groupId>
-	<artifactId>HRSystemM</artifactId>
+	<groupId>com.justnd.octorye</groupId>
+	<artifactId>OctoRyeS</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>HRSystemM</name>
+	<name>OctoRyeS</name>
 	<description />
 	<properties>
 		<webVersion>3.1</webVersion>
@@ -36,12 +36,13 @@
 		<dependency>
 			<groupId>c3p0</groupId>
 			<artifactId>c3p0</artifactId>
-			<version>0.9.1.2</version>
-			<type>jar</type>
-			<scope>compile</scope>
+			<version>0.9.5.2</version>
 		</dependency>
-		<!-- <dependency> <groupId>org.slf4j</groupId> <artifactId>slf4j-api</artifactId> 
-			<version>1.6.1</version> <type>jar</type> <scope>compile</scope> </dependency> -->
+		<dependency>
+			<groupId>com.mchange</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>0.9.5.2</version>
+		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
@@ -75,7 +76,12 @@
 			<artifactId>spring-context-support</artifactId>
 			<version>4.1.9.RELEASE</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>4.1.9.RELEASE</version>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-spring-plugin</artifactId>
@@ -99,7 +105,17 @@
 			<artifactId>hibernate-ehcache</artifactId>
 			<version>4.3.11.Final</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-c3p0</artifactId>
+			<version>4.2.0.Final</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>c3p0</artifactId>
+					<groupId>c3p0</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 		<dependency>
 			<groupId>javassist</groupId>
 			<artifactId>javassist</artifactId>

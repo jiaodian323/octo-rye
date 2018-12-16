@@ -8,8 +8,6 @@
 */
 package com.justnd.octoryeserver.dao;
 
-import java.util.List;
-
 import com.justnd.octoryeserver.domain.User;
 
 /**

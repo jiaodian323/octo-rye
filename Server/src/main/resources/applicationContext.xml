@@ -48,7 +48,8 @@
 		<property name="jobDetail">
 			<!-- 使用嵌套Bean的方式来定义任务Bean jobClass指定任务Bean的实现类 -->
 			<bean class="org.springframework.scheduling.quartz.JobDetailFactoryBean"
-				p:jobClass="com.justnd.octoryeserver.schedule.PunchJob" p:durability="true">
+				p:jobClass="com.justnd.octoryeserver.schedule.PunchJob"
+				p:durability="true">
 				<!-- 为任务Bean注入属性 -->
 				<property name="jobDataAsMap">
 					<map>
@@ -71,7 +72,7 @@
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager"
 		p:sessionFactory-ref="sessionFactory" />
-	<tx:annotation-driven transaction-manager="transactionManager" />
+	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
 	<!-- 配置事务增强处理Bean,指定事务管理器 -->
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<!-- 用于配置详细的事务语义 -->
@@ -81,11 +82,15 @@
 			<!-- 其他方法使用默认的事务设置 -->
 			<tx:method name="*" />
 		</tx:attributes>
-	</tx:advice>
+	</tx:advice>   
+	<!-- (execution(* com.justnd.octoryeserver.test..*.*(..))) -->
 	<aop:config>
 		<!-- 配置一个切入点，匹配empManager和mgrManager 两个Bean的所有方法的执行 -->
-		<aop:pointcut id="myPointcut" expression="bean(empManager) or bean(mgrManager)" />
+		<aop:pointcut id="myPointcut"
+			expression="bean(empManager) or bean(mgrManager)" />
+			<!-- bean(empManager) or bean(mgrManager) or execution(* com.justnd.octoryeserver.test..*.*(..))-->
 		<!-- 指定在leePointcut切入点应用txAdvice事务增强处理 -->
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="myPointcut" />
 	</aop:config>
+	<aop:aspectj-autoproxy proxy-target-class="true" />
 </beans>
