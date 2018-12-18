@@ -8,13 +8,10 @@
 */
 package com.justnd.octoryeserver.dao.impl;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import com.justnd.octoryeserver.dao.HotPostsDao;
-import com.justnd.octoryeserver.domain.Article;
 import com.justnd.octoryeserver.domain.HotPosts;
 
 /** 
@@ -32,8 +29,12 @@ public class HotPostsDaoHibernate4 extends BaseDaoHibernate4<HotPosts> implement
 	 * @return  
 	 */
 	@Override
-	public Set<Article> findByDate(Date date) {
-		// TODO Auto-generated method stub
+	public List<HotPosts> findByDate(Date date) {
+		List<HotPosts> hotPosts = find("select p from HotPosts p where p.postDate=?0", date);
+		if (hotPosts != null && hotPosts.size() >= 1) {
+			return hotPosts;
+		}
+		
 		return null;
 	}
 

@@ -9,9 +9,8 @@
 package com.justnd.octoryeserver.dao;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
-import com.justnd.octoryeserver.domain.Article;
 import com.justnd.octoryeserver.domain.HotPosts;
 
 /** 
@@ -30,5 +29,5 @@ public interface HotPostsDao extends BaseDao<HotPosts> {
 	* @return Set<Article>
 	* @throws 
 	*/
-	Set<Article> findByDate(Date date);
+	List<HotPosts> findByDate(Date date);
 }

@@ -47,12 +47,30 @@ public class AuthorDaoTest extends AbstractJUnit4SpringContextTests {
 
 	@Test
 	public void insertTest() {
-		Author authorA = new Author();
-		authorA.setAuthorName("韩寒33333");
-		authorA.setArea("上海333333");
-		authorA.setIntroduction("《三重门》、《就这么飘来飘去》作者，电影《后会无期》导演333333");
-
-		authorDaoTest.save(authorA);
+//		Author authorA = new Author();
+//		authorA.setAuthorName("韩寒");
+//		authorA.setArea("上海");
+//		authorA.setIntroduction("《三重门》、《就这么飘来飘去》作者，电影《后会无期》导演");
+//		
+//		Author authorB = new Author();
+//		authorB.setAuthorName("路遥");
+//		authorB.setArea("陕西");
+//		authorB.setIntroduction("《平凡的世界》作者");
+//		
+//		Author authorC = new Author();
+//		authorC.setAuthorName("鲁迅");
+//		authorC.setArea("浙江");
+//		authorC.setIntroduction("《呐喊》作者");
+//
+//		authorDaoTest.save(authorA);
+//		authorDaoTest.save(authorB);
+//		authorDaoTest.save(authorC);
+		
+		Author author = new Author();
+		author.setAuthorName("吴彦祖");
+		author.setArea("香港");
+		author.setIntroduction("其实我是一个演员");
+		authorDaoTest.save(author);
 	}
 	
 	@Test

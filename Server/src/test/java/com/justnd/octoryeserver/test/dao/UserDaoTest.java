@@ -34,7 +34,7 @@ public class UserDaoTest extends AbstractJUnit4SpringContextTests{
 	UserDaoHibernate4 userDaoTest;
 	
 	@Test
-	public void userDaoTest() {
+	public void insertTest() {
 		User userA = new User();
 		userA.setUserName("nnnnn");
 		userA.setPassword("22222");

@@ -9,11 +9,12 @@
 package com.justnd.octoryeserver.domain;
 
 import java.io.Serializable;
-import java.sql.Clob;
 import java.util.Date;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -65,7 +66,7 @@ public class Article implements Serializable {
 	/**
 	 * @Fields publishTime : TODO 发布时间
 	 */
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "publishTime")
 	private Date publishTime;
 
@@ -73,8 +74,9 @@ public class Article implements Serializable {
 	 * @Fields content : TODO 文章内容
 	 */
 	@Lob
+	@Basic(fetch = FetchType.EAGER) 
 	@Column(name = "content")
-	private Clob content;
+	private String content;
 	
 //	@Column(name = "content", nullable = false)
 //	private Clob content;
@@ -156,11 +158,11 @@ public class Article implements Serializable {
 		this.publishTime = publishTime;
 	}
 	
-	public Clob getContent() {
+	public String getContent() {
 		return content;
 	}
 	
-	public void setContent(Clob content) {
+	public void setContent(String content) {
 		this.content = content;
 	}
 	

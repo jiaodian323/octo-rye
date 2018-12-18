@@ -12,8 +12,10 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,6 +28,8 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 /** 
 * @ClassName: HotPosts 
@@ -58,10 +62,12 @@ public class HotPosts implements Serializable{
 	/** 
 	* @Fields hotPosts : TODO 推荐文章列表
 	*/ 
-	@ManyToMany(targetEntity=Article.class)
+	@ManyToMany(targetEntity=Article.class, fetch=FetchType.EAGER)
 	@JoinTable(name="hotPost_article",
 			joinColumns=@JoinColumn(name="hotPost_id",referencedColumnName="hotPost_id"),
 			inverseJoinColumns=@JoinColumn(name="article_id", referencedColumnName="article_id"))
+	@Cascade(CascadeType.ALL)
+//	@Basic(fetch = FetchType.EAGER) 
 	private Set<Article> posts;
 
 	/**
@@ -95,14 +101,14 @@ public class HotPosts implements Serializable{
 	/**
 	 * @return the hotPosts
 	 */
-	public Set<Article> getHotPosts() {
+	public Set<Article> getPosts() {
 		return posts;
 	}
 
 	/**
 	 * @param hotPosts the hotPosts to set
 	 */
-	public void setHotPosts(Set<Article> hotPosts) {
+	public void setPosts(Set<Article> hotPosts) {
 		this.posts = hotPosts;
 	}
 
