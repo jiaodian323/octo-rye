@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">OctoRye</string>
+    <string name="octorye_title">十月麦田</string>
+    <string name="title_home">首页</string>
+    <string name="title_bookstore">书店</string>
+    <string name="title_my">我</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- TODO: open source -->
+    <string name="rank">排行榜</string>
+    <string name="home_tab_more">更多</string>
+    <string name="look_more">查看更多</string>
+    <string name="change_recommend">换一波推荐</string>
+    <string name="topic">话题</string>
+    <string name="goto_look">进去看看</string>
+</resources>

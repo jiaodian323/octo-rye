@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/selector_bottom_navi_home"
+        android:title="@string/title_home" />
+
+    <item
+        android:id="@+id/navigation_bookstore"
+        android:icon="@drawable/selector_bottom_navi_bookstore"
+        android:title="@string/title_bookstore" />
+
+    <item
+        android:id="@+id/navigation_my"
+        android:icon="@drawable/selector_bottom_navi_my"
+        android:title="@string/title_my" />
+
+</menu>
