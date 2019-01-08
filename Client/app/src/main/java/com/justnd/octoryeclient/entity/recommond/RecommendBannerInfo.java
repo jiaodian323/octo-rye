@@ -94,5 +94,12 @@ public class RecommendBannerInfo {
         public void setHash(String hash) {
             this.hash = hash;
         }
+
+        @Override
+        public String toString() {
+            return "title:" + getTitle() + "\n" + ",value:" + getValue() + "\n" + ",image:" + getImage()
+                    + "\n" + ",type:" + getType() + "\n" + ",weight:" + getWeight() + "\n" + ",remark:" + getRemark()
+                    + "\n" + ",hash:" + getHash() + "\n-------------------\n";
+        }
     }
 }

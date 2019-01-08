@@ -25,11 +25,14 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.justnd.octoryeserver.dao.impl.ArticleDaoHibernate4;
 import com.justnd.octoryeserver.dao.impl.AuthorDaoHibernate4;
 import com.justnd.octoryeserver.dao.impl.HotPostsDaoHibernate4;
 import com.justnd.octoryeserver.domain.Article;
 import com.justnd.octoryeserver.domain.HotPosts;
+import com.justnd.octoryeserver.vo.RecommendBean;
 
 /**
  * @ClassName: HotPostsDaoTest
@@ -64,16 +67,24 @@ public class HotPostsDaoTest extends AbstractJUnit4SpringContextTests {
 		Date timeA;
 		try {
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-			timeA = df.parse("2018-12-20");
+			timeA = df.parse("2019-1-8");
 			hotPost.setPostDate(timeA);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		Set<Article> articles = new HashSet<Article>();
-		articles.add(articleDaoTest.get(Article.class, 19));
-		articles.add(articleDaoTest.get(Article.class, 18));
+		articles.add(articleDaoTest.get(Article.class, 1));
+		articles.add(articleDaoTest.get(Article.class, 2));
+		articles.add(articleDaoTest.get(Article.class, 3));
+		articles.add(articleDaoTest.get(Article.class, 4));
+		articles.add(articleDaoTest.get(Article.class, 5));
+		articles.add(articleDaoTest.get(Article.class, 6));
+		articles.add(articleDaoTest.get(Article.class, 7));
+		articles.add(articleDaoTest.get(Article.class, 8));
 		articles.add(articleDaoTest.get(Article.class, 20));
 		articles.add(articleDaoTest.get(Article.class, 21));
+		articles.add(articleDaoTest.get(Article.class, 22));
+		articles.add(articleDaoTest.get(Article.class, 23));
 		articles.add(articleDaoTest.get(Article.class, 24));
 		hotPost.setPosts(articles);
 
@@ -109,7 +120,7 @@ public class HotPostsDaoTest extends AbstractJUnit4SpringContextTests {
 
 	@Test
 	public void deleteMethodBTest() {
-		hotPostsDaoTest.delete(HotPosts.class, 4);
+		hotPostsDaoTest.delete(HotPosts.class, 12);
 	}
 
 	@Test
@@ -131,12 +142,64 @@ public class HotPostsDaoTest extends AbstractJUnit4SpringContextTests {
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 			time = df.parse("2018-12-19");
 			List<HotPosts> hotPosts = hotPostsDaoTest.findByDate(time);
-			
+
 			printHotPostsString(hotPosts);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 
+	}
+
+	@Test
+	public void getJsonStrTest() {
+		List<HotPosts> hotPosts = hotPostsDaoTest.findByDate(new Date());
+		
+		if (hotPosts == null || hotPosts.size() == 0)
+			return;
+
+		RecommendBean bean = new RecommendBean();
+		bean.setCode(0);
+
+		List<RecommendBean.ResultBean> results = new ArrayList<>();
+		RecommendBean.ResultBean resultBean = new RecommendBean.ResultBean();
+		resultBean.setType("recommend");
+		RecommendBean.ResultBean.HeadBean resultHeadBean = new RecommendBean.ResultBean.HeadBean();
+		resultHeadBean.setStyle("gm_av");
+		resultHeadBean.setTitle("热门焦点");
+		resultBean.setHead(resultHeadBean);
+		List<RecommendBean.ResultBean.BodyBean> resultBodyBeans = new ArrayList<>();
+		for (int i = 0; i < hotPosts.size(); i++) {
+			Iterator<Article> iterator = hotPosts.get(i).getPosts().iterator();
+			while (iterator.hasNext()) {
+				Article article = iterator.next();
+				if (article != null) {
+					RecommendBean.ResultBean.BodyBean body = new RecommendBean.ResultBean.BodyBean();
+					body.setTitle(article.getTitle());
+					body.setStyle("gm_av");
+					body.setUp(article.getAuthor().getAuthorName());
+					body.setCover(article.getHeadImage());
+					body.setPlay(article.getPageviewCount().toString());
+					body.setDanmaku(article.getLikes().toString());
+
+					resultBodyBeans.add(body);
+				}
+			}
+		}
+		resultBean.setBody(resultBodyBeans);
+		results.add(resultBean);
+
+		bean.setResult(results);
+
+//		Gson gson = new Gson();
+		Gson gson = new GsonBuilder()
+                .setLenient()// json宽松  
+                .enableComplexMapKeySerialization()//支持Map的key为复杂对象的形式  
+                .serializeNulls() //智能null  
+                .setPrettyPrinting()// 调教格式  
+                .create();  
+		String gsonStr = gson.toJson(bean);
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println("GsonStr:" + gsonStr);
 	}
 
 	public void printHotPostsString(List<HotPosts> hotPosts) {
@@ -145,9 +208,9 @@ public class HotPostsDaoTest extends AbstractJUnit4SpringContextTests {
 		}
 
 		for (int i = 0; i < hotPosts.size(); i++) {
-			System.out.println(
-					"HotPost id=" + hotPosts.get(i).getId() + ",postDate=" + hotPosts.get(i).getPostDate()
-							+ ",Set<Article>=\n" + getArticleSetString(hotPosts.get(i).getPosts()));
+			System.out.println("HotPost id=" + hotPosts.get(i).getId() + ",postDate="
+					+ hotPosts.get(i).getPostDate() + ",Set<Article>=\n"
+					+ getArticleSetString(hotPosts.get(i).getPosts()));
 		}
 	}
 

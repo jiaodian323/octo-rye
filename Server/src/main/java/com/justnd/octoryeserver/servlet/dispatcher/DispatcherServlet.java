@@ -12,11 +12,10 @@ import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 /**
  * @ClassName: DispatcherServlet
@@ -25,10 +24,11 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
  * @date 2018年12月6日 下午2:21:44
  * 
  */
+@WebServlet(name = "DispatcherServlet", urlPatterns = ("/dispatcherServlet"))
 public class DispatcherServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 6555124110876977092L;
-	
+
 	@Override
 	public void init() throws ServletException {
 		super.init();
@@ -50,9 +50,9 @@ public class DispatcherServlet extends HttpServlet {
 			RequestDispatcher dispatchToRegister = request.getRequestDispatcher("RegisterServlet");
 			dispatchToRegister.forward(request, reponse);
 			break;
-		case "PushArticles":
+		case "Recommend":
 			RequestDispatcher dispatchToPushArticles = request
-					.getRequestDispatcher("PushArticlesServlet");
+					.getRequestDispatcher("RecommendServlet");
 			dispatchToPushArticles.forward(request, reponse);
 			break;
 		default:

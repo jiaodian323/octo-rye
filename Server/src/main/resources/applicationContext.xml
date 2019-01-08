@@ -13,25 +13,17 @@
 		class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
 	<!-- 定义业务逻辑组件模板,为之注入DAO组件 -->
 	<bean id="managerTemplate" abstract="true" lazy-init="true"
-		p:appDao-ref="appDao" p:attendDao-ref="attendDao" p:typeDao-ref="attendTypeDao"
-		p:checkDao-ref="checkDao" p:empDao-ref="employeeDao" p:mgrDao-ref="managerDao"
-		p:payDao-ref="payDao" p:userDao-ref="userDao" />
-
-	<!-- 定义两个业务逻辑组件，继承业务逻辑组件的模板 -->
-	<bean id="empManager" class="com.justnd.octoryeserver.service.impl.EmpManagerImpl"
-		parent="managerTemplate" />
-	<bean id="mgrManager" class="com.justnd.octoryeserver.service.impl.MgrManagerImpl"
-		parent="managerTemplate" />
+		 p:userDao-ref="userDao" />
 
 	<!-- cronExpression指定Cron表达式：每月3日2时启动 -->
-	<bean id="cronTriggerPay"
+	<!-- <bean id="cronTriggerPay"
 		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"
 		p:cronExpression="0 0 2 3 * ? *">
 		<property name="jobDetail">
-			<!-- 使用嵌套Bean的方式来定义任务Bean jobClass指定任务Bean的实现类 -->
+			使用嵌套Bean的方式来定义任务Bean jobClass指定任务Bean的实现类
 			<bean class="org.springframework.scheduling.quartz.JobDetailFactoryBean"
 				p:jobClass="com.justnd.octoryeserver.schedule.PayJob" p:durability="true">
-				<!-- 为任务Bean注入属性 -->
+				为任务Bean注入属性
 				<property name="jobDataAsMap">
 					<map>
 						<entry key="empMgr" value-ref="empManager" />
@@ -41,16 +33,16 @@
 		</property>
 	</bean>
 
-	<!-- 定义触发器来管理任务Bean cronExpression指定Cron表达式：周一到周五7点、12点执行调度 -->
+	定义触发器来管理任务Bean cronExpression指定Cron表达式：周一到周五7点、12点执行调度
 	<bean id="cronTriggerPunch"
 		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"
 		p:cronExpression="0 0 7,12 ? * MON-FRI">
 		<property name="jobDetail">
-			<!-- 使用嵌套Bean的方式来定义任务Bean jobClass指定任务Bean的实现类 -->
+			使用嵌套Bean的方式来定义任务Bean jobClass指定任务Bean的实现类
 			<bean class="org.springframework.scheduling.quartz.JobDetailFactoryBean"
 				p:jobClass="com.justnd.octoryeserver.schedule.PunchJob"
 				p:durability="true">
-				<!-- 为任务Bean注入属性 -->
+				为任务Bean注入属性
 				<property name="jobDataAsMap">
 					<map>
 						<entry key="empMgr" value-ref="empManager" />
@@ -58,16 +50,16 @@
 				</property>
 			</bean>
 		</property>
-	</bean>
+	</bean> -->
 	<!-- 执行实际的调度调度 -->
-	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+<!-- 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
 				<ref bean="cronTriggerPay" />
 				<ref bean="cronTriggerPunch" />
 			</list>
 		</property>
-	</bean>
+	</bean> -->
 
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager"
@@ -87,7 +79,7 @@
 	<aop:config>
 		<!-- 配置一个切入点，匹配empManager和mgrManager 两个Bean的所有方法的执行 -->
 		<aop:pointcut id="myPointcut"
-			expression="bean(empManager) or bean(mgrManager)" />
+			expression="execution(* com.justnd.octoryeserver.test..*.*(..))" />
 			<!-- bean(empManager) or bean(mgrManager) or execution(* com.justnd.octoryeserver.test..*.*(..))-->
 		<!-- 指定在leePointcut切入点应用txAdvice事务增强处理 -->
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="myPointcut" />

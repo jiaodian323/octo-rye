@@ -28,6 +28,9 @@
     <color name="mask_tags_14">#7A378B</color>
 
     <!--open source-->
+    <color name="top_bar">#3B3B3B</color>
+    <color name="main_background">#D1EEEE</color>
+
     <color name="font_normal">#555555</color>
 
     <color name="black_80">#222222</color>

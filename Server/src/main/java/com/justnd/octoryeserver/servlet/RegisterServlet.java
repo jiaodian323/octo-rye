@@ -8,6 +8,7 @@
 */
 package com.justnd.octoryeserver.servlet;
 
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 
 /** 
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 * @date 2018年12月6日 下午3:06:18 
 *  
 */
+@WebServlet(name="RegisterServlet", urlPatterns=("/s/user/register"))
 public class RegisterServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 2718811378143301923L;

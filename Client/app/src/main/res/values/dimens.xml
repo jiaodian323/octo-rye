@@ -32,8 +32,8 @@
     <dimen name="card_title_margin">5dp</dimen>
     <dimen name="title_margin_small">8dp</dimen>
     <dimen name="card_charging_width">110dp</dimen>
-    <dimen name="card_default_height">190dp</dimen>
-    <dimen name="card_image_default_height">120dp</dimen>
+    <dimen name="card_default_height">450dp</dimen>
+    <dimen name="card_image_default_height">250dp</dimen>
 
     <dimen name="app_bar_default_elevation">0dp</dimen>
     <dimen name="home_topic_head_layout_height">40dp</dimen>

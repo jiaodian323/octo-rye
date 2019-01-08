@@ -1,0 +1,130 @@
+/**   
+* @Title: HotPostServlet.java 
+* @Package com.justnd.octoryeserver.servlet 
+* @Description: TODO
+* @author JD 
+* @EMail jiaodian822@163.com 
+* @date 2019年1月7日 下午12:46:52  
+*/
+package com.justnd.octoryeserver.servlet;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.justnd.octoryeserver.dao.HotPostsDao;
+import com.justnd.octoryeserver.domain.Article;
+import com.justnd.octoryeserver.domain.HotPosts;
+import com.justnd.octoryeserver.vo.RecommendBean;
+
+/**
+ * @ClassName: HotPostServlet
+ * @Description: TODO
+ * @author JD
+ * @date 2019年1月7日 下午12:46:52
+ * 
+ */
+@WebServlet(name="RecommendServlet", urlPatterns=("/s/show/recommend"))
+public class RecommendServlet extends HttpServlet {
+
+	private static final long serialVersionUID = 1722882278436376202L;
+
+	@Autowired
+	private HotPostsDao hotPostDao;
+	
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		System.out.println("初始化RecommendServlet");
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
+				getServletContext());
+	}
+
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		System.out.println("RecommendServlet接受到get请求");
+		response.setContentType("text/json;charset=utf-8");
+		request.setCharacterEncoding("utf-8");
+		response.setCharacterEncoding("utf-8");
+
+		try (PrintWriter out = response.getWriter()) {
+//			String queryDate = request.getParameter("Date").trim();
+			out.write(getResponseStr());
+			out.close();
+		}
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		System.out.println("RecommendServlet接受到Post请求，交由get请求处理");
+		doGet(request, response);
+	}
+
+	public String getResponseStr() {
+		List<HotPosts> hotPosts = hotPostDao.findByDate(new Date());
+		
+		if (hotPosts == null || hotPosts.size() == 0)
+			return "";
+
+		RecommendBean bean = new RecommendBean();
+		bean.setCode(0);
+
+		List<RecommendBean.ResultBean> results = new ArrayList<>();
+		RecommendBean.ResultBean resultBean = new RecommendBean.ResultBean();
+		resultBean.setType("recommend");
+		RecommendBean.ResultBean.HeadBean resultHeadBean = new RecommendBean.ResultBean.HeadBean();
+		resultHeadBean.setStyle("gm_av");
+		resultHeadBean.setTitle("热门焦点");
+		resultBean.setHead(resultHeadBean);
+		List<RecommendBean.ResultBean.BodyBean> resultBodyBeans = new ArrayList<>();
+		for (int i = 0; i < hotPosts.size(); i++) {
+			Iterator<Article> iterator = hotPosts.get(i).getPosts().iterator();
+			while (iterator.hasNext()) {
+				Article article = iterator.next();
+				if (article != null) {
+					RecommendBean.ResultBean.BodyBean body = new RecommendBean.ResultBean.BodyBean();
+					body.setTitle(article.getTitle());
+					body.setStyle("gm_av");
+					body.setUp(article.getAuthor().getAuthorName());
+					body.setCover(article.getHeadImage());
+					body.setPlay(article.getPageviewCount().toString());
+					body.setDanmaku(article.getLikes().toString());
+
+					resultBodyBeans.add(body);
+				}
+			}
+		}
+		resultBean.setBody(resultBodyBeans);
+		results.add(resultBean);
+
+		bean.setResult(results);
+
+		Gson gson = new GsonBuilder()
+                .setLenient()// json宽松  
+                .enableComplexMapKeySerialization()//支持Map的key为复杂对象的形式  
+                .serializeNulls() //智能null  
+                .setPrettyPrinting()// 调教格式  
+                .create();  
+		String gsonStr = gson.toJson(bean);
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println("GsonStr:" + gsonStr);
+		
+		return gsonStr;
+	}
+}

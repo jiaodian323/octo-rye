@@ -2,11 +2,17 @@ package com.justnd.octoryeclient.adapter.section;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -34,6 +40,8 @@ import butterknife.ButterKnife;
  * 首页推荐界面Section
  */
 public class HomeRecommendedSection extends StatelessSection {
+    public static final String TAG = "HomeRecommendedSection";
+
     private Context mContext;
     private String title;
     private String type;
@@ -110,6 +118,7 @@ public class HomeRecommendedSection extends StatelessSection {
             }
         });
 
+        Log.i(TAG, "in HomeRecommendedSection:onBindItemViewHolder(): type=" + type);
         switch (type) {
             case TYPE_LIVE:
                 //直播item
@@ -154,34 +163,35 @@ public class HomeRecommendedSection extends StatelessSection {
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder) {
-//        HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
-//        setTypeIcon(headerViewHolder);
-//        headerViewHolder.mTypeTv.setText(title);
+        HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
+        setTypeIcon(headerViewHolder);
+        headerViewHolder.mTypeTv.setText(title);
 //        headerViewHolder.mTypeRankBtn.setOnClickListener(v -> mContext.startActivity(
 //                new Intent(mContext, OriginalRankActivity.class)));
-//        switch (type) {
-//            case TYPE_RECOMMENDED:
-//                headerViewHolder.mTypeMore.setVisibility(View.GONE);
-//                headerViewHolder.mTypeRankBtn.setVisibility(View.VISIBLE);
-//                headerViewHolder.mAllLiveNum.setVisibility(View.GONE);
-//                break;
-//            case TYPE_LIVE:
-//                headerViewHolder.mTypeRankBtn.setVisibility(View.GONE);
-//                headerViewHolder.mTypeMore.setVisibility(View.VISIBLE);
-//                headerViewHolder.mAllLiveNum.setVisibility(View.VISIBLE);
-//                SpannableStringBuilder stringBuilder = new SpannableStringBuilder("当前" + liveCount + "个直播");
-//                ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(
-//                        mContext.getResources().getColor(R.color.pink_text_color));
-//                stringBuilder.setSpan(foregroundColorSpan, 2,
-//                        stringBuilder.length() - 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-//                headerViewHolder.mAllLiveNum.setText(stringBuilder);
-//                break;
-//            default:
-//                headerViewHolder.mTypeRankBtn.setVisibility(View.GONE);
-//                headerViewHolder.mTypeMore.setVisibility(View.VISIBLE);
-//                headerViewHolder.mAllLiveNum.setVisibility(View.GONE);
-//                break;
-//        }
+        Log.i(TAG, "in HomeRecommendedSection:onBindHeaderViewHolder(): type=" + type);
+        switch (type) {
+            case TYPE_RECOMMENDED:
+                headerViewHolder.mTypeMore.setVisibility(View.GONE);
+                headerViewHolder.mTypeRankBtn.setVisibility(View.VISIBLE);
+                headerViewHolder.mAllLiveNum.setVisibility(View.GONE);
+                break;
+            case TYPE_LIVE:
+                headerViewHolder.mTypeRankBtn.setVisibility(View.GONE);
+                headerViewHolder.mTypeMore.setVisibility(View.VISIBLE);
+                headerViewHolder.mAllLiveNum.setVisibility(View.VISIBLE);
+                SpannableStringBuilder stringBuilder = new SpannableStringBuilder("当前" + liveCount + "个直播");
+                ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(
+                        mContext.getResources().getColor(R.color.pink_text_color));
+                stringBuilder.setSpan(foregroundColorSpan, 2,
+                        stringBuilder.length() - 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                headerViewHolder.mAllLiveNum.setText(stringBuilder);
+                break;
+            default:
+                headerViewHolder.mTypeRankBtn.setVisibility(View.GONE);
+                headerViewHolder.mTypeMore.setVisibility(View.VISIBLE);
+                headerViewHolder.mAllLiveNum.setVisibility(View.GONE);
+                break;
+        }
     }
 
 
@@ -245,48 +255,48 @@ public class HomeRecommendedSection extends StatelessSection {
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindFooterViewHolder(RecyclerView.ViewHolder holder) {
-//        final FootViewHolder footViewHolder = (FootViewHolder) holder;
-//        footViewHolder.mDynamic.setText(String.valueOf(mRandom.nextInt(200)) + "条新动态,点这里刷新");
-//        footViewHolder.mRefreshBtn.setOnClickListener(v -> footViewHolder.mRefreshBtn
-//                .animate()
-//                .rotation(360)
-//                .setInterpolator(new LinearInterpolator())
-//                .setDuration(1000).start());
-//        footViewHolder.mRecommendRefresh.setOnClickListener(v -> footViewHolder.mRecommendRefresh
-//                .animate()
-//                .rotation(360)
-//                .setInterpolator(new LinearInterpolator())
-//                .setDuration(1000).start());
+        final FootViewHolder footViewHolder = (FootViewHolder) holder;
+        footViewHolder.mDynamic.setText(String.valueOf(mRandom.nextInt(200)) + "条新动态,点这里刷新");
+        footViewHolder.mRefreshBtn.setOnClickListener(v -> footViewHolder.mRefreshBtn
+                .animate()
+                .rotation(360)
+                .setInterpolator(new LinearInterpolator())
+                .setDuration(1000).start());
+        footViewHolder.mRecommendRefresh.setOnClickListener(v -> footViewHolder.mRecommendRefresh
+                .animate()
+                .rotation(360)
+                .setInterpolator(new LinearInterpolator())
+                .setDuration(1000).start());
 //        footViewHolder.mBangumiIndexBtn.setOnClickListener(v -> mContext.startActivity(
 //                new Intent(mContext, BangumiIndexActivity.class)));
 //        footViewHolder.mBangumiTimelineBtn.setOnClickListener(v -> mContext.startActivity(
 //                new Intent(mContext, BangumiScheduleActivity.class)));
-//        switch (type) {
-//            case TYPE_RECOMMENDED:
-//                footViewHolder.mMoreBtn.setVisibility(View.GONE);
-//                footViewHolder.mRefreshLayout.setVisibility(View.GONE);
-//                footViewHolder.mBangumiLayout.setVisibility(View.GONE);
-//                footViewHolder.mRecommendRefreshLayout.setVisibility(View.VISIBLE);
-//                break;
-//            case TYPE_BANGUMI:
-//                footViewHolder.mMoreBtn.setVisibility(View.GONE);
-//                footViewHolder.mRefreshLayout.setVisibility(View.GONE);
-//                footViewHolder.mRecommendRefreshLayout.setVisibility(View.GONE);
-//                footViewHolder.mBangumiLayout.setVisibility(View.VISIBLE);
-//                break;
-//            case TYPE_ACTIVITY:
-//                footViewHolder.mRecommendRefreshLayout.setVisibility(View.GONE);
-//                footViewHolder.mBangumiLayout.setVisibility(View.GONE);
-//                footViewHolder.mMoreBtn.setVisibility(View.GONE);
-//                footViewHolder.mRefreshLayout.setVisibility(View.GONE);
-//                break;
-//            default:
-//                footViewHolder.mRecommendRefreshLayout.setVisibility(View.GONE);
-//                footViewHolder.mBangumiLayout.setVisibility(View.GONE);
-//                footViewHolder.mMoreBtn.setVisibility(View.VISIBLE);
-//                footViewHolder.mRefreshLayout.setVisibility(View.VISIBLE);
-//                break;
-//        }
+        switch (type) {
+            case TYPE_RECOMMENDED:
+                footViewHolder.mMoreBtn.setVisibility(View.GONE);
+                footViewHolder.mRefreshLayout.setVisibility(View.GONE);
+                footViewHolder.mBangumiLayout.setVisibility(View.GONE);
+                footViewHolder.mRecommendRefreshLayout.setVisibility(View.VISIBLE);
+                break;
+            case TYPE_BANGUMI:
+                footViewHolder.mMoreBtn.setVisibility(View.GONE);
+                footViewHolder.mRefreshLayout.setVisibility(View.GONE);
+                footViewHolder.mRecommendRefreshLayout.setVisibility(View.GONE);
+                footViewHolder.mBangumiLayout.setVisibility(View.VISIBLE);
+                break;
+            case TYPE_ACTIVITY:
+                footViewHolder.mRecommendRefreshLayout.setVisibility(View.GONE);
+                footViewHolder.mBangumiLayout.setVisibility(View.GONE);
+                footViewHolder.mMoreBtn.setVisibility(View.GONE);
+                footViewHolder.mRefreshLayout.setVisibility(View.GONE);
+                break;
+            default:
+                footViewHolder.mRecommendRefreshLayout.setVisibility(View.GONE);
+                footViewHolder.mBangumiLayout.setVisibility(View.GONE);
+                footViewHolder.mMoreBtn.setVisibility(View.VISIBLE);
+                footViewHolder.mRefreshLayout.setVisibility(View.VISIBLE);
+                break;
+        }
     }
 
 

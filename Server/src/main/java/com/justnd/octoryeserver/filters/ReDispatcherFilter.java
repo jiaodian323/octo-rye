@@ -21,20 +21,20 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-/** 
-* @ClassName: ReDispatcherFilter 当Struts和Servlet需要共存的时候，使用该过滤器重新定义，
-* 使Struts核心过滤器不会拦截需要Servlet处理的请求
-* @Description: TODO
-* @author JD
-* @date 2018年12月4日 下午4:00:50 
-*  
-*/
+/**
+ * @ClassName: ReDispatcherFilter 当Struts和Servlet需要共存的时候，使用该过滤器重新定义，
+ *             使Struts核心过滤器不会拦截需要Servlet处理的请求
+ * @Description: TODO
+ * @author JD
+ * @date 2018年12月4日 下午4:00:50
+ * 
+ */
 public class ReDispatcherFilter implements Filter {
 
 	private ArrayList<String> includes = new ArrayList<String>();
-	/**  
-	 * Title: destroy  
-	 * Description:     
+
+	/**
+	 * Title: destroy Description:
 	 */
 	@Override
 	public void destroy() {
@@ -42,49 +42,66 @@ public class ReDispatcherFilter implements Filter {
 
 	}
 
-	/**  
-	 * Title: doFilter  
-	 * Description:   
+	/**
+	 * Title: doFilter Description:
+	 * 
 	 * @param arg0
 	 * @param arg1
 	 * @param arg2
 	 * @throws IOException
-	 * @throws ServletException  
+	 * @throws ServletException
 	 */
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
 			throws IOException, ServletException {
-		System.out.println("拦截名单包含：");
-		System.out.println(includes.toString());
-		
-		HttpServletRequest request = (HttpServletRequest)req;
-		   String target = request.getRequestURI();
-		   target = target.lastIndexOf("?")>0   
-		      ?target.substring(target.lastIndexOf("/")+1,target.lastIndexOf("?")-target.lastIndexOf("/"))
-		      :target.substring(target.lastIndexOf("/")+1);
-		  
-		   System.out.println("servlet拦截器拦截到：" + target);
-		   if(this.includes.contains(target))
-		   {
-		    RequestDispatcher rdsp = request.getRequestDispatcher(target);
-		   
-		    System.out.println("Filter拦截，转发请求至：" + target);
-		    rdsp.forward(req, resp);
-		   }
-		   else {
-			   System.out.println("servlet拦截器未做拦截，交由struts核心拦截器处理");
-			   chain.doFilter(req, resp);
-		   }
+		// System.out.println("拦截名单包含：");
+		// System.out.println(includes.toString());
+
+		HttpServletRequest request = (HttpServletRequest) req;
+		String target = request.getRequestURI();
+		System.out.println("初始request URI：" + target);
+		// 将"/OctoRyeS/s/"目录下的所有请求视为servlet处理
+		if (target.contains("/OctoRyeS/s/")) {
+			// 截取初始URI结尾页面字符再传入getRequestDispatcher（）方法，因为该方法已封装了父目录
+			target = target.lastIndexOf("?") > 0 ? 
+					target.substring(target.lastIndexOf("/") + 1, target.lastIndexOf("?") - target.lastIndexOf("/"))
+					: target.substring(target.lastIndexOf("/") + 1);
+					
+			System.out.println("ReDispatcherFilter拦截，转发请求至：" + target);
+			RequestDispatcher rdsp = request.getRequestDispatcher(target);
+			rdsp.forward(req, resp);
+		} else {
+			System.out.println("ReDispatcherFilter拦截器未做拦截，交由struts核心拦截器处理");
+			chain.doFilter(req, resp);
+		}
+
+		// target = target.lastIndexOf("?")>0
+		// ?target.substring(target.lastIndexOf("/")+1,target.lastIndexOf("?")-target.lastIndexOf("/"))
+		// :target.substring(target.lastIndexOf("/")+1);
+		//
+		// System.out.println("servlet拦截器拦截到：" + target);
+		// if(this.includes.contains(target))
+		// {
+		// RequestDispatcher rdsp = request.getRequestDispatcher(target);
+		//
+		// System.out.println("Filter拦截，转发请求至：" + target);
+		// rdsp.forward(req, resp);
+		// }
+		// else {
+		// System.out.println("servlet拦截器未做拦截，交由struts核心拦截器处理");
+		// chain.doFilter(req, resp);
+		// }
 	}
 
-	/**  
-	 * Title: init  
-	 * Description:   
+	/**
+	 * Title: init Description:
+	 * 
 	 * @param arg0
-	 * @throws ServletException  
+	 * @throws ServletException
 	 */
 	@Override
 	public void init(FilterConfig config) throws ServletException {
-		this.includes.addAll( Arrays.asList(config.getInitParameter("includeServlets").split(",")));
+		// this.includes.addAll(
+		// Arrays.asList(config.getInitParameter("includeServlets").split(",")));
 	}
 }

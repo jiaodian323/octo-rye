@@ -3,8 +3,10 @@ package com.justnd.octoryeclient.module.home;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 
 import com.justnd.octoryeclient.R;
@@ -37,6 +39,8 @@ public class HomeRecommendedFragment extends RxLazyFragment {
     RecyclerView mRecyclerView;
     @BindView(R.id.empty_layout)
     CustomEmptyView mCustomEmptyView;
+
+    public static final String TAG = "HomeRecommendedFG_JD";
 
     private boolean mIsRefreshing = false;
     private SectionedRecyclerViewAdapter mSectionedAdapter;
@@ -72,21 +76,23 @@ public class HomeRecommendedFragment extends RxLazyFragment {
     @Override
     protected void initRecyclerView() {
         mSectionedAdapter = new SectionedRecyclerViewAdapter();
-        GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
-        mLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                switch (mSectionedAdapter.getSectionItemViewType(position)) {
-                    case SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER:
-                        return 2;
-                    case SectionedRecyclerViewAdapter.VIEW_TYPE_FOOTER:
-                        return 2;
-                    default:
-                        return 1;
-                }
-            }
-        });
-        mRecyclerView.setLayoutManager(mLayoutManager);
+
+//        GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
+//        mLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+//            @Override
+//            public int getSpanSize(int position) {
+//                switch (mSectionedAdapter.getSectionItemViewType(position)) {
+//                    case SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER:
+//                        return 2;
+//                    case SectionedRecyclerViewAdapter.VIEW_TYPE_FOOTER:
+//                        return 2;
+//                    default:
+//                        return 1;
+//                }
+//            }
+//        });
+//        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mSectionedAdapter);
         setRecycleNoScroll();
     }
@@ -115,7 +121,9 @@ public class HomeRecommendedFragment extends RxLazyFragment {
                     @Override
                     public Observable<RecommendInfo> call(List<RecommendBannerInfo.DataBean> dataBeans) {
                         recommendBanners.addAll(dataBeans);
-                        return RetrofitHelper.getRecommendAPI().getRecommendedInfo();
+//                        return RetrofitHelper.getRecommendAPI().getRecommendedInfo();
+                        Log.i(TAG, "向局域网服务器发送recommend查询请求");
+                        return RetrofitHelper.getRecommendAPIDebug().getRecommendedInfoDebug();
                     }
                 })
                 .compose(bindToLifecycle())
@@ -174,7 +182,7 @@ public class HomeRecommendedFragment extends RxLazyFragment {
                                 getActivity(),
                                 results.get(i).getHead().getTitle(),
                                 results.get(i).getType(),
-                                results.get(1).getHead().getCount(),
+                                results.get(i).getHead().getCount(),
                                 results.get(i).getBody()));
                         break;
                 }

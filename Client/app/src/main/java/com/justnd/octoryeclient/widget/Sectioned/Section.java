@@ -255,6 +255,7 @@ public abstract class Section {
     public abstract int getContentItemsTotal();
 
 
+
     /**
      * Return the ViewHolder for the Header of this Section
      *
@@ -264,7 +265,6 @@ public abstract class Section {
     public RecyclerView.ViewHolder getHeaderViewHolder(View view) {
         return new SectionedRecyclerViewAdapter.EmptyViewHolder(view);
     }
-
 
     /**
      * Bind the data to the ViewHolder for the Header of this Section

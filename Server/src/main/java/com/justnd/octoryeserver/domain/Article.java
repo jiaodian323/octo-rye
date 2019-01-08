@@ -97,7 +97,16 @@ public class Article implements Serializable {
 	 * @Fields tags : TODO 文章标签
 	 */
 	private String tags;
-
+	
+	/** 
+	* @Fields pageviewCount : TODO 
+	*/ 
+	@Column(name = "pageviewCount", nullable = false, columnDefinition="INT default 0")
+	private Integer pageviewCount;
+	
+	@Column(name = "likes", nullable = false, columnDefinition="INT default 0")
+	private Integer likes;
+	
 	/**
 	 * @return the id
 	 */
@@ -246,6 +255,34 @@ public class Article implements Serializable {
 	 */
 	public void setTags(String tags) {
 		this.tags = tags;
+	}
+
+	/**
+	 * @return the pageviewCount
+	 */
+	public Integer getPageviewCount() {
+		return pageviewCount;
+	}
+
+	/**
+	 * @param pageviewCount the pageviewCount to set
+	 */
+	public void setPageviewCount(Integer pageviewCount) {
+		this.pageviewCount = pageviewCount;
+	}
+
+	/**
+	 * @return the likes
+	 */
+	public Integer getLikes() {
+		return likes;
+	}
+
+	/**
+	 * @param likes the likes to set
+	 */
+	public void setLikes(Integer likes) {
+		this.likes = likes;
 	}
 
 	/**
