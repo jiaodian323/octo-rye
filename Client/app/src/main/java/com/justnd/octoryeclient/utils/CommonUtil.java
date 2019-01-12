@@ -8,12 +8,6 @@ import android.os.StatFs;
 
 import java.io.File;
 
-/**
- * Created by hcc on 16/8/4 21:18
- * 100332338@qq.com
- * <p/>
- * 通用工具类
- */
 public class CommonUtil {
 
     /**

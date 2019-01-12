@@ -4,12 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-/**
- * Created by hcc on 16/8/20 12:38
- * 100332338@qq.com
- * <p/>
- * 首页推荐界面数据
- */
 public class RecommendInfo {
     private int code;
     private List<ResultBean> result;

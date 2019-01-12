@@ -24,11 +24,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.justnd.octoryeserver.dao.HotPostsDao;
 import com.justnd.octoryeserver.domain.Article;
 import com.justnd.octoryeserver.domain.HotPosts;
+import com.justnd.octoryeserver.utils.GsonUtil;
 import com.justnd.octoryeserver.vo.RecommendBean;
 
 /**
@@ -114,14 +113,8 @@ public class RecommendServlet extends HttpServlet {
 		results.add(resultBean);
 
 		bean.setResult(results);
-
-		Gson gson = new GsonBuilder()
-                .setLenient()// json宽松  
-                .enableComplexMapKeySerialization()//支持Map的key为复杂对象的形式  
-                .serializeNulls() //智能null  
-                .setPrettyPrinting()// 调教格式  
-                .create();  
-		String gsonStr = gson.toJson(bean);
+		String gsonStr = GsonUtil.toJsonString(bean);
+		
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		System.out.println("GsonStr:" + gsonStr);
 		

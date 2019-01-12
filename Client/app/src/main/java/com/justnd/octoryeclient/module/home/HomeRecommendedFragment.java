@@ -203,11 +203,11 @@ public class HomeRecommendedFragment extends RxLazyFragment {
     }
 
     private void clearData() {
-//        banners.clear();
-//        recommendBanners.clear();
-//        results.clear();
-//        mIsRefreshing = true;
-//        mSectionedAdapter.removeAllSections();
+        banners.clear();
+        recommendBanners.clear();
+        results.clear();
+        mIsRefreshing = true;
+        mSectionedAdapter.removeAllSections();
     }
 
     private void setRecycleNoScroll() {

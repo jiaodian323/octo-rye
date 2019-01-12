@@ -1,6 +1,7 @@
 package com.justnd.octoryeclient.adapter.section;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -23,6 +24,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.justnd.octoryeclient.R;
 import com.justnd.octoryeclient.entity.recommond.RecommendInfo;
+import com.justnd.octoryeclient.module.activity.ContentDetailActivity;
+import com.justnd.octoryeclient.module.activity.TestActivity;
 import com.justnd.octoryeclient.utils.DisplayUtil;
 import com.justnd.octoryeclient.widget.Sectioned.StatelessSection;
 
@@ -33,12 +36,6 @@ import java.util.Random;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by hcc on 16/8/27 11:51
- * 100332338@qq.com
- * <p/>
- * 首页推荐界面Section
- */
 public class HomeRecommendedSection extends StatelessSection {
     public static final String TAG = "HomeRecommendedSection";
 
@@ -63,9 +60,10 @@ public class HomeRecommendedSection extends StatelessSection {
             R.drawable.ic_category_t11, R.drawable.ic_category_t23
     };
 
-
-    public HomeRecommendedSection(Context context, String title, String type, int liveCount, List<RecommendInfo.ResultBean.BodyBean> datas) {
-        super(R.layout.layout_home_recommend_head, R.layout.layout_home_recommend_foot, R.layout.layout_home_recommend_boby);
+    public HomeRecommendedSection(Context context, String title, String type, int liveCount,
+                                  List<RecommendInfo.ResultBean.BodyBean> datas) {
+        super(R.layout.layout_home_recommend_head, R.layout.layout_home_recommend_foot, R.layout
+                .layout_home_recommend_boby);
         this.mContext = context;
         this.title = title;
         this.type = type;
@@ -74,18 +72,15 @@ public class HomeRecommendedSection extends StatelessSection {
         mRandom = new Random();
     }
 
-
     @Override
     public int getContentItemsTotal() {
         return datas.size();
     }
 
-
     @Override
     public RecyclerView.ViewHolder getItemViewHolder(View view) {
         return new ItemViewHolder(view);
     }
-
 
     @Override
     public void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position) {
@@ -112,6 +107,13 @@ public class HomeRecommendedSection extends StatelessSection {
                 case GOTO_BANGUMI:
                     break;
                 default:
+                    Integer contentId = 0;
+                    if (bodyBean.getParam() != "")
+                        contentId = Integer.parseInt(bodyBean.getParam());
+                    ContentDetailActivity.launch((Activity) mContext,
+                            contentId, bodyBean.getCover());
+//                    TestActivity.launch((Activity) mContext,
+//                            contentId, bodyBean.getCover());
 //                    VideoDetailsActivity.launch((Activity) mContext,
 //                            Integer.parseInt(bodyBean.getParam()), bodyBean.getCover());
                     break;
@@ -179,7 +181,8 @@ public class HomeRecommendedSection extends StatelessSection {
                 headerViewHolder.mTypeRankBtn.setVisibility(View.GONE);
                 headerViewHolder.mTypeMore.setVisibility(View.VISIBLE);
                 headerViewHolder.mAllLiveNum.setVisibility(View.VISIBLE);
-                SpannableStringBuilder stringBuilder = new SpannableStringBuilder("当前" + liveCount + "个直播");
+                SpannableStringBuilder stringBuilder = new SpannableStringBuilder("当前" +
+                        liveCount + "个直播");
                 ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(
                         mContext.getResources().getColor(R.color.pink_text_color));
                 stringBuilder.setSpan(foregroundColorSpan, 2,

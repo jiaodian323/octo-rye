@@ -14,12 +14,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by hcc on 16/8/27 14:06
- * 100332338@qq.com
- * <p/>
- * 首页推荐界面轮播图Section
- */
 public class HomeRecommendBannerSection extends StatelessSection {
     private List<BannerEntity> banners = new ArrayList<>();
 
@@ -28,36 +22,30 @@ public class HomeRecommendBannerSection extends StatelessSection {
         this.banners = banners;
     }
 
-
     @Override
     public int getContentItemsTotal() {
         return 1;
     }
-
 
     @Override
     public RecyclerView.ViewHolder getItemViewHolder(View view) {
         return new ItemViewHolder(view);
     }
 
-
     @Override
     public void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position) {
     }
-
 
     @Override
     public RecyclerView.ViewHolder getHeaderViewHolder(View view) {
         return new BannerViewHolder(view);
     }
 
-
     @Override
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder) {
         BannerViewHolder bannerViewHolder = (BannerViewHolder) holder;
         bannerViewHolder.mBannerView.delayTime(5).build(banners);
     }
-
 
     static class ItemViewHolder extends RecyclerView.ViewHolder {
         public ItemViewHolder(View itemView) {

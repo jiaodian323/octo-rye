@@ -3,9 +3,19 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="app_bar_elevation">3dp</dimen>
+    <dimen name="default_toolbar_title">18sp</dimen>
+    <dimen name="default_title_margin">25dp</dimen>
+    <dimen name="appbar_parallax_max_height">226dp</dimen>
+    <dimen name="head_image_bg_height">128dp</dimen>
+    <dimen name="default_detail_title">25sp</dimen>
+    <dimen name="default_detail_author">13sp</dimen>
+    <dimen name="default_detail_extract">14sp</dimen>
+    <dimen name="default_detail_content">16sp</dimen>
 
     <!--open source-->
-    <dimen name="default_general_margin">10dp</dimen>
+    <dimen name="default_general_margin">8dp</dimen>
+    <dimen name="default_authorToExtract_margin">20dp</dimen>
+    <dimen name="default_extract_padding">8dp</dimen>
     <dimen name="default_small_text_size">14sp</dimen>
     <dimen name="default_tiny_padding">5dp</dimen>
     <dimen name="default_tiny_text_size">12sp</dimen>
@@ -38,4 +48,5 @@
     <dimen name="app_bar_default_elevation">0dp</dimen>
     <dimen name="home_topic_head_layout_height">40dp</dimen>
     <dimen name="general_banner_height">126dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

@@ -2,13 +2,6 @@ package com.justnd.octoryeclient.entity.recommond;
 
 import java.util.List;
 
-/**
- * Created by hcc on 2016/9/24 19:25
- * 100332338@qq.com
- * <p>
- * 首页Banner推荐
- */
-
 public class RecommendBannerInfo {
     private int code;
     private List<DataBean> data;

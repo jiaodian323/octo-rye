@@ -13,12 +13,6 @@ import com.justnd.octoryeclient.widget.Sectioned.StatelessSection;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by hcc on 16/8/27 20:19
- * 100332338@qq.com
- * <p/>
- * 首页推荐界面话题section
- */
 public class HomeRecommendTopicSection extends StatelessSection {
     private Context mContext;
     private String imgUrl;

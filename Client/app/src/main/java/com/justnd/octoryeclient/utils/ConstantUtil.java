@@ -1,12 +1,5 @@
 package com.justnd.octoryeclient.utils;
 
-/**
- * Created by hcc on 2016/10/13 11:13
- * 100332338@qq.com
- * <p>
- * 常量工具类
- */
-
 public class ConstantUtil {
     public static final String SHOP_URL = "http://bmall.bilibili.com/";
     public static final String VIP_URL = "http://vip.bilibili.com/site/vip-faq-h5.html#yv1";

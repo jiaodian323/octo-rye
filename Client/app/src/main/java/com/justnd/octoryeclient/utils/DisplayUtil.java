@@ -3,12 +3,6 @@ package com.justnd.octoryeclient.utils;
 import android.content.Context;
 import android.util.DisplayMetrics;
 
-/**
- * Created by hcc on 16/8/4 21:18
- * 100332338@qq.com
- * <p/>
- * 屏幕像素转换工具类
- */
 public class DisplayUtil {
     public static int px2dp(Context context, float pxValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
