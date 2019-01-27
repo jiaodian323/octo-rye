@@ -46,7 +46,8 @@
                 android:minHeight="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"></android.support.v7.widget.Toolbar>
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+            </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -74,9 +75,7 @@
                 android:paddingRight="?dialogPreferredPadding"
                 android:paddingTop="@dimen/abc_dialog_padding_top_material"
                 android:textStyle="bold"
-                android:textColor="@android:color/widget_edittext_dark"
-                android:textSize="@dimen/default_detail_title"
-                android:text="@string/test_title" />
+                android:textSize="@dimen/default_detail_title" />
 
             <TextView
                 android:id="@+id/author_tv"
@@ -88,10 +87,8 @@
                 android:paddingTop="@dimen/abc_dialog_padding_top_material"
                 android:textStyle="italic"
                 android:typeface="serif"
-                android:textColor="@android:color/widget_edittext_dark"
                 android:textSize="@dimen/default_detail_author"
-                android:lineSpacingMultiplier="1.5"
-                android:text="@string/test_author" />
+                android:lineSpacingMultiplier="1.5" />
 
             <TextView
                 android:id="@+id/article_extract_tv"
@@ -104,10 +101,8 @@
                 android:background="@color/color_detail_extract"
                 android:textStyle="italic"
                 android:typeface="serif"
-                android:textColor="@android:color/widget_edittext_dark"
                 android:textSize="@dimen/default_detail_extract"
-                android:lineSpacingMultiplier="1.5"
-                android:text="@string/test_extract" />
+                android:lineSpacingMultiplier="1.5" />
 
             <TextView
                 android:id="@+id/article_content_tv"
@@ -119,66 +114,18 @@
                 android:paddingRight="?dialogPreferredPadding"
                 android:paddingTop="@dimen/abc_dialog_padding_top_material"
                 android:typeface="serif"
-                android:textColor="@android:color/widget_edittext_dark"
                 android:textSize="@dimen/default_detail_content"
                 android:lineSpacingMultiplier="1.7"
-                android:letterSpacing="0.05"
-                android:text="@string/test_content"/>
+                android:letterSpacing="0.05" />
 
-            <!--<View
-                android:id="@+id/textSpacerNoButtons"
-                android:layout_width="0.0dip"
-                android:layout_height="@dimen/abc_dialog_padding_top_material"
-                android:visibility="gone" />-->
+            <include android:id="@+id/author_info_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_authorToExtract_margin"
+                layout="@layout/layout_author_info" />
+
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
-
-    <!--<ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:layout_scrollFlags="scroll">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/content_title_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/widget_edittext_dark"
-                android:textSize="30sp"
-                android:text="@string/test_title" />
-
-            <TextView
-                android:id="@+id/author_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/widget_edittext_dark"
-                android:textSize="10sp"
-                android:text="@string/test_author" />
-
-            <TextView
-                android:id="@+id/article_extract_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/widget_edittext_dark"
-                android:textSize="15sp"
-                android:text="@string/test_extract" />
-
-            <TextView
-                android:id="@+id/article_content_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@android:color/widget_edittext_dark"
-                android:textSize="20sp"
-                android:text="@string/test_content" />
-
-        </LinearLayout>
-
-    </ScrollView>-->
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/commentsList"

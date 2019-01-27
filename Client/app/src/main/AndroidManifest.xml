@@ -7,8 +7,8 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
-        android:name=".application.OctoRyeApplication"
-        android:allowBackup="true"
+        android:name="com.justnd.octoryeclient.application.OctoRyeApplication"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -16,6 +16,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".module.activity.MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
             <intent-filter>
@@ -24,15 +26,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".module.activity.FirstMainActivity" />
+
         <activity
             android:name=".module.activity.ContentDetailActivity"
             android:label="@string/title_activity_content_detail"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".module.activity.TestActivity"
             android:label="@string/title_activity_test"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+
     </application>
 
 </manifest>

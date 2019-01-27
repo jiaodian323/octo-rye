@@ -24,11 +24,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
+import com.justnd.octoryeserver.beans.RecommendBean;
 import com.justnd.octoryeserver.dao.HotPostsDao;
 import com.justnd.octoryeserver.domain.Article;
 import com.justnd.octoryeserver.domain.HotPosts;
+import com.justnd.octoryeserver.utils.ConstantUtil;
 import com.justnd.octoryeserver.utils.GsonUtil;
-import com.justnd.octoryeserver.vo.RecommendBean;
 
 /**
  * @ClassName: HotPostServlet
@@ -86,10 +87,9 @@ public class RecommendServlet extends HttpServlet {
 
 		List<RecommendBean.ResultBean> results = new ArrayList<>();
 		RecommendBean.ResultBean resultBean = new RecommendBean.ResultBean();
-		resultBean.setType("recommend");
+		resultBean.setType("test");
 		RecommendBean.ResultBean.HeadBean resultHeadBean = new RecommendBean.ResultBean.HeadBean();
-		resultHeadBean.setStyle("gm_av");
-		resultHeadBean.setTitle("热门焦点");
+		resultHeadBean.setTitle("推荐文章");
 		resultBean.setHead(resultHeadBean);
 		List<RecommendBean.ResultBean.BodyBean> resultBodyBeans = new ArrayList<>();
 		for (int i = 0; i < hotPosts.size(); i++) {
@@ -98,12 +98,16 @@ public class RecommendServlet extends HttpServlet {
 				Article article = iterator.next();
 				if (article != null) {
 					RecommendBean.ResultBean.BodyBean body = new RecommendBean.ResultBean.BodyBean();
+					body.setParam(article.getId());
 					body.setTitle(article.getTitle());
-					body.setStyle("gm_av");
-					body.setUp(article.getAuthor().getAuthorName());
+					String testStr = article.getType().toString();
+					System.out.println("testStr = " + testStr);
+					body.setStyle(article.getType().toString());
+					body.setAuthorName(article.getAuthor().getAuthorName());
+					body.setExtract(article.getExtract());
 					body.setCover(article.getHeadImage());
-					body.setPlay(article.getPageviewCount().toString());
-					body.setDanmaku(article.getLikes().toString());
+					body.setPageViewNum(article.getPageviewCount());
+					body.setLikeNum(article.getLikeNum());
 
 					resultBodyBeans.add(body);
 				}

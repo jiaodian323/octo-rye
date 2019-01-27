@@ -1,9 +1,16 @@
 package com.justnd.octoryeclient.entity.recommond;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
+import com.google.gson.annotations.SerializedName;
+
+/**
+ * @ClassName: HotPostBean
+ * @Description: TODO
+ * @author JD
+ * @date 2019年1月7日 下午5:44:16
+ *
+ */
 public class RecommendInfo {
     private int code;
     private List<ResultBean> result;
@@ -103,21 +110,25 @@ public class RecommendInfo {
         }
 
         public static class BodyBean {
-            private String title;
             private String style;
-            private String cover;
-            private String param;
             @SerializedName("goto")
             private String gotoX;
             private int width;
             private int height;
-            private String play;
             private String danmaku;
             private String up;
             @SerializedName("up_face")
             private String upFace;
             private int online;
             private String desc1;
+            private int param;
+            private String title;
+            private String authorName;
+            private String cover;
+            private String extract;
+            private int likeNum;
+            private int commentNum;
+            private int pageViewNum;
 
             public String getTitle() {
                 return title;
@@ -143,11 +154,11 @@ public class RecommendInfo {
                 this.cover = cover;
             }
 
-            public String getParam() {
+            public int getParam() {
                 return param;
             }
 
-            public void setParam(String param) {
+            public void setParam(int param) {
                 this.param = param;
             }
 
@@ -175,12 +186,12 @@ public class RecommendInfo {
                 this.height = height;
             }
 
-            public String getPlay() {
-                return play;
+            public int getPageViewNum() {
+                return pageViewNum;
             }
 
-            public void setPlay(String play) {
-                this.play = play;
+            public void setPageViewNum(int play) {
+                this.pageViewNum = play;
             }
 
             public String getDanmaku() {
@@ -222,6 +233,63 @@ public class RecommendInfo {
             public void setDesc1(String desc1) {
                 this.desc1 = desc1;
             }
+
+            /**
+             * @return the like
+             */
+            public int getLikeNum() {
+                return likeNum;
+            }
+
+            /**
+             * @param like the like to set
+             */
+            public void setLikeNum(int like) {
+                this.likeNum = like;
+            }
+
+            /**
+             * @return the comment
+             */
+            public int getCommentNum() {
+                return commentNum;
+            }
+
+            /**
+             * @param comment the comment to set
+             */
+            public void setCommentNum(int comment) {
+                this.commentNum = comment;
+            }
+
+            /**
+             * @return the authorName
+             */
+            public String getAuthorName() {
+                return authorName;
+            }
+
+            /**
+             * @param authorName the authorName to set
+             */
+            public void setAuthorName(String authorName) {
+                this.authorName = authorName;
+            }
+
+            /**
+             * @return the extract
+             */
+            public String getExtract() {
+                return extract;
+            }
+
+            /**
+             * @param extract the extract to set
+             */
+            public void setExtract(String extract) {
+                this.extract = extract;
+            }
         }
     }
 }
+

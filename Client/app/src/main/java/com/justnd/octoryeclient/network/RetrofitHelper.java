@@ -28,12 +28,15 @@ public class RetrofitHelper {
         initOkHttpClient();
     }
 
-    public static RecommendService getRecommendAPI() {
+    public static RecommendService getRecommendAPIDebug() {
         return createApi(RecommendService.class, ApiConstants.RECOMMEND_URL_TEST);
     }
 
-    public static RecommendService getRecommendAPIDebug() {
+    public static RecommendService getRecommendAPI() {
+
         return createApi(RecommendService.class, ApiConstants.DEBUG_URL);
+
+//        return createApi(RecommendService.class, ApiConstants.CLOUD_SERVER_URL);
     }
 
     /**

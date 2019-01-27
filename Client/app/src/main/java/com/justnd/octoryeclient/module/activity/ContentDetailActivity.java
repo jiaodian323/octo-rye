@@ -5,23 +5,40 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.justnd.octoryeclient.R;
+import com.justnd.octoryeclient.entity.recommond.ArticleDetail;
 import com.justnd.octoryeclient.module.base.RxBaseActivity;
+import com.justnd.octoryeclient.network.RetrofitHelper;
 import com.justnd.octoryeclient.utils.ConstantUtil;
+import com.justnd.octoryeclient.widget.customview.AuthorTagView;
 
 import butterknife.BindView;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class ContentDetailActivity extends RxBaseActivity {
     @BindView(R.id.collapsing_toolbar)
     CollapsingToolbarLayout mCollapsingtoolbar;
     @BindView(R.id.content_title_image)
     ImageView mContentTitleImage;
+    @BindView(R.id.content_title_tv)
+    TextView mTitleTextView;
+    @BindView(R.id.author_tv)
+    TextView mAuthorTextView;
+    @BindView(R.id.article_extract_tv)
+    TextView mExtractTextView;
+    @BindView(R.id.article_content_tv)
+    TextView mContentTextView;
+    @BindView(R.id.author_tag)
+    AuthorTagView mAuthorTagView;
 
+    private String contentType;
     private Integer contentId;
-    private String imgUrl;
+    private ArticleDetail detailBean = new ArticleDetail();
 
     @Override
     public int getLayoutId() {
@@ -30,19 +47,14 @@ public class ContentDetailActivity extends RxBaseActivity {
 
     @Override
     public void initViews(Bundle savedInstanceState) {
+
         Intent intent = getIntent();
         if (intent != null) {
-            contentId = intent.getIntExtra(ConstantUtil.EXTRA_AV, -1);
-            imgUrl = intent.getStringExtra(ConstantUtil.EXTRA_IMG_URL);
+            contentType = intent.getStringExtra(ConstantUtil.EXTRA_CONTENT_TYPE);
+            contentId = intent.getIntExtra(ConstantUtil.EXTRA_CONTENT_ID, -1);
         }
-        Glide.with(ContentDetailActivity.this)
-                .load(imgUrl)
-                .centerCrop()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(R.drawable.bili_default_image_tv)
-                .dontAnimate()
-                .into(mContentTitleImage);
-        mCollapsingtoolbar.setTitle(getString(R.string.default_content_title));
+
+        loadData();
     }
 
     @Override
@@ -50,11 +62,45 @@ public class ContentDetailActivity extends RxBaseActivity {
 
     }
 
-    public static void launch(Activity activity, int aid, String imgUrl) {
+    @Override
+    public void loadData() {
+        RetrofitHelper.getRecommendAPI()
+                .getArticleDetail(contentId)
+                .compose(bindToLifecycle())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(resultBeans -> {
+                    detailBean = resultBeans;
+                    finishTask();
+                });
+    }
+
+    @Override
+    public void finishTask() {
+        mTitleTextView.setText(detailBean.getTitle());
+        String authorName = getString(R.string.authorName_prefix) + detailBean.getAuthor()
+                .getName();
+        mAuthorTextView.setText(authorName);
+        mExtractTextView.setText(detailBean.getExtract());
+        mContentTextView.setText(detailBean.getContent());
+
+        Glide.with(ContentDetailActivity.this)
+                .load(detailBean.getHeadImage())
+                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .placeholder(R.drawable.bili_default_image_tv)
+                .dontAnimate()
+                .into(mContentTitleImage);
+
+        mAuthorTagView.setUpWithInfo(ContentDetailActivity.this, "刘德华", 666, detailBean
+                .getHeadImage());
+        mCollapsingtoolbar.setTitle(getString(R.string.default_content_title));
+    }
+
+    public static void launch(Activity activity, int aid) {
         Intent intent = new Intent(activity, ContentDetailActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra(ConstantUtil.EXTRA_AV, aid);
-        intent.putExtra(ConstantUtil.EXTRA_IMG_URL, imgUrl);
+        intent.putExtra(ConstantUtil.EXTRA_CONTENT_ID, aid);
         activity.startActivity(intent);
     }
 }

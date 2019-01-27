@@ -31,11 +31,17 @@
     <color name="top_bar">#3B3B3B</color>
     <color name="main_background">#D1EEEE</color>
 
+    <!--字体-->
     <color name="font_normal">#555555</color>
+    <color name="font_tint">#777777</color>
+
+    <!--图标-->
+    <color name="icon_normal">#272438</color>
 
     <color name="black_80">#222222</color>
     <color name="black_alpha_45">#71000000</color>
 
+    <color name="cardView_background">#FFFAF0</color>
     <color name="card_view_background">@color/white</color>
 
     <color name="gray_80">#BEBBB4</color>

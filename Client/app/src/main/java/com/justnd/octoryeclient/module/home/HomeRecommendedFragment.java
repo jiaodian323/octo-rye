@@ -2,7 +2,6 @@ package com.justnd.octoryeclient.module.home;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -11,8 +10,6 @@ import android.view.View;
 
 import com.justnd.octoryeclient.R;
 import com.justnd.octoryeclient.adapter.section.HomeRecommendBannerSection;
-import com.justnd.octoryeclient.adapter.section.HomeRecommendPicSection;
-import com.justnd.octoryeclient.adapter.section.HomeRecommendTopicSection;
 import com.justnd.octoryeclient.adapter.section.HomeRecommendedSection;
 import com.justnd.octoryeclient.entity.recommond.RecommendBannerInfo;
 import com.justnd.octoryeclient.entity.recommond.RecommendInfo;
@@ -76,22 +73,6 @@ public class HomeRecommendedFragment extends RxLazyFragment {
     @Override
     protected void initRecyclerView() {
         mSectionedAdapter = new SectionedRecyclerViewAdapter();
-
-//        GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
-//        mLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-//            @Override
-//            public int getSpanSize(int position) {
-//                switch (mSectionedAdapter.getSectionItemViewType(position)) {
-//                    case SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER:
-//                        return 2;
-//                    case SectionedRecyclerViewAdapter.VIEW_TYPE_FOOTER:
-//                        return 2;
-//                    default:
-//                        return 1;
-//                }
-//            }
-//        });
-//        mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mSectionedAdapter);
         setRecycleNoScroll();
@@ -113,7 +94,7 @@ public class HomeRecommendedFragment extends RxLazyFragment {
 
     @Override
     protected void loadData() {
-        RetrofitHelper.getRecommendAPI()
+        RetrofitHelper.getRecommendAPIDebug()
                 .getRecommendedBannerInfo()
                 .compose(bindToLifecycle())
                 .map(RecommendBannerInfo::getData)
@@ -121,9 +102,8 @@ public class HomeRecommendedFragment extends RxLazyFragment {
                     @Override
                     public Observable<RecommendInfo> call(List<RecommendBannerInfo.DataBean> dataBeans) {
                         recommendBanners.addAll(dataBeans);
-//                        return RetrofitHelper.getRecommendAPI().getRecommendedInfo();
-                        Log.i(TAG, "向局域网服务器发送recommend查询请求");
-                        return RetrofitHelper.getRecommendAPIDebug().getRecommendedInfoDebug();
+                        Log.i(TAG, "向服务器发送recommend查询请求");
+                        return RetrofitHelper.getRecommendAPI().getRecommendedInfo();
                     }
                 })
                 .compose(bindToLifecycle())
@@ -145,13 +125,6 @@ public class HomeRecommendedFragment extends RxLazyFragment {
 //        SnackbarUtil.showMessage(mRecyclerView, "数据加载失败,请重新加载或者检查网络是否链接");
     }
 
-    private void convertBanner() {
-        Observable.from(recommendBanners)
-                .compose(bindToLifecycle())
-                .forEach(dataBean -> banners.add(new BannerEntity(dataBean.getValue(),
-                        dataBean.getTitle(), dataBean.getImage())));
-    }
-
     @Override
     protected void finishTask() {
         mSwipeRefreshLayout.setRefreshing(false);
@@ -164,18 +137,17 @@ public class HomeRecommendedFragment extends RxLazyFragment {
             String type = results.get(i).getType();
             if (!TextUtils.isEmpty(type)) {
                 switch (type) {
-                    case ConstantUtil.TYPE_TOPIC:
-                        //话题
-                        mSectionedAdapter.addSection(new HomeRecommendTopicSection(getActivity(),
-                                results.get(i).getBody().get(0).getCover(),
-                                results.get(i).getBody().get(0).getTitle(),
-                                results.get(i).getBody().get(0).getParam()));
+                    case ConstantUtil.TYPE_ARTICLE:
+                        mSectionedAdapter.addSection(new HomeRecommendedSection(
+                                getActivity(),
+                                results.get(i).getHead().getTitle(),
+                                results.get(i).getType(),
+                                results.get(i).getHead().getCount(),
+                                results.get(i).getBody()));
                         break;
-                    case ConstantUtil.TYPE_ACTIVITY_CENTER:
-                        //活动中心
-//                        mSectionedAdapter.addSection(new HomeRecommendActivityCenterSection(
-//                                getActivity(),
-//                                results.get(i).getBody()));
+                    case ConstantUtil.TYPE_MUSIC:
+                        break;
+                    case ConstantUtil.TYPE_VIDEO:
                         break;
                     default:
                         mSectionedAdapter.addSection(new HomeRecommendedSection(
@@ -187,14 +159,15 @@ public class HomeRecommendedFragment extends RxLazyFragment {
                         break;
                 }
             }
-            String style = results.get(i).getHead().getStyle();
-            if (style.equals(ConstantUtil.STYLE_PIC)) {
-                mSectionedAdapter.addSection(new HomeRecommendPicSection(getActivity(),
-                        results.get(i).getBody().get(0).getCover(),
-                        results.get(i).getBody().get(0).getParam()));
-            }
         }
         mSectionedAdapter.notifyDataSetChanged();
+    }
+
+    private void convertBanner() {
+        Observable.from(recommendBanners)
+                .compose(bindToLifecycle())
+                .forEach(dataBean -> banners.add(new BannerEntity(dataBean.getValue(),
+                        dataBean.getTitle(), dataBean.getImage())));
     }
 
     public void hideEmptyView() {

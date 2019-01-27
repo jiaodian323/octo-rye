@@ -3,7 +3,6 @@ package com.justnd.octoryeclient.adapter.section;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -19,14 +18,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Space;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.justnd.octoryeclient.R;
 import com.justnd.octoryeclient.entity.recommond.RecommendInfo;
 import com.justnd.octoryeclient.module.activity.ContentDetailActivity;
-import com.justnd.octoryeclient.module.activity.TestActivity;
+import com.justnd.octoryeclient.utils.ConstantUtil;
 import com.justnd.octoryeclient.utils.DisplayUtil;
+import com.justnd.octoryeclient.utils.ToastUtil;
 import com.justnd.octoryeclient.widget.Sectioned.StatelessSection;
 
 import java.util.ArrayList;
@@ -43,9 +44,6 @@ public class HomeRecommendedSection extends StatelessSection {
     private String title;
     private String type;
     private int liveCount;
-    private static final String TYPE_RECOMMENDED = "recommend";
-    private static final String TYPE_LIVE = "live";
-    private static final String TYPE_BANGUMI = "bangumi_2";
     private static final String GOTO_BANGUMI = "bangumi_list";
     private static final String TYPE_ACTIVITY = "activity";
     private List<RecommendInfo.ResultBean.BodyBean> datas = new ArrayList<>();
@@ -72,6 +70,11 @@ public class HomeRecommendedSection extends StatelessSection {
         mRandom = new Random();
     }
 
+//    public HomeRecommendedSection(Context context, String title, String type, int ) {
+//
+//        mRandom = new Random();
+//    }
+
     @Override
     public int getContentItemsTotal() {
         return datas.size();
@@ -87,6 +90,11 @@ public class HomeRecommendedSection extends StatelessSection {
         ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
         final RecommendInfo.ResultBean.BodyBean bodyBean = datas.get(position);
 
+        itemViewHolder.mArticleTitle.setText(bodyBean.getTitle());
+        String authorText = mContext.getString(R.string.authorName_prefix) + bodyBean
+                .getAuthorName();
+        itemViewHolder.mAuthorName.setText(authorText);
+        itemViewHolder.mArticleExtract.setText(bodyBean.getExtract());
         Glide.with(mContext)
                 .load(Uri.parse(bodyBean.getCover()))
                 .centerCrop()
@@ -95,45 +103,45 @@ public class HomeRecommendedSection extends StatelessSection {
                 .dontAnimate()
                 .into(itemViewHolder.mVideoImg);
 
-        itemViewHolder.mVideoTitle.setText(bodyBean.getTitle());
         itemViewHolder.mCardView.setOnClickListener(v -> {
-            String gotoX = bodyBean.getGotoX();
-            switch (gotoX) {
-                case TYPE_LIVE:
-//                    LivePlayerActivity.launch((Activity) mContext,
-//                            Integer.valueOf(bodyBean.getParam()), bodyBean.getTitle(),
-//                            bodyBean.getOnline(), bodyBean.getUpFace(), bodyBean.getUp(), 0);
+            String style = bodyBean.getStyle();
+            switch (style) {
+                case ConstantUtil.TYPE_ARTICLE:
+                    ContentDetailActivity.launch((Activity) mContext,
+                            bodyBean.getParam());
                     break;
-                case GOTO_BANGUMI:
+                case ConstantUtil.TYPE_MUSIC:
+                    ToastUtil.ShortToast("进入Music界面");
+                    break;
+                case ConstantUtil.TYPE_VIDEO:
+                    ToastUtil.ShortToast("进入Video界面");
+                    break;
+                case ConstantUtil.TYPE_AUDIO:
+                    ToastUtil.ShortToast("进入Audio界面");
                     break;
                 default:
-                    Integer contentId = 0;
-                    if (bodyBean.getParam() != "")
-                        contentId = Integer.parseInt(bodyBean.getParam());
                     ContentDetailActivity.launch((Activity) mContext,
-                            contentId, bodyBean.getCover());
+                            bodyBean.getParam());
 //                    TestActivity.launch((Activity) mContext,
 //                            contentId, bodyBean.getCover());
-//                    VideoDetailsActivity.launch((Activity) mContext,
-//                            Integer.parseInt(bodyBean.getParam()), bodyBean.getCover());
                     break;
             }
         });
 
         Log.i(TAG, "in HomeRecommendedSection:onBindItemViewHolder(): type=" + type);
         switch (type) {
-            case TYPE_LIVE:
+            case ConstantUtil.TYPE_MUSIC:
                 //直播item
                 itemViewHolder.mLiveLayout.setVisibility(View.VISIBLE);
-                itemViewHolder.mVideoLayout.setVisibility(View.GONE);
+                itemViewHolder.mIconLayout.setVisibility(View.GONE);
                 itemViewHolder.mBangumiLayout.setVisibility(View.GONE);
                 itemViewHolder.mLiveUp.setText(bodyBean.getUp());
                 itemViewHolder.mLiveOnline.setText(String.valueOf(bodyBean.getOnline()));
                 break;
-            case TYPE_BANGUMI:
+            case ConstantUtil.TYPE_VIDEO:
                 // 番剧item
                 itemViewHolder.mLiveLayout.setVisibility(View.GONE);
-                itemViewHolder.mVideoLayout.setVisibility(View.GONE);
+                itemViewHolder.mIconLayout.setVisibility(View.GONE);
                 itemViewHolder.mBangumiLayout.setVisibility(View.VISIBLE);
                 itemViewHolder.mBangumiUpdate.setText(bodyBean.getDesc1());
                 break;
@@ -142,15 +150,15 @@ public class HomeRecommendedSection extends StatelessSection {
                 layoutParams.height = DisplayUtil.dp2px(mContext, 200f);
                 itemViewHolder.mCardView.setLayoutParams(layoutParams);
                 itemViewHolder.mLiveLayout.setVisibility(View.GONE);
-                itemViewHolder.mVideoLayout.setVisibility(View.GONE);
+                itemViewHolder.mIconLayout.setVisibility(View.GONE);
                 itemViewHolder.mBangumiLayout.setVisibility(View.GONE);
                 break;
             default:
                 itemViewHolder.mLiveLayout.setVisibility(View.GONE);
                 itemViewHolder.mBangumiLayout.setVisibility(View.GONE);
-                itemViewHolder.mVideoLayout.setVisibility(View.VISIBLE);
-                itemViewHolder.mVideoPlayNum.setText(bodyBean.getPlay());
-                itemViewHolder.mVideoReviewCount.setText(bodyBean.getDanmaku());
+                itemViewHolder.mIconLayout.setVisibility(View.VISIBLE);
+//                itemViewHolder.mVideoPlayNum.setText(bodyBean.getPlay());
+//                itemViewHolder.mVideoReviewCount.setText(bodyBean.getDanmaku());
                 break;
         }
     }
@@ -172,12 +180,12 @@ public class HomeRecommendedSection extends StatelessSection {
 //                new Intent(mContext, OriginalRankActivity.class)));
         Log.i(TAG, "in HomeRecommendedSection:onBindHeaderViewHolder(): type=" + type);
         switch (type) {
-            case TYPE_RECOMMENDED:
+            case ConstantUtil.TYPE_ARTICLE:
                 headerViewHolder.mTypeMore.setVisibility(View.GONE);
                 headerViewHolder.mTypeRankBtn.setVisibility(View.VISIBLE);
                 headerViewHolder.mAllLiveNum.setVisibility(View.GONE);
                 break;
-            case TYPE_LIVE:
+            case ConstantUtil.TYPE_MUSIC:
                 headerViewHolder.mTypeRankBtn.setVisibility(View.GONE);
                 headerViewHolder.mTypeMore.setVisibility(View.VISIBLE);
                 headerViewHolder.mAllLiveNum.setVisibility(View.VISIBLE);
@@ -203,7 +211,7 @@ public class HomeRecommendedSection extends StatelessSection {
      */
     private void setTypeIcon(HeaderViewHolder headerViewHolder) {
         switch (title) {
-            case "热门焦点":
+            case "推荐文章":
                 headerViewHolder.mTypeImg.setImageResource(icons[0]);
                 break;
             case "正在直播":
@@ -275,13 +283,13 @@ public class HomeRecommendedSection extends StatelessSection {
 //        footViewHolder.mBangumiTimelineBtn.setOnClickListener(v -> mContext.startActivity(
 //                new Intent(mContext, BangumiScheduleActivity.class)));
         switch (type) {
-            case TYPE_RECOMMENDED:
+            case ConstantUtil.TYPE_ARTICLE:
                 footViewHolder.mMoreBtn.setVisibility(View.GONE);
                 footViewHolder.mRefreshLayout.setVisibility(View.GONE);
                 footViewHolder.mBangumiLayout.setVisibility(View.GONE);
                 footViewHolder.mRecommendRefreshLayout.setVisibility(View.VISIBLE);
                 break;
-            case TYPE_BANGUMI:
+            case ConstantUtil.TYPE_VIDEO:
                 footViewHolder.mMoreBtn.setVisibility(View.GONE);
                 footViewHolder.mRefreshLayout.setVisibility(View.GONE);
                 footViewHolder.mRecommendRefreshLayout.setVisibility(View.GONE);
@@ -324,18 +332,31 @@ public class HomeRecommendedSection extends StatelessSection {
     static class ItemViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.card_view)
         CardView mCardView;
-        @BindView(R.id.video_preview)
+        @BindView(R.id.article_title)
+        TextView mArticleTitle;
+        @BindView(R.id.author_name)
+        TextView mAuthorName;
+        @BindView(R.id.article_title_image)
         ImageView mVideoImg;
-        @BindView(R.id.video_title)
-        TextView mVideoTitle;
-        @BindView(R.id.video_play_num)
-        TextView mVideoPlayNum;
-        @BindView(R.id.video_review_count)
-        TextView mVideoReviewCount;
+        @BindView(R.id.article_extract)
+        TextView mArticleExtract;
+        @BindView(R.id.icon_like)
+        ImageView mLikeIcon;
+        @BindView(R.id.like_num)
+        TextView mLikeNum;
+        @BindView(R.id.space)
+        Space mSpace;
+        @BindView(R.id.icon_main_item_share)
+        ImageView mItemShare;
+
+        //        @BindView(R.id.video_play_num)
+//        TextView mVideoPlayNum;
+//        @BindView(R.id.video_review_count)
+//        TextView mVideoReviewCount;
         @BindView(R.id.layout_live)
         RelativeLayout mLiveLayout;
-        @BindView(R.id.layout_video)
-        LinearLayout mVideoLayout;
+        @BindView(R.id.layout_icons)
+        RelativeLayout mIconLayout;
         @BindView(R.id.item_live_up)
         TextView mLiveUp;
         @BindView(R.id.item_live_online)

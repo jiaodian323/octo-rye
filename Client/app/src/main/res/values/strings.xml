@@ -5,6 +5,10 @@
     <string name="title_bookstore">书店</string>
     <string name="title_my">我</string>
     <string name="default_content_title">文章</string>
+    <string name="author_section">作者</string>
+    <string name="focus_on">+关注</string>
+    <string name="focusing">已关注</string>
+    <string name="authorName_prefix">文/</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

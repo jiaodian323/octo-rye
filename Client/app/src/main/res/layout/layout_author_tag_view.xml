@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/author_tag_view_height"
+    android:minWidth="@dimen/author_info_min_width"
+    android:layout_marginBottom="@dimen/touch_raise"
+    android:clickable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <com.justnd.octoryeclient.widget.customview.CircleImageView
+        android:id="@+id/author_avatar"
+        android:layout_width="@dimen/author_avatar_size"
+        android:layout_height="@dimen/author_avatar_size"
+        android:layout_margin="@dimen/author_avatar_margin" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/author_info_layout_margin_start"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/author_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/author_info_name_size"
+            android:text="刘德华"/>
+
+        <TextView
+            android:id="@+id/author_intro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/author_info_layout_margin_top"
+            android:textSize="@dimen/author_info_intro_size"
+            android:textColor="@color/font_tint"
+            android:text="其实我是一个演员" />
+
+    </LinearLayout>
+
+    <!--填充TextView至屏幕最右-->
+    <View android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/focus"
+        android:layout_width="@dimen/focus_width"
+        android:layout_height="@dimen/focus_height"
+        android:gravity="center"
+        android:background="@drawable/shape_textview_divider"
+        android:textSize="@dimen/author_info_intro_size"
+        android:text="@string/focus_on" />
+
+</LinearLayout>
+

@@ -18,8 +18,10 @@ import java.sql.Clob;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import javax.annotation.Resource;
 
@@ -34,6 +36,7 @@ import com.justnd.octoryeserver.dao.impl.ArticleDaoHibernate4;
 import com.justnd.octoryeserver.dao.impl.AuthorDaoHibernate4;
 import com.justnd.octoryeserver.domain.Article;
 import com.justnd.octoryeserver.domain.Author;
+import com.justnd.octoryeserver.domain.ContentType;
 
 /**
  * @ClassName: AritcleDaoTest
@@ -134,11 +137,9 @@ public class ArticleDaoTest extends AbstractJUnit4SpringContextTests {
 	@Test
 	public void updateTest() {
 		Article article = new Article();
-		article.setId(12);
-		article.setTitle("被修改的Title");
-		article.setAuthor(authorDaoTest.get(Author.class, 26));
-		article.setContent("被修改的谢霆锋的第50次");
-		// article.setHeadImage("被修改的http://url");
+		article.setId(20);
+		String str = getStringFromFile("test3.txt");
+		article.setContent(str);
 
 		articleDaoTest.update(article);
 	}
@@ -160,6 +161,23 @@ public class ArticleDaoTest extends AbstractJUnit4SpringContextTests {
 		List<Article> allArticles = articleDaoTest.findAll(Article.class);
 
 		printArticleList(allArticles);
+	}
+	
+	@Test
+	public void updateAllTest() {
+		Random rand = new Random();
+		
+		List<Article> allArticles = articleDaoTest.findAll(Article.class);
+		
+		for (int i = 0; i < allArticles.size(); i++) {
+			int typeInt = rand.nextInt(4);
+			ContentType type = getContentType(typeInt);
+			
+			Article article = allArticles.get(i);
+			article.setType(type);
+			
+			articleDaoTest.update(article);
+		}
 	}
 
 	@Test
@@ -217,6 +235,21 @@ public class ArticleDaoTest extends AbstractJUnit4SpringContextTests {
 		}
 
 		return sb;
+	}
+	
+	public ContentType getContentType(int i) {
+		switch (i) {
+		case 0:
+			return ContentType.Article;
+		case 1:
+			return ContentType.Music;
+		case 2:
+			return ContentType.Video;
+		case 3:
+			return ContentType.Audio;
+		default:
+			return ContentType.Article;
+		}
 	}
 
 	/**

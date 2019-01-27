@@ -14,6 +14,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -48,18 +50,22 @@ public class Article implements Serializable {
 	@Column(name = "article_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-
+	
+	@Column(name = "content_type")
+    @Enumerated(EnumType.STRING)
+	private ContentType type;
+	
 	/**
 	 * @Fields title : TODO 文章标题
 	 */
-	@Column(name = "title", nullable = false, length = 200)
+	@Column(name = "title", length = 200)
 	private String title;
 
 	/**
 	 * @Fields author : TODO 作者
 	 */
 	@ManyToOne(targetEntity = Author.class)
-	@JoinColumn(name = "author_id", nullable=false)
+	@JoinColumn(name = "author_id")
 	@Cascade(CascadeType.MERGE)
 	private Author author;
 
@@ -98,14 +104,17 @@ public class Article implements Serializable {
 	 */
 	private String tags;
 	
+	@Column(name = "extract")
+	private String extract;
+	
 	/** 
 	* @Fields pageviewCount : TODO 
 	*/ 
-	@Column(name = "pageviewCount", nullable = false, columnDefinition="INT default 0")
+	@Column(name = "pageviewCount", columnDefinition="INT default 0")
 	private Integer pageviewCount;
 	
-	@Column(name = "likes", nullable = false, columnDefinition="INT default 0")
-	private Integer likes;
+	@Column(name = "likeNum", columnDefinition="INT default 0")
+	private Integer likeNum;
 	
 	/**
 	 * @return the id
@@ -127,6 +136,20 @@ public class Article implements Serializable {
 	 */
 	public String getTitle() {
 		return title;
+	}
+
+	/**
+	 * @return the type
+	 */
+	public ContentType getType() {
+		return type;
+	}
+
+	/**
+	 * @param type the type to set
+	 */
+	public void setType(ContentType type) {
+		this.type = type;
 	}
 
 	/**
@@ -258,6 +281,20 @@ public class Article implements Serializable {
 	}
 
 	/**
+	 * @return the extract
+	 */
+	public String getExtract() {
+		return extract;
+	}
+
+	/**
+	 * @param extract the extract to set
+	 */
+	public void setExtract(String extract) {
+		this.extract = extract;
+	}
+
+	/**
 	 * @return the pageviewCount
 	 */
 	public Integer getPageviewCount() {
@@ -272,17 +309,17 @@ public class Article implements Serializable {
 	}
 
 	/**
-	 * @return the likes
+	 * @return the likeNum
 	 */
-	public Integer getLikes() {
-		return likes;
+	public Integer getLikeNum() {
+		return likeNum;
 	}
 
 	/**
-	 * @param likes the likes to set
+	 * @param likeNum the likeNum to set
 	 */
-	public void setLikes(Integer likes) {
-		this.likes = likes;
+	public void setLikeNum(Integer likeNum) {
+		this.likeNum = likeNum;
 	}
 
 	/**

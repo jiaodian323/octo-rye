@@ -7,16 +7,32 @@
     <dimen name="default_title_margin">25dp</dimen>
     <dimen name="appbar_parallax_max_height">226dp</dimen>
     <dimen name="head_image_bg_height">128dp</dimen>
+
+    <!--Default-->
+    <dimen name="default_small_text_size">14sp</dimen>
+
+    <!--main activity:CardView-->
+    <dimen name="default_recommend_title_size">18sp</dimen>
+    <dimen name="default_recommend_title_margin">10dp</dimen>
+    <dimen name="default_recommend_authorName_margin">5dp</dimen>
+    <dimen name="default_recommend_imageView_margin">10dp</dimen>
+    <dimen name="default_recommend_extract_margin">10dp</dimen>
+    <dimen name="default_cardView_padding">15dp</dimen>
+    <dimen name="default_cardView_margin">8dp</dimen>
+
+    <!--content detail activity-->
     <dimen name="default_detail_title">25sp</dimen>
     <dimen name="default_detail_author">13sp</dimen>
     <dimen name="default_detail_extract">14sp</dimen>
     <dimen name="default_detail_content">16sp</dimen>
 
+    <dimen name="detail_section_title">13sp</dimen>
+    <dimen name="detail_section_line">70dp</dimen>
+
     <!--open source-->
     <dimen name="default_general_margin">8dp</dimen>
     <dimen name="default_authorToExtract_margin">20dp</dimen>
     <dimen name="default_extract_padding">8dp</dimen>
-    <dimen name="default_small_text_size">14sp</dimen>
     <dimen name="default_tiny_padding">5dp</dimen>
     <dimen name="default_tiny_text_size">12sp</dimen>
     <dimen name="default_tiny_margin">3dp</dimen>
@@ -29,7 +45,9 @@
     <dimen name="home_recommend_foot_refresh_margin">7dp</dimen>
     <dimen name="home_recommend_foot_bangumi_layout_height">40dp</dimen>
 
-    <dimen name="video_info_mini_icons_size">12dp</dimen>
+    <dimen name="recommend_info_mini_icons_size">25dp</dimen>
+    <dimen name="recommend_info_space_size">20dp</dimen>
+    <dimen name="recommend_info_default_icons_margin">10dp</dimen>
     <dimen name="video_info_count_text_margin_start">4dp</dimen>
 
     <!-- Card -->
@@ -42,11 +60,24 @@
     <dimen name="card_title_margin">5dp</dimen>
     <dimen name="title_margin_small">8dp</dimen>
     <dimen name="card_charging_width">110dp</dimen>
-    <dimen name="card_default_height">450dp</dimen>
+    <dimen name="card_default_height">465dp</dimen>
     <dimen name="card_image_default_height">250dp</dimen>
 
     <dimen name="app_bar_default_elevation">0dp</dimen>
     <dimen name="home_topic_head_layout_height">40dp</dimen>
     <dimen name="general_banner_height">126dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+
+    <!-- AuthorTagView -->
+    <dimen name="author_tag_view_height">70dp</dimen>
+    <dimen name="author_avatar_size">38dp</dimen>
+    <dimen name="author_avatar_margin">4dp</dimen>
+    <dimen name="author_avatar_small_size">30dp</dimen>
+    <dimen name="author_info_min_width">220dp</dimen>
+    <dimen name="author_info_layout_margin_top">3dp</dimen>
+    <dimen name="author_info_layout_margin_start">6dp</dimen>
+    <dimen name="author_info_name_size">14sp</dimen>
+    <dimen name="author_info_intro_size">12sp</dimen>
+    <dimen name="focus_width">50dp</dimen>
+    <dimen name="focus_height">35dp</dimen>
 </resources>

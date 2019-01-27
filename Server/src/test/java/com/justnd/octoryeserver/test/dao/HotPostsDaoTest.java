@@ -27,12 +27,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.justnd.octoryeserver.beans.RecommendBean;
 import com.justnd.octoryeserver.dao.impl.ArticleDaoHibernate4;
 import com.justnd.octoryeserver.dao.impl.AuthorDaoHibernate4;
 import com.justnd.octoryeserver.dao.impl.HotPostsDaoHibernate4;
 import com.justnd.octoryeserver.domain.Article;
 import com.justnd.octoryeserver.domain.HotPosts;
-import com.justnd.octoryeserver.vo.RecommendBean;
 
 /**
  * @ClassName: HotPostsDaoTest
@@ -67,7 +67,7 @@ public class HotPostsDaoTest extends AbstractJUnit4SpringContextTests {
 		Date timeA;
 		try {
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-			timeA = df.parse("2019-1-13");
+			timeA = df.parse("2019-2-15");
 			hotPost.setPostDate(timeA);
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -178,8 +178,8 @@ public class HotPostsDaoTest extends AbstractJUnit4SpringContextTests {
 					body.setStyle("gm_av");
 					body.setUp(article.getAuthor().getAuthorName());
 					body.setCover(article.getHeadImage());
-					body.setPlay(article.getPageviewCount().toString());
-					body.setDanmaku(article.getLikes().toString());
+					body.setPageViewNum(article.getPageviewCount());
+					body.setDanmaku(article.getLikeNum().toString());
 
 					resultBodyBeans.add(body);
 				}

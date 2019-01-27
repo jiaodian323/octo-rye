@@ -4,51 +4,125 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/card_margin"
+    android:layout_marginTop="@dimen/default_cardView_margin"
     android:clickable="true"
     android:foreground="?attr/selectableItemBackground"
-    app:cardBackgroundColor="@color/background_light"
+    app:cardBackgroundColor="@color/cardView_background"
     app:cardCornerRadius="@dimen/card_corner_radius"
     app:cardElevation="@dimen/card_elevation">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/default_cardView_padding"
+        android:paddingRight="@dimen/default_cardView_padding"
         android:minHeight="@dimen/card_default_height">
 
+        <TextView
+            android:id="@+id/article_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_recommend_title_margin"
+            android:layout_marginBottom="@dimen/default_recommend_title_margin"
+            android:textSize="@dimen/default_recommend_title_size"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/author_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/default_recommend_authorName_margin"
+            android:layout_below="@+id/article_title"
+            android:textColor="@color/font_normal"
+            android:textSize="@dimen/default_small_text_size" />
+
         <ImageView
-            android:id="@+id/video_preview"
+            android:id="@+id/article_title_image"
             android:layout_width="match_parent"
             android:layout_height="@dimen/card_image_default_height"
-            android:scaleType="center" />
+            android:scaleType="center"
+            android:layout_below="@+id/author_name" />
 
         <LinearLayout
-            android:id="@+id/layout_title"
+            android:id="@+id/layout_extract"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/video_preview"
+            android:layout_below="@+id/article_title_image"
             android:orientation="horizontal"
-            android:padding="@dimen/card_title_margin">
+            android:layout_marginTop="@dimen/default_recommend_title_margin"
+            android:layout_marginBottom="@dimen/default_recommend_title_margin">
 
             <TextView
-                android:id="@+id/video_title"
+                android:id="@+id/article_extract"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:typeface="serif"
                 android:ellipsize="end"
+                android:letterSpacing="0.05"
                 android:lineSpacingExtra="2dp"
-                android:maxLines="2"
+                android:maxLines="3"
                 android:textColor="@color/font_normal"
                 android:textSize="@dimen/default_small_text_size" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/layout_video"
+        <RelativeLayout
+            android:id="@+id/layout_icons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
             android:paddingBottom="@dimen/default_tiny_padding">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentEnd="true">
+
+                <ImageView
+                    android:id="@+id/icon_like"
+                    android:layout_width="@dimen/recommend_info_mini_icons_size"
+                    android:layout_height="@dimen/recommend_info_mini_icons_size"
+                    android:src="@drawable/ic_like_border"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/like_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/recommend_info_mini_icons_size"
+                    android:gravity="center_vertical"
+                    android:text="0"
+                    android:textColor="@color/font_normal"
+                    android:textSize="@dimen/default_small_text_size" />
+
+                <Space
+                    android:id="@+id/space"
+                    android:layout_width="@dimen/recommend_info_space_size"
+                    android:layout_height="@dimen/recommend_info_mini_icons_size">
+                </Space>
+
+                <ImageView
+                    android:id="@+id/icon_main_item_share"
+                    android:layout_width="@dimen/recommend_info_mini_icons_size"
+                    android:layout_height="@dimen/recommend_info_mini_icons_size"
+                    android:paddingEnd="@dimen/recommend_info_default_icons_margin"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/ic_share"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+
+            <!--<TextView
+                android:id="@+id/item_live_online"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/video_info_count_text_margin_start"
+                android:drawablePadding="@dimen/default_tiny_margin"
+                android:drawableStart="@drawable/ic_watching"
+                android:gravity="center"
+                android:textColor="@color/black_alpha_45"
+                android:textSize="@dimen/default_tiny_text_size" />
 
             <ImageView
                 android:layout_width="@dimen/video_info_mini_icons_size"
@@ -82,8 +156,8 @@
                 android:layout_marginStart="@dimen/video_info_count_text_margin_start"
                 android:gravity="center"
                 android:textColor="@color/black_alpha_45"
-                android:textSize="@dimen/default_tiny_text_size" />
-        </LinearLayout>
+                android:textSize="@dimen/default_tiny_text_size" />-->
+        </RelativeLayout>
 
 
         <RelativeLayout

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="?dialogPreferredPadding"
+    android:paddingRight="?dialogPreferredPadding">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/author_section"
+        android:textSize="@dimen/detail_section_title" />
+
+    <FrameLayout
+        android:layout_width="@dimen/detail_section_line"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_general_margin"
+        android:background="@drawable/shape_detail_section_line"></FrameLayout>
+
+</LinearLayout>
