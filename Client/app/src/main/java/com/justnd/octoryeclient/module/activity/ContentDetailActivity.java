@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +23,8 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class ContentDetailActivity extends RxBaseActivity {
+    @BindView(R.id.content_title_toolbar)
+    Toolbar mToolbar;
     @BindView(R.id.collapsing_toolbar)
     CollapsingToolbarLayout mCollapsingtoolbar;
     @BindView(R.id.content_title_image)
@@ -59,7 +63,11 @@ public class ContentDetailActivity extends RxBaseActivity {
 
     @Override
     public void initToolBar() {
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);//左侧添加一个默认的返回图标
+        getSupportActionBar().setHomeButtonEnabled(true); //设置返回键可用
 
+        mToolbar.setNavigationOnClickListener(v -> finish());
     }
 
     @Override
@@ -92,8 +100,9 @@ public class ContentDetailActivity extends RxBaseActivity {
                 .dontAnimate()
                 .into(mContentTitleImage);
 
-        mAuthorTagView.setUpWithInfo(ContentDetailActivity.this, "刘德华", 666, detailBean
-                .getHeadImage());
+        mAuthorTagView.setUpWithInfo(ContentDetailActivity.this, detailBean.getAuthor().getId(),
+                detailBean.getAuthor().getName(), detailBean.getAuthor().getIntroduction(),
+                detailBean.getHeadImage());
         mCollapsingtoolbar.setTitle(getString(R.string.default_content_title));
     }
 

@@ -29,7 +29,7 @@
 
     <!--open source-->
     <color name="top_bar">#3B3B3B</color>
-    <color name="main_background">#D1EEEE</color>
+    <color name="main_background">#FFFFFF</color>
 
     <!--字体-->
     <color name="font_normal">#555555</color>
@@ -37,11 +37,16 @@
 
     <!--图标-->
     <color name="icon_normal">#272438</color>
+    <color name="wechat_color">#228B22</color>
+
+    <!--EditText-->
+    <color name="edit_text_normal">#A6A6A6</color>
+    <color name="edit_text_activated">#696969</color>
 
     <color name="black_80">#222222</color>
     <color name="black_alpha_45">#71000000</color>
 
-    <color name="cardView_background">#FFFAF0</color>
+    <color name="cardView_background">#fffaf0</color>
     <color name="card_view_background">@color/white</color>
 
     <color name="gray_80">#BEBBB4</color>
@@ -52,7 +57,8 @@
     <color name="white">#FFFFFF</color>
 
     <color name="yellow_50">#FFD11B</color>
-    <color name="primary_material_dark">#2196f3</color>
+    <color name="primary_material_dark">#cddc39</color>
     <color name="background_light">#f8f4f4</color>
+    <color name="colorBackground">#2196f3</color>
 
 </resources>

@@ -5,12 +5,13 @@
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/selector_bottom_navi_home"
-        android:title="@string/title_home" />
+        android:title="@string/title_home"
+        android:checked="true"/>
 
     <item
-        android:id="@+id/navigation_bookstore"
-        android:icon="@drawable/selector_bottom_navi_bookstore"
-        android:title="@string/title_bookstore" />
+        android:id="@+id/navigation_discovery"
+        android:icon="@drawable/selector_bottom_navi_discovery"
+        android:title="@string/title_discovery" />
 
     <item
         android:id="@+id/navigation_my"

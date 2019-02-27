@@ -42,8 +42,8 @@
             <android.support.v7.widget.Toolbar
                 android:id="@+id/content_title_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:minHeight="?attr/actionBarSize"
+                android:layout_height="@dimen/default_toolbar_height"
+                android:minHeight="@dimen/default_toolbar_height"
                 app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
@@ -55,20 +55,20 @@
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/scrollView"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_scrollFlags="scroll">
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/content_title_tv"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_general_margin"
                 android:paddingLeft="?dialogPreferredPadding"
@@ -79,7 +79,7 @@
 
             <TextView
                 android:id="@+id/author_tv"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_general_margin"
                 android:paddingLeft="?dialogPreferredPadding"
@@ -107,14 +107,14 @@
             <TextView
                 android:id="@+id/article_content_tv"
                 style="@style/TextAppearance.AppCompat.Subhead"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_general_margin"
                 android:paddingLeft="?dialogPreferredPadding"
                 android:paddingRight="?dialogPreferredPadding"
                 android:paddingTop="@dimen/abc_dialog_padding_top_material"
                 android:typeface="serif"
-                android:textSize="@dimen/default_detail_content"
+                android:textSize="@dimen/default_text_size"
                 android:lineSpacingMultiplier="1.7"
                 android:letterSpacing="0.05" />
 

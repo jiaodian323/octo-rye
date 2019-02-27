@@ -25,8 +25,7 @@
             android:id="@+id/author_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/author_info_name_size"
-            android:text="刘德华"/>
+            android:textSize="@dimen/author_info_name_size" />
 
         <TextView
             android:id="@+id/author_intro"
@@ -34,8 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/author_info_layout_margin_top"
             android:textSize="@dimen/author_info_intro_size"
-            android:textColor="@color/font_tint"
-            android:text="其实我是一个演员" />
+            android:textColor="@color/font_tint" />
 
     </LinearLayout>
 

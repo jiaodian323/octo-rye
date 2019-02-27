@@ -7,7 +7,7 @@
     android:layout_marginTop="@dimen/default_cardView_margin"
     android:clickable="true"
     android:foreground="?attr/selectableItemBackground"
-    app:cardBackgroundColor="@color/cardView_background"
+    app:cardBackgroundColor="@color/color_white"
     app:cardCornerRadius="@dimen/card_corner_radius"
     app:cardElevation="@dimen/card_elevation">
 

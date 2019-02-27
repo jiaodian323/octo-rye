@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_white"
+    tools:context=".module.user.LoginModeFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:divider="@drawable/shape_spacer_medium"
+        android:showDividers="middle">
+
+        <TextView
+            android:id="@+id/login_mode_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="?dialogPreferredPadding"
+            android:paddingRight="?dialogPreferredPadding"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/login_mode_detail"
+            android:textColor="@color/font_normal"
+            android:textSize="@dimen/default_small_text_size"
+            android:lineSpacingMultiplier="1.3"
+            android:letterSpacing="0.02"/>
+
+        <Button
+            android:id="@+id/wechat_login"
+            android:layout_width="@dimen/login_mode_btn_size"
+            android:layout_height="@dimen/login_mode_btn_size"
+            android:layout_marginTop="@dimen/login_mode_extra_margin"
+            android:background="@drawable/shape_circle_wechat_btn"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/wechat_login_text"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/login_mode_btn_text_size"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/phone_sign_up"
+            android:layout_width="@dimen/login_mode_btn_size"
+            android:layout_height="@dimen/login_mode_btn_size"
+            android:background="@drawable/shape_circle_phone_sign_up_btn"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/phone_sign_up_text"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/login_mode_btn_text_size"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/other_login_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/login_mode_extra_margin"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/other_login_mode_text"
+            android:textColor="@color/color_black"
+            android:textSize="@dimen/login_mode_btn_text_size" />
+
+    </LinearLayout>
+
+</RelativeLayout>

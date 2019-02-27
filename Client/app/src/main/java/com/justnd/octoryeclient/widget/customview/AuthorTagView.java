@@ -82,12 +82,18 @@ public class AuthorTagView extends FrameLayout {
         return this.mAuthorNameText.getText().toString();
     }
 
-    public void setUpWithInfo(Activity activity, String name, int mid, String avatarUrl) {
+    public void setAuthorIntro(String text) {
+        mAuthorIntroText.setText(text);
+    }
+
+    public void setUpWithInfo(Activity activity, int mid, String name, String intro, String
+            avatarUrl) {
         this.activity = activity;
         this.name = name;
         this.mid = mid;
         this.avatarUrl = avatarUrl;
         this.setAuthorName(name);
+        this.setAuthorIntro(intro);
         Glide.with(getContext())
                 .load(this.avatarUrl)
                 .centerCrop()

@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
-<title>《同人》后台管理系统</title>
+<title>《同人》</title>
 </head>
 <body>
 <%@include file="header.jsp"%> 
@@ -15,7 +15,7 @@
   <tr> 
 	<td colspan="3"> 
 	<br>
-	  <p align="center"><span class="pt11">该系统用于为同人客户端支持的服务器进行管理操作而设立。<br>
+	  <p align="center"><span class="pt11"><br>
 	  系统具有的功能有文章各信息编辑、录入数据库，广告信息编辑，管理分配数据资源等<br></span></p>	  
 	  <p align="center" class="pt11">现该系统为开发阶段……</p>
 	</td>

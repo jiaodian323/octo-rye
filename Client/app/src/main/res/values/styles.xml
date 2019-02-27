@@ -3,7 +3,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/primary_material_dark</item>
+        <item name="colorPrimary">@color/colorBackground</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:colorBackground">@color/background_light</item>
@@ -29,4 +29,13 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="CustomEditTextTheme" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@color/font_normal</item>
+        <item name="android:textColorHint">@color/edit_text_normal</item>
+        <item name="colorControlNormal">@color/edit_text_normal</item>
+        <item name="colorControlActivated">@color/edit_text_activated</item>
+        <item name="colorControlHighlight">@color/white</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
 </resources>

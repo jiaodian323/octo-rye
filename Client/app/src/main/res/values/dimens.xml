@@ -3,12 +3,15 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="app_bar_elevation">3dp</dimen>
-    <dimen name="default_toolbar_title">18sp</dimen>
-    <dimen name="default_title_margin">25dp</dimen>
     <dimen name="appbar_parallax_max_height">226dp</dimen>
     <dimen name="head_image_bg_height">128dp</dimen>
+    <dimen name="linearlayout_space_medium">20dp</dimen>
 
     <!--Default-->
+    <dimen name="default_toolbar_height">55dp</dimen>
+    <dimen name="default_toolbar_title">18sp</dimen>
+    <dimen name="default_title_margin">25dp</dimen>
+    <dimen name="default_text_size">16sp</dimen>
     <dimen name="default_small_text_size">14sp</dimen>
 
     <!--main activity:CardView-->
@@ -24,10 +27,23 @@
     <dimen name="default_detail_title">25sp</dimen>
     <dimen name="default_detail_author">13sp</dimen>
     <dimen name="default_detail_extract">14sp</dimen>
-    <dimen name="default_detail_content">16sp</dimen>
 
     <dimen name="detail_section_title">13sp</dimen>
     <dimen name="detail_section_line">70dp</dimen>
+
+    <!--login mode fragment-->
+    <dimen name="login_mode_btn_size">85dp</dimen>
+    <dimen name="login_mode_btn_text_size">16sp</dimen>
+    <dimen name="login_mode_extra_margin">15dp</dimen>
+
+    <!--sign up activity-->
+    <dimen name="sign_up_horizontal_margin">60dp</dimen>
+    <dimen name="sign_up_title_image_height">200dp</dimen>
+    <dimen name="next_button_text_size">18sp</dimen>
+    <dimen name="next_button_margin_top">50dp</dimen>
+    <dimen name="agreement_text_size">12sp</dimen>
+    <dimen name="drawable_padding_size">20dp</dimen>
+    <dimen name="send_auth_code_text_size">15sp</dimen>
 
     <!--open source-->
     <dimen name="default_general_margin">8dp</dimen>

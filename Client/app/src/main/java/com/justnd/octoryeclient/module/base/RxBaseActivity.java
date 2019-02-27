@@ -29,8 +29,6 @@ public abstract class RxBaseActivity extends RxAppCompatActivity {
         initViews(savedInstanceState);
         // 初始化ToolBar
         initToolBar();
-        // 适配沉浸式状态栏高度
-//        setStatusBar();
     }
 
 
@@ -94,37 +92,4 @@ public abstract class RxBaseActivity extends RxAppCompatActivity {
         super.onDestroy();
         bind.unbind();
     }
-
-    /**
-     * 适配沉浸式状态栏高度
-     */
-//    protected void setStatusBar() {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            final ViewGroup linear_bar = (ViewGroup) findViewById(R.id.bar_layout);
-//            final int statusHeight = getStatusBarHeight();
-//            linear_bar.post(new Runnable() {
-//                @Override
-//                public void run() {
-//                    int titleHeight = linear_bar.getHeight();
-//                    android.support.constraint.ConstraintLayout.LayoutParams params = (android
-//                            .support.constraint.ConstraintLayout.LayoutParams) linear_bar
-//                            .getLayoutParams();
-//                    params.height = statusHeight + titleHeight;
-//                    linear_bar.setLayoutParams(params);
-//                }
-//            });
-//        }
-//    }
-//
-//    /**
-//     * 获取状态栏的高度
-//     *
-//     * @return
-//     */
-//    protected int getStatusBarHeight() {
-//        Resources resources = this.getResources();
-//        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
-//        int height = resources.getDimensionPixelSize(resourceId);
-//        return height;
-//    }
 }

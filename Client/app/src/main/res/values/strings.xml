@@ -2,60 +2,41 @@
     <string name="app_name">同人</string>
     <string name="octorye_title">同人</string>
     <string name="title_home">首页</string>
-    <string name="title_bookstore">书店</string>
+    <string name="title_discovery">发现</string>
     <string name="title_my">我</string>
     <string name="default_content_title">文章</string>
     <string name="author_section">作者</string>
     <string name="focus_on">+关注</string>
     <string name="focusing">已关注</string>
     <string name="authorName_prefix">文/</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="exit_tip_text">再按一次退出</string>
+    <string name="wechat_login_text">微信\n登录</string>
+    <string name="phone_sign_up_text">手机\n注册</string>
+    <string name="other_login_mode_text">其他方式登录</string>
+    <string name="login_mode_detail">收藏你最喜欢的内容，分享给\n身边的人，关注优质作者</string>
 
     <!-- TODO: open source -->
-    <string name="rank">排行榜</string>
-    <string name="home_tab_more">更多</string>
     <string name="look_more">查看更多</string>
-    <string name="change_recommend">换一波推荐</string>
-    <string name="topic">话题</string>
-    <string name="goto_look">进去看看</string>
     <string name="title_activity_content_detail">ContentDetailActivity</string>
 
-    <!-- TODO: test-->
-    <string name="test_title">这是我的测试标题</string>
-    <string name="test_author">文/巴巴爸爸</string>
-    <string name="test_extract">在1月10日下午的红米新品发布会上，雷军撂下一句狠话：生死看淡，不服就干。
-                                   雷军霸气喊话友商华为荣耀：生死看淡，不服就干。</string>
-    <string name="test_content">喊话友商：不服就干嘛\n\n\n
-
-事情是这样的。\n
-
-1月3日小米公司宣布将1月10日召开全新独立品牌红米Redmi发布会。在宣布这件事的前一天，手机行业老将卢伟冰确定入职小米，担任副总裁并负责今后红米品牌的操盘。\n\n
-
-据雷军讲，为了这员老将，他足足挖了两年时间。\n
-
-这件事对小米来说是喜事，但对友商未必。\n
-
-从发布会现场放出的截图来看，雷军将枪口瞄准了华为的子品牌荣耀。\n
-
-2013年的小米风头正盛，荣耀也是从那年开始，自华为独立出来成为一个单独品牌，主攻互联网渠道。\n
-
-五年前，华为荣耀向小米看齐，五年后红米品牌独立，被业界解读为是向华为荣耀看齐。\n
-
-“狠人”雷军，急了\n\n
-
-红米新品牌发布会现场打出“友商急了”\n
-
-有媒体报道称，荣耀产品副总裁熊军民回应红米品牌独立时表示，荣耀与小米的竞争早就已经结束，无论是整体销量，还是中高端产品线的市场表现，荣耀早就已经遥遥领先。熊军民还说，“如果友商愿意跟随，我们非常欢迎。”\n\n
-
-除了这件事，双方还就“性价比”与小米这次的新品红米Note 7所搭载的“4800万像素摄像头”在网上有过争执。在红米Note 7的新品发布会上，小米毫不掩饰的把包括荣耀V20在内的多款友商的竞品拿出来，做参数对比。\n
-
-如果当时没看直播的朋友可以去视频平台上搜下当时发布会的回顾，不夸张的说，全方位无死角的在怼友商。\n
-
-“主要是友商的态度把我弄急了，他们出了一堆的稿子，看了我挺烦。所以那天真的给我弄急了，生死看淡，不服就干，有本事就干嘛。”聊起这事，雷军在会后的媒体群访上情绪依然激动。\n
-
-“还有你是不是真正的性价比，我是真的买了两款手机的，真的学习了一下。如果大家想学习，我们可以现场比一下，不怕，就拿来比一下，不要渲染图。”雷军说到这的时候，有媒体朋友插了一句：“您一急感觉挺不像您了。”\n</string>
     <string name="title_activity_test">TestActivity</string>
+    <string name="title_activity_login">登录</string>
+
+    <!-- Strings related to sing up -->
+    <string name="prompt_phone_number">电话号码</string>
+    <string name="prompt_auth_code">验证码</string>
+    <string name="action_next_step">下一步</string>
+    <string name="action_sign_in_short">确定</string>
+    <string name="error_phone_number_null">手机号码不能为空</string>
+    <string name="error_invalid_phone_number">手机号码格式错误</string>
+    <string name="error_invalid_password">密码不符合规则</string>
+    <string name="error_incorrect_auth_code">验证码错误</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="send_auth_code">发送验证码</string>
+    <string name="resend_after_seconds">秒后重发</string>
+    <string name="user_service_agreement_text">注册即代表您同意用户服务协议</string>
 
 </resources>
