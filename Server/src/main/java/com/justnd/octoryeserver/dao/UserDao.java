@@ -27,5 +27,13 @@ public interface UserDao extends BaseDao<User> {
 	*/
 	User findByUsername(String username);
 	
-	
+	/** 
+	* @Title: findByPhoneNumber 
+	* @Description: TODO 根据手机号查找是否已经注册
+	* @param @param phoneNumber
+	* @param @return
+	* @return boolean
+	* @throws 
+	*/
+	User findByPhoneNumber(String phoneNumber);
 }

@@ -6,7 +6,7 @@
 * @EMail jiaodian822@163.com 
 * @date 2019年1月9日 下午10:19:08  
 */
-package com.justnd.octoryeserver.utils;
+package com.justnd.octoryeserver.util;
 
 import java.io.IOException;
 

@@ -5,7 +5,6 @@ import com.justnd.octoryeclient.entity.recommond.RecommendBannerInfo;
 import com.justnd.octoryeclient.entity.recommond.RecommendInfo;
 
 import retrofit2.http.GET;
-import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
 

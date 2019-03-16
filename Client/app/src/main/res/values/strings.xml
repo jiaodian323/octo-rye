@@ -39,4 +39,7 @@
     <string name="resend_after_seconds">秒后重发</string>
     <string name="user_service_agreement_text">注册即代表您同意用户服务协议</string>
 
+    <!--Exception Messages-->
+    <string name="error_server_connect">服务器连接错误</string>
+
 </resources>

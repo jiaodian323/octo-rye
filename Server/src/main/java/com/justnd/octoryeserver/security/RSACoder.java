@@ -2,6 +2,7 @@ package com.justnd.octoryeserver.security;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -30,7 +31,7 @@ import javax.crypto.NoSuchPaddingException;
 * @date 2019年2月26日 下午8:19:16 
 *  
 */
-public class RSAUtil {
+public class RSACoder {
 	
 	/** 
 	* @Fields HEX_CHAR : TODO 字节数据转字符串专用集合
@@ -42,6 +43,11 @@ public class RSAUtil {
 	* @Fields RSA_ALGORITHM : TODO RSA非对称加密算法
 	*/ 
 	private static final String RSA_ALGORITHM = "RSA";
+	
+	/** 
+	* @Fields KEYSTORE_TYPE : TODO KeyStrore类型，即密钥库类型
+	*/ 
+	private static final String KEYSTORE_TYPE = "JKS";
 	
 	/** 
 	* @Fields KEYSIZE : TODO 密钥长度
@@ -94,19 +100,43 @@ public class RSAUtil {
 			e.printStackTrace();
 		}
 	}
+	
+//  添加CA认证时，需要抛弃原代码，并使用此部分代码，此部分代码为KeyStore存储的标准写法，
+//	需要设置KeyStore内容别名和访问密码等，并需要存储证书链，否则现有仅保存公钥和私钥的方式并不是一种标准的且更安全的方式
+//	private void savePublicKeyToFile(String filePath, String fileName, String publicKeyStr) {
+//		try {
+//			FileWriter publicFW = new FileWriter(filePath + "/publicKey.keystore");
+//			BufferedWriter publicBW = new BufferedWriter(publicFW);
+//			publicBW.write(publicKeyStr);
+//			publicBW.flush();
+//			publicBW.close();
+//			publicFW.close();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
+//	
+//	private void savePrivateKeyToFile(String filePath, String password, PrivateKey privateKey) {
+//		try {
+//			KeyStore ks = KeyStore.getInstance(KEYSTORE_TYPE);
+//			KeyStore.ProtectionParameter protParam = new KeyStore.PasswordProtection(password.toCharArray());
+//			KeyStore.PrivateKeyEntry pkEntry = new KeyStore.PrivateKeyEntry(privateKey, chain);
+//		} catch (KeyStoreException e) {
+//			e.printStackTrace();
+//		}
+//	}
  
 	/**
-	 * 从文件中输入流中加载公钥
+	 * 从文件中输入流中加载公钥(读取keystore文件方式有问题，应使用KeyStore类，需要重构)
 	 * 
 	 * @param in
 	 *            公钥输入流
 	 * @throws Exception
 	 *             加载公钥时产生的异常
 	 */
-	public static String loadPublicKeyByFile(String path) throws Exception {
+	public static String loadKeyStrByFile(String path) throws Exception {
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(path
-					+ "/publicKey.keystore"));
+			BufferedReader br = new BufferedReader(new FileReader(path));
 			String readLine = null;
 			StringBuilder sb = new StringBuilder();
 			while ((readLine = br.readLine()) != null) {
@@ -115,9 +145,9 @@ public class RSAUtil {
 			br.close();
 			return sb.toString();
 		} catch (IOException e) {
-			throw new Exception("公钥数据流读取错误");
+			throw new Exception("数据流读取错误");
 		} catch (NullPointerException e) {
-			throw new Exception("公钥输入流为空");
+			throw new Exception("输入流为空");
 		}
 	}
  
@@ -132,7 +162,7 @@ public class RSAUtil {
 	public static RSAPublicKey loadPublicKeyByStr(String publicKeyStr)
 			throws Exception {
 		try {
-			byte[] buffer = Base64.getDecoder().decode(publicKeyStr);
+			byte[] buffer =Base64.getDecoder().decode(publicKeyStr);
 			KeyFactory keyFactory = KeyFactory.getInstance(RSA_ALGORITHM);
 			X509EncodedKeySpec keySpec = new X509EncodedKeySpec(buffer);
 			return (RSAPublicKey) keyFactory.generatePublic(keySpec);
@@ -142,32 +172,6 @@ public class RSAUtil {
 			throw new Exception("公钥非法");
 		} catch (NullPointerException e) {
 			throw new Exception("公钥数据为空");
-		}
-	}
- 
-	/**
-	 * 从文件中加载私钥
-	 * 
-	 * @param keyFileName
-	 *            私钥文件名
-	 * @return 是否成功
-	 * @throws Exception
-	 */
-	public static String loadPrivateKeyByFile(String path) throws Exception {
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(path
-					+ "/privateKey.keystore"));
-			String readLine = null;
-			StringBuilder sb = new StringBuilder();
-			while ((readLine = br.readLine()) != null) {
-				sb.append(readLine);
-			}
-			br.close();
-			return sb.toString();
-		} catch (IOException e) {
-			throw new Exception("私钥数据读取错误");
-		} catch (NullPointerException e) {
-			throw new Exception("私钥输入流为空");
 		}
 	}
  
@@ -345,6 +349,46 @@ public class RSAUtil {
 		} catch (BadPaddingException e) {
 			throw new Exception("密文数据已损坏");
 		}
+	}
+	
+	/** 
+	* @Title: isPublicKeyFileValid 
+	* @Description: TODO 判断公钥文件内容是否可用
+	* @param @param path
+	* @param @return
+	* @return boolean
+	* @throws 
+	*/
+	public static boolean isPublicKeyFileValid(File file) {
+		String filePath = file.getPath();
+		try {
+			String publicKeyStr = loadKeyStrByFile(filePath);
+			loadPublicKeyByStr(publicKeyStr);
+		} catch (Exception e) {
+			return false;
+		}
+		
+		return true;
+	} 
+	
+	/** 
+	* @Title: isPrivateKeyFileValid 
+	* @Description: TODO 判断私钥文件内容是否可用
+	* @param @param path
+	* @param @return
+	* @return boolean
+	* @throws 
+	*/
+	public static boolean isPrivateKeyFileValid(File file) {
+		String filePath = file.getPath();
+		try {
+			String publicKeyStr = loadKeyStrByFile(filePath);
+			loadPrivateKeyByStr(publicKeyStr);
+		} catch (Exception e) {
+			return false;
+		}
+		
+		return true;
 	}
  
 	/**

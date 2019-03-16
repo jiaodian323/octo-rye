@@ -6,7 +6,7 @@
 * @EMail jiaodian822@163.com 
 * @date 2019年1月27日 上午2:11:42  
 */
-package com.justnd.octoryeserver.servlet;
+package com.justnd.octoryeserver.servlet.common;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -24,7 +24,7 @@ import com.justnd.octoryeserver.beans.ArticleDetailBean;
 import com.justnd.octoryeserver.dao.ArticleDao;
 import com.justnd.octoryeserver.domain.Article;
 import com.justnd.octoryeserver.domain.Author;
-import com.justnd.octoryeserver.utils.GsonUtil;
+import com.justnd.octoryeserver.util.GsonUtil;
 
 /** 
 * @ClassName: ContentDetailServlet 

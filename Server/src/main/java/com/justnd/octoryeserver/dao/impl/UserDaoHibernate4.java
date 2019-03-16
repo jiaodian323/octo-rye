@@ -30,7 +30,7 @@ public class UserDaoHibernate4 extends BaseDaoHibernate4<User> implements UserDa
 	 */
 	@Override
 	public User findByUsername(String username) {
-		List<User> users = find("select p from User p where p.userName = ?0", username);
+		List<User> users = find("select u from User u where u.userName = ?0", username);
 		if (users != null && users.size() >= 1) {
 			return users.get(0);
 		}
@@ -38,4 +38,13 @@ public class UserDaoHibernate4 extends BaseDaoHibernate4<User> implements UserDa
 		return null;
 	}
 
+	@Override
+	public User findByPhoneNumber(String phoneNumber) {
+		List<User> users = find("select u from User u where u.phoneNumber = ?0", phoneNumber);
+		if (users != null && users.size() >= 1) {
+			return users.get(0);
+		}
+		
+		return null;
+	}
 }

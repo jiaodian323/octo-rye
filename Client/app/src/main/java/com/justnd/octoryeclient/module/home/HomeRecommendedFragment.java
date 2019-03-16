@@ -92,9 +92,10 @@ public class HomeRecommendedFragment extends RxLazyFragment {
         });
     }
 
+    @SuppressWarnings("all")
     @Override
     protected void loadData() {
-        RetrofitHelper.getRecommendAPIDebug()
+        RetrofitHelper.getBiliTestService()
                 .getRecommendedBannerInfo()
                 .compose(bindToLifecycle())
                 .map(RecommendBannerInfo::getData)
@@ -103,7 +104,7 @@ public class HomeRecommendedFragment extends RxLazyFragment {
                     public Observable<RecommendInfo> call(List<RecommendBannerInfo.DataBean> dataBeans) {
                         recommendBanners.addAll(dataBeans);
                         Log.i(TAG, "向服务器发送recommend查询请求");
-                        return RetrofitHelper.getRecommendAPI().getRecommendedInfo();
+                        return RetrofitHelper.getRecommendService().getRecommendedInfo();
                     }
                 })
                 .compose(bindToLifecycle())

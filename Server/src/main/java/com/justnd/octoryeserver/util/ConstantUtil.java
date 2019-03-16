@@ -6,7 +6,7 @@
 * @EMail jiaodian822@163.com 
 * @date 2019年1月26日 下午4:57:44  
 */
-package com.justnd.octoryeserver.utils;
+package com.justnd.octoryeserver.util;
 
 /** 
 * @ClassName: ConstantUtil 
@@ -37,4 +37,8 @@ public class ConstantUtil {
 	* @Fields TYPE_AUDIO : TODO 类型：音频
 	*/ 
 	public static final String TYPE_AUDIO = "audio";
+	
+	public static final String PHONE_NUMBER_ALREADY_SIGNED_UP = "该手机已被注册";
+	
+	public static final String SUCCUSS_SEND_AUTH_SMS = "成功发送验证码短信";
 }

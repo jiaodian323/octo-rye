@@ -6,7 +6,7 @@
 * @EMail jiaodian822@163.com 
 * @date 2019年1月7日 下午12:46:52  
 */
-package com.justnd.octoryeserver.servlet;
+package com.justnd.octoryeserver.servlet.common;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -28,8 +28,8 @@ import com.justnd.octoryeserver.beans.RecommendBean;
 import com.justnd.octoryeserver.dao.HotPostsDao;
 import com.justnd.octoryeserver.domain.Article;
 import com.justnd.octoryeserver.domain.HotPosts;
-import com.justnd.octoryeserver.utils.ConstantUtil;
-import com.justnd.octoryeserver.utils.GsonUtil;
+import com.justnd.octoryeserver.util.ConstantUtil;
+import com.justnd.octoryeserver.util.GsonUtil;
 
 /**
  * @ClassName: HotPostServlet

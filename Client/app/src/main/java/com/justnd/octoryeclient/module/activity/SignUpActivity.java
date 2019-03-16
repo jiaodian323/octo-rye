@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.justnd.octoryeclient.R;
 import com.justnd.octoryeclient.module.base.RxBaseActivity;
+import com.justnd.octoryeclient.network.RetrofitHelper;
 import com.justnd.octoryeclient.utils.SMSUtil;
 import com.justnd.octoryeclient.utils.ToastUtil;
 
@@ -24,6 +25,9 @@ import com.justnd.octoryeclient.utils.ToastUtil;
 import java.lang.ref.WeakReference;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import rx.schedulers.Schedulers;
+import rx.android.schedulers.AndroidSchedulers;
 
 import butterknife.BindView;
 
@@ -57,12 +61,6 @@ public class SignUpActivity extends RxBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        mSendAuthCode.setOnClickListener(v -> {
-            Editable phoneStr = mPhoneNumber.getText();
-
-            sendAuthCode(phoneStr.toString());
-        });
     }
 
     @Override
@@ -82,6 +80,12 @@ public class SignUpActivity extends RxBaseActivity {
         mPhoneNumber.addTextChangedListener(changedWatcher);
         mAuthCode.addTextChangedListener(changedWatcher);
 
+        mSendAuthCode.setOnClickListener(v -> {
+            Editable phoneStr = mPhoneNumber.getText();
+
+            signUpCheck(phoneStr.toString());
+        });
+
         mNextStep.setOnClickListener(v -> {
             // ① 再次验证文本框里手机号是否合法
             if (!phoneNumberLegalCheck(mPhoneNumber.getText().toString()))
@@ -91,9 +95,8 @@ public class SignUpActivity extends RxBaseActivity {
             if (SMSUtil.isAuthCodeCorrect(mPhoneNumber.getText().toString(), mAuthCode.getText()
                     .toString())) {
 
-            }
-            else {
-               ToastUtil.ShortToast(R.string.error_incorrect_auth_code);
+            } else {
+                ToastUtil.ShortToast(R.string.error_incorrect_auth_code);
             }
         });
     }
@@ -111,6 +114,32 @@ public class SignUpActivity extends RxBaseActivity {
         Intent intent = new Intent(activity, SignUpActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent);
+    }
+
+    /** 
+    * @Description: 注册检测，如果手机已注册，则终止验证码流程，如未注册则继续
+    * @param phoneNumberCipher 手机号加密后的密文
+    * @return
+    * @throws 
+    * @author Justiniano  Email:jiaodian822@163.com
+    */
+    private void signUpCheck(String phoneNumberCipher) {
+        RetrofitHelper.getUserService()
+                .signUpCheckByPhoneNumber(phoneNumberCipher)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(s -> {
+                            final boolean isSignedUp = (s.getResult() == 0 ? false : true);
+
+                            if (isSignedUp) {
+                                // 如已注册，则Toast提示，并退出流程
+                                ToastUtil.showShort(this, s.getMsg());
+                            } else {
+                                // 如未注册，进入发送验证码流程
+                                sendAuthCode(phoneNumberCipher);
+                            }
+                        },
+                        throwable -> ToastUtil.showShort(this, R.string.error_server_connect));
     }
 
     /**
@@ -184,8 +213,8 @@ public class SignUpActivity extends RxBaseActivity {
         }
     }
 
-    // 使用弱引用包装Activity，避免Handler未停止时，GC无法释放对Activity的引用而导致的内存泄露
     final class SendAuthCodeHandler extends Handler {
+        // 使用弱引用包装Activity，避免Handler未停止时，GC无法释放对Activity的引用而导致的内存泄露
         WeakReference<SignUpActivity> activityWeakReference;
 
         public SendAuthCodeHandler(SignUpActivity activity) {

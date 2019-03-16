@@ -9,6 +9,7 @@
 package com.justnd.octoryeserver.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +17,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -48,6 +51,14 @@ public class User implements Serializable{
 	*/ 
 	@Column(name="profilePicture", nullable=true, length=500)
 	private String profilePicture;
+	
+	@Column(name="phoneNumber", nullable=false, unique=true)
+	private String phoneNumber;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "createTime")
+	private Date createTime;
+	
 	/**
 	 * @return the id
 	 */
@@ -102,5 +113,33 @@ public class User implements Serializable{
 	 */
 	public void setProfilePicture(String profilePicture) {
 		this.profilePicture = profilePicture;
+	}
+
+	/**
+	 * @return the phoneNumber
+	 */
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	/**
+	 * @param phoneNumber the phoneNumber to set
+	 */
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	/**
+	 * @return the createTime
+	 */
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	/**
+	 * @param createTime the createTime to set
+	 */
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 }
