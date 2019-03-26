@@ -1,5 +1,6 @@
 package com.justnd.octoryeclient.network.api;
 
+import com.justnd.octoryeclient.entity.base.BaseBean;
 import com.justnd.octoryeclient.entity.recommond.ArticleDetail;
 import com.justnd.octoryeclient.entity.recommond.RecommendBannerInfo;
 import com.justnd.octoryeclient.entity.recommond.RecommendInfo;
@@ -21,7 +22,7 @@ public interface RecommendService {
     * @author Justiniano  Email:jiaodian822@163.com
     */
     @GET("s/show/recommend")
-    Observable<RecommendInfo> getRecommendedInfo();
+    Observable<BaseBean<RecommendInfo>> getRecommendedInfo();
 
     /**
     * @Description: 获取文章详细内容接口
@@ -31,5 +32,5 @@ public interface RecommendService {
     * @author Justiniano  Email:jiaodian822@163.com
     */
     @GET("s/show/articledetail")
-    Observable<ArticleDetail> getArticleDetail(@Query("aid") int aid);
+    Observable<BaseBean<ArticleDetail>> getArticleDetail(@Query("aid") int aid);
 }

@@ -12,7 +12,6 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.justnd.octoryeserver.dao.UserDao;
+import com.justnd.octoryeserver.servlet.base.BaseServlet;
 
 /** 
 * @ClassName: RegisterServlet 
@@ -29,7 +29,7 @@ import com.justnd.octoryeserver.dao.UserDao;
 *  
 */
 @WebServlet(name="SignUpServlet", urlPatterns=("/s/user/register/signup"))
-public class SignUpServlet extends HttpServlet {
+public class SignUpServlet extends BaseServlet {
 
 	private static final long serialVersionUID = 2718811378143301923L;
 	

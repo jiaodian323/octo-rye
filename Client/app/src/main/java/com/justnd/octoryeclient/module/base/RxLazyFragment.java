@@ -48,12 +48,10 @@ public abstract class RxLazyFragment extends RxFragment {
      */
     public abstract void finishCreateView(Bundle state);
 
-
     @Override
     public void onResume() {
         super.onResume();
     }
-
 
     @Override
     public void onDestroyView() {
@@ -61,13 +59,11 @@ public abstract class RxLazyFragment extends RxFragment {
         bind.unbind();
     }
 
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         this.activity = (FragmentActivity) activity;
     }
-
 
     @Override
     public void onDetach() {
@@ -75,22 +71,18 @@ public abstract class RxLazyFragment extends RxFragment {
         this.activity = null;
     }
 
-
     public FragmentActivity getSupportActivity() {
         return super.getActivity();
     }
-
 
     public android.app.ActionBar getSupportActionBar() {
         return getSupportActivity().getActionBar();
     }
 
-
     public Context getApplicationContext() {
         return this.activity == null ? (getActivity() == null ?
                 null : getActivity().getApplicationContext()) : this.activity.getApplicationContext();
     }
-
 
     /**
      * Fragment数据的懒加载
@@ -161,7 +153,6 @@ public abstract class RxLazyFragment extends RxFragment {
      */
     protected void finishTask() {
     }
-
 
     @SuppressWarnings("unchecked")
     public <T extends View> T $(int id) {

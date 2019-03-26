@@ -11,6 +11,7 @@ import android.view.View;
 import com.justnd.octoryeclient.R;
 import com.justnd.octoryeclient.adapter.section.HomeRecommendBannerSection;
 import com.justnd.octoryeclient.adapter.section.HomeRecommendedSection;
+import com.justnd.octoryeclient.entity.base.BaseBean;
 import com.justnd.octoryeclient.entity.recommond.RecommendBannerInfo;
 import com.justnd.octoryeclient.entity.recommond.RecommendInfo;
 import com.justnd.octoryeclient.module.base.RxLazyFragment;
@@ -87,28 +88,39 @@ public class HomeRecommendedFragment extends RxLazyFragment {
             loadData();
         });
         mSwipeRefreshLayout.setOnRefreshListener(() -> {
-           clearData();
-           loadData();
+            clearData();
+            loadData();
         });
     }
 
     @SuppressWarnings("all")
     @Override
     protected void loadData() {
+        // 此处代码较为晦涩，请小心阅读
         RetrofitHelper.getBiliTestService()
                 .getRecommendedBannerInfo()
                 .compose(bindToLifecycle())
                 .map(RecommendBannerInfo::getData)
-                .flatMap(new Func1<List<RecommendBannerInfo.DataBean>, Observable<RecommendInfo>>() {
+                .flatMap(new Func1<List<RecommendBannerInfo.DataBean>,
+                        Observable<BaseBean<RecommendInfo>>>() {
                     @Override
-                    public Observable<RecommendInfo> call(List<RecommendBannerInfo.DataBean> dataBeans) {
+                    public Observable<BaseBean<RecommendInfo>> call(List<RecommendBannerInfo
+                            .DataBean> dataBeans) {
                         recommendBanners.addAll(dataBeans);
                         Log.i(TAG, "向服务器发送recommend查询请求");
                         return RetrofitHelper.getRecommendService().getRecommendedInfo();
                     }
                 })
                 .compose(bindToLifecycle())
-                .map(RecommendInfo::getResult)
+                .map(new Func1<BaseBean<RecommendInfo>, List<RecommendInfo.ResultBean>>() {
+                    @Override
+                    public List<RecommendInfo.ResultBean> call(BaseBean<RecommendInfo>
+                                                                           recommendInfoBaseBean) {
+                        // 将返回的BaseBean<RecommendInfo>类型转换为，
+                        // RecommendInfo内部resultbean数据
+                        return recommendInfoBaseBean.getData().getResult();
+                    }
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(resultBeans -> {
@@ -137,6 +149,7 @@ public class HomeRecommendedFragment extends RxLazyFragment {
         for (int i = 0; i < size; i++) {
             String type = results.get(i).getType();
             if (!TextUtils.isEmpty(type)) {
+
                 switch (type) {
                     case ConstantUtil.TYPE_ARTICLE:
                         mSectionedAdapter.addSection(new HomeRecommendedSection(

@@ -6,7 +6,7 @@
 * @EMail jiaodian822@163.com 
 * @date 2019年1月7日 下午5:44:16  
 */
-package com.justnd.octoryeserver.beans;
+package com.justnd.octoryeserver.beans.recommend;
 
 import java.util.List;
 
@@ -20,16 +20,7 @@ import com.google.gson.annotations.SerializedName;
 *  
 */
 public class RecommendBean {
-	private int code;
-    private List<ResultBean> result;
-
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
+	private List<ResultBean> result;
 
     public List<ResultBean> getResult() {
         return result;

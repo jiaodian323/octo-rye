@@ -17,17 +17,18 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
-import com.justnd.octoryeserver.beans.RecommendBean;
+import com.justnd.octoryeserver.beans.base.BaseBean;
+import com.justnd.octoryeserver.beans.recommend.RecommendBean;
 import com.justnd.octoryeserver.dao.HotPostsDao;
 import com.justnd.octoryeserver.domain.Article;
 import com.justnd.octoryeserver.domain.HotPosts;
+import com.justnd.octoryeserver.servlet.base.BaseServlet;
 import com.justnd.octoryeserver.util.ConstantUtil;
 import com.justnd.octoryeserver.util.GsonUtil;
 
@@ -39,7 +40,7 @@ import com.justnd.octoryeserver.util.GsonUtil;
  * 
  */
 @WebServlet(name="RecommendServlet", urlPatterns=("/s/show/recommend"))
-public class RecommendServlet extends HttpServlet {
+public class RecommendServlet extends BaseServlet {
 
 	private static final long serialVersionUID = 1722882278436376202L;
 
@@ -82,9 +83,11 @@ public class RecommendServlet extends HttpServlet {
 		if (hotPosts == null || hotPosts.size() == 0)
 			return "";
 
-		RecommendBean bean = new RecommendBean();
-		bean.setCode(0);
-
+		BaseBean<RecommendBean> baseBean = new BaseBean<RecommendBean>();
+		baseBean.setCode(ConstantUtil.STATUS_CODE_SUCCESS);
+		baseBean.setMessage(ConstantUtil.SUCCUSS_SEND_RECOMMENDED);
+		
+		RecommendBean dataBean = new RecommendBean();
 		List<RecommendBean.ResultBean> results = new ArrayList<>();
 		RecommendBean.ResultBean resultBean = new RecommendBean.ResultBean();
 		resultBean.setType("test");
@@ -115,9 +118,10 @@ public class RecommendServlet extends HttpServlet {
 		}
 		resultBean.setBody(resultBodyBeans);
 		results.add(resultBean);
-
-		bean.setResult(results);
-		String gsonStr = GsonUtil.toJsonString(bean);
+		dataBean.setResult(results);
+		
+		baseBean.setData(dataBean);
+		String gsonStr = GsonUtil.objectToJsonStr(baseBean);
 		
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		System.out.println("GsonStr:" + gsonStr);

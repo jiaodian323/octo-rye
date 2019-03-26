@@ -1,10 +1,9 @@
 package com.justnd.octoryeclient.network.api;
 
-import com.justnd.octoryeclient.entity.user.SignUpCheck;
+import com.justnd.octoryeclient.entity.base.BaseBean;
 import com.justnd.octoryeclient.entity.user.UserInfo;
 
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Body;
 import retrofit2.http.POST;
 import rx.Observable;
 
@@ -19,16 +18,14 @@ public interface UserService {
     
     /** 
     * @Description: 使用手机号注册
-    * @param phoneNumber 手机号码
+    * @param userJson 用户信息bean
     * @return 
     * @throws 
     * @author Justiniano  Email:jiaodian822@163.com
     */
     @POST("s/user/register/signup")
-    @FormUrlEncoded
-    Observable<UserInfo> signUpByPhoneNumber(@Field("phoneNumber")String phoneNumber);
+    Observable<BaseBean<UserInfo>> signUp(@Body UserInfo userJson);
 
     @POST("s/user/register/signupcheck")
-    @FormUrlEncoded
-    Observable<SignUpCheck> signUpCheckByPhoneNumber(@Field("phoneNumber")String phoneNumber);
+    Observable<BaseBean> signUpCheck(@Body UserInfo userJson);
 }

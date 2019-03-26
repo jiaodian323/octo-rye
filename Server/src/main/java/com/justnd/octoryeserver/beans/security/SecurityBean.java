@@ -1,13 +1,22 @@
-package com.justnd.octoryeclient.entity.security;
+/**   
+* @Title: SecurityBean.java 
+* @Package com.justnd.octoryeserver.beans 
+* @Description: TODO
+* @author JD 
+* @EMail jiaodian822@163.com 
+* @date 2019年3月18日 下午3:51:24  
+*/
+package com.justnd.octoryeserver.beans.security;
 
-/**
- * @author Justiniano  Email:jiaodian822@163.com
- * @Description: 安全信息Bean
- * @throws
- * @time 2019/3/15 0015 下午 2:57
- */
-public class SecurityInfo {
-    private String updateTime;
+/** 
+* @ClassName: SecurityBean 
+* @Description: TODO 安全信息Bean
+* @author JD
+* @date 2019年3月18日 下午3:51:24 
+*  
+*/
+public class SecurityBean {
+	private String updateTime;
     private String expirationTime;
     private String publicKeyString;
 

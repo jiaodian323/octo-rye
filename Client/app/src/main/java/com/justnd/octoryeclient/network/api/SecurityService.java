@@ -1,10 +1,9 @@
 package com.justnd.octoryeclient.network.api;
 
+import com.justnd.octoryeclient.entity.base.BaseBean;
 import com.justnd.octoryeclient.entity.security.SecurityInfo;
 
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
-
 import rx.Observable;
 
 /**
@@ -15,6 +14,5 @@ import rx.Observable;
  */
 public interface SecurityService {
     @POST("s/sec/info")
-    @FormUrlEncoded
-    Observable<SecurityInfo> getSecurityInfo();
+    Observable<BaseBean<SecurityInfo>> getSecurityInfo();
 }

@@ -13,17 +13,19 @@ import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
-import com.justnd.octoryeserver.beans.ArticleDetailBean;
+import com.justnd.octoryeserver.beans.base.BaseBean;
+import com.justnd.octoryeserver.beans.recommend.ArticleDetailBean;
 import com.justnd.octoryeserver.dao.ArticleDao;
 import com.justnd.octoryeserver.domain.Article;
 import com.justnd.octoryeserver.domain.Author;
+import com.justnd.octoryeserver.servlet.base.BaseServlet;
+import com.justnd.octoryeserver.util.ConstantUtil;
 import com.justnd.octoryeserver.util.GsonUtil;
 
 /** 
@@ -34,7 +36,7 @@ import com.justnd.octoryeserver.util.GsonUtil;
 *  
 */
 @WebServlet(name="ArticleDetailServlet", urlPatterns=("/s/show/articledetail"))
-public class ArticleDetailServlet extends HttpServlet {
+public class ArticleDetailServlet extends BaseServlet {
 
 	/** 
 	* @Fields serialVersionUID : TODO 
@@ -81,26 +83,31 @@ public class ArticleDetailServlet extends HttpServlet {
 		if (article == null)
 			return "";
 		
-		ArticleDetailBean bean = new ArticleDetailBean();
-		bean.setType(article.getType().toString());
-		bean.setTitle(article.getTitle());
-		bean.setPublishTime("");
+		BaseBean<ArticleDetailBean> baseBean = new BaseBean<ArticleDetailBean>();
+		baseBean.setCode(ConstantUtil.STATUS_CODE_SUCCESS);
+		baseBean.setMessage(ConstantUtil.SUCCUSS_SEND_ARTICLE_DETAIL);
+		
+		ArticleDetailBean dataBean = new ArticleDetailBean();
+		dataBean.setType(article.getType().toString());
+		dataBean.setTitle(article.getTitle());
+		dataBean.setPublishTime("");
 		ArticleDetailBean.Author authorBean = new ArticleDetailBean.Author();
 		Author author = article.getAuthor();
 		authorBean.setName(author.getAuthorName());
 		authorBean.setIntroduction(author.getIntroduction());
-		bean.setAuthor(authorBean);
-		bean.setExtract(article.getExtract());
-		bean.setContent(article.getContent());
-		bean.setHeadImage(article.getHeadImage());
-		bean.setLikeNum(article.getLikeNum());
-		bean.setPageviewCount(article.getPageviewCount());
+		dataBean.setAuthor(authorBean);
+		dataBean.setExtract(article.getExtract());
+		dataBean.setContent(article.getContent());
+		dataBean.setHeadImage(article.getHeadImage());
+		dataBean.setLikeNum(article.getLikeNum());
+		dataBean.setPageviewCount(article.getPageviewCount());
+		baseBean.setData(dataBean);
 
-		String gsonStr = GsonUtil.toJsonString(bean);
+		String jsonStr = GsonUtil.objectToJsonStr(baseBean);
 		
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-		System.out.println("GsonStr:" + gsonStr);
+		System.out.println("文章详细响应JsonStr:" + jsonStr);
 		
-		return gsonStr;
+		return jsonStr;
 	}
 }

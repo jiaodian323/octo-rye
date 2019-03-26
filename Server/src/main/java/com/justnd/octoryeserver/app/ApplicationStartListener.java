@@ -8,15 +8,13 @@
 */
 package com.justnd.octoryeserver.app;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 
 import com.justnd.octoryeserver.security.RSACoder;
+import com.justnd.octoryeserver.util.ConstantUtil;
 import com.justnd.octoryeserver.util.FileUtil;
 
 /**
@@ -31,21 +29,16 @@ public class ApplicationStartListener implements ApplicationListener<ContextRefr
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		genKeys();
 	}
-	
-	/** 
-	* @Title: genKeys 根据实际情况生成公钥和私钥文件
-	* @Description: TODO
-	* @param 
-	* @return void
-	* @throws 
-	*/
+
+	/**
+	 * @Title: genKeys 根据实际情况生成公钥和私钥文件 @Description: TODO @param @return
+	 * void @throws
+	 */
 	public void genKeys() {
 		System.out.println("--------------------------------------------------------------");
 		String webInfSecPath = FileUtil.getWebInfSecPath();
-		String publicKeyFilePath = "\\publickey.keystore";
-		String privateKeyFilePath = "\\privateKey.keystore";
-		File publicKeyFile = new File(webInfSecPath + publicKeyFilePath);
-		File privateKeyFile = new File(webInfSecPath + privateKeyFilePath);
+		File publicKeyFile = new File(webInfSecPath + ConstantUtil.PUBLIC_KEY_FILE_NAME);
+		File privateKeyFile = new File(webInfSecPath + ConstantUtil.PRIVATE_KEY_FILE_NAME);
 		// 如果公钥和私钥文件均存在，并且都是可用的，则不做任何操作，否则重新生成公钥和私钥文件
 		if (publicKeyFile.exists() && privateKeyFile.exists()) {
 			if (!RSACoder.isPublicKeyFileValid(publicKeyFile)
@@ -57,7 +50,14 @@ public class ApplicationStartListener implements ApplicationListener<ContextRefr
 			System.out.println("公钥或者私钥文件不存在，重新生成");
 			RSACoder.genKeyPair(webInfSecPath);
 		}
-		
+
+		try {
+			RSACoder.rsaPublicKeyStr = RSACoder.loadKeyStrByFile(publicKeyFile);
+			RSACoder.rsaPrivateKeyStr = RSACoder.loadKeyStrByFile(privateKeyFile);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		System.out.println("--------------------------------------------------------------");
 	}
 }

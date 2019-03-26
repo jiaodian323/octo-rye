@@ -27,7 +27,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.justnd.octoryeserver.beans.RecommendBean;
+import com.justnd.octoryeserver.beans.base.BaseBean;
+import com.justnd.octoryeserver.beans.recommend.RecommendBean;
 import com.justnd.octoryeserver.dao.impl.ArticleDaoHibernate4;
 import com.justnd.octoryeserver.dao.impl.AuthorDaoHibernate4;
 import com.justnd.octoryeserver.dao.impl.HotPostsDaoHibernate4;
@@ -67,7 +68,7 @@ public class HotPostsDaoTest extends AbstractJUnit4SpringContextTests {
 		Date timeA;
 		try {
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-			timeA = df.parse("2019-3-13");
+			timeA = df.parse("2019-3-26");
 			hotPost.setPostDate(timeA);
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -157,9 +158,10 @@ public class HotPostsDaoTest extends AbstractJUnit4SpringContextTests {
 		if (hotPosts == null || hotPosts.size() == 0)
 			return;
 
-		RecommendBean bean = new RecommendBean();
-		bean.setCode(0);
-
+		BaseBean<RecommendBean> baseBean = new BaseBean<RecommendBean>();
+		baseBean.setCode(0);
+		
+		RecommendBean dataBean = new RecommendBean();
 		List<RecommendBean.ResultBean> results = new ArrayList<>();
 		RecommendBean.ResultBean resultBean = new RecommendBean.ResultBean();
 		resultBean.setType("recommend");
@@ -187,8 +189,9 @@ public class HotPostsDaoTest extends AbstractJUnit4SpringContextTests {
 		}
 		resultBean.setBody(resultBodyBeans);
 		results.add(resultBean);
-
-		bean.setResult(results);
+		dataBean.setResult(results);
+		
+		baseBean.setData(dataBean);
 
 //		Gson gson = new Gson();
 		Gson gson = new GsonBuilder()
@@ -197,7 +200,7 @@ public class HotPostsDaoTest extends AbstractJUnit4SpringContextTests {
                 .serializeNulls() //智能null  
                 .setPrettyPrinting()// 调教格式  
                 .create();  
-		String gsonStr = gson.toJson(bean);
+		String gsonStr = gson.toJson(baseBean);
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		System.out.println("GsonStr:" + gsonStr);
 	}

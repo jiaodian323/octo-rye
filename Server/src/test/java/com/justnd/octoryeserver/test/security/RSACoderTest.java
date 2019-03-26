@@ -8,6 +8,7 @@
 */
 package com.justnd.octoryeserver.test.security;
 
+import java.io.File;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.Provider;
@@ -47,7 +48,7 @@ public class RSACoderTest {
 	public void loadPublicKeyByFileTest() {
 		String publicKeyStr = "";
 		try {
-			publicKeyStr = RSACoder.loadKeyStrByFile(testFilePath + publicPath);
+			publicKeyStr = RSACoder.loadKeyStrByFile(new File(testFilePath + publicPath));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -60,7 +61,7 @@ public class RSACoderTest {
 	public void loadPrivateKeyByFileTest() {
 		String privateKeyStr = "";
 		try {
-			privateKeyStr = RSACoder.loadKeyStrByFile(testFilePath + privatePath);
+			privateKeyStr = RSACoder.loadKeyStrByFile(new File(testFilePath + publicPath));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -77,7 +78,7 @@ public class RSACoderTest {
 		String plainText = "niubility8790";
 		
 		try {
-			publicKeyStr = RSACoder.loadKeyStrByFile(testFilePath + publicPath);
+			publicKeyStr = RSACoder.loadKeyStrByFile(new File(testFilePath + publicPath));
 			publicKey = RSACoder.loadPublicKeyByStr(publicKeyStr);
 			encryptByteArray = RSACoder.encrypt(publicKey, plainText.getBytes());
 		} catch (Exception e) {
@@ -87,7 +88,7 @@ public class RSACoderTest {
 		
 		System.out.println(new String(encryptByteArray));
 		System.out.println("-------------------------------");
-		System.out.println(RSACoder.byteArrayToString(encryptByteArray));
+		System.out.println(RSACoder.byteToHexString(encryptByteArray));
 	}
 	
 	@Test
@@ -98,7 +99,7 @@ public class RSACoderTest {
 		String plainText = "niubility8790";
 		
 		try {
-			privateKeyStr = RSACoder.loadKeyStrByFile(testFilePath + privatePath);
+			privateKeyStr = RSACoder.loadKeyStrByFile(new File(testFilePath + privatePath));
 			privateKey = RSACoder.loadPrivateKeyByStr(privateKeyStr);
 			encryptByteArray = RSACoder.encrypt(privateKey, plainText.getBytes());
 		} catch (Exception e) {
@@ -108,12 +109,7 @@ public class RSACoderTest {
 		
 		System.out.println(new String(encryptByteArray));
 		System.out.println("-------------------------------");
-		System.out.println(RSACoder.byteArrayToString(encryptByteArray));
-	}
-	
-	@Test
-	public void publicDecryptTest() {
-		
+		System.out.println(RSACoder.byteToHexString(encryptByteArray));
 	}
 	
 	@Test
@@ -127,9 +123,9 @@ public class RSACoderTest {
 		String plainText = "abcdefghigklmnopqrstuvwxyz12345678900987654321";
 		
 		try {
-			publicKeyStr = RSACoder.loadKeyStrByFile(testFilePath + publicPath);
+			publicKeyStr = RSACoder.loadKeyStrByFile(new File(testFilePath + publicPath));
 			publicKey = RSACoder.loadPublicKeyByStr(publicKeyStr);
-			privateKeyStr = RSACoder.loadKeyStrByFile(testFilePath + privatePath);
+			privateKeyStr = RSACoder.loadKeyStrByFile(new File(testFilePath + privatePath));
 			privateKey = RSACoder.loadPrivateKeyByStr(privateKeyStr);
 			encryptByteArray = RSACoder.encrypt(publicKey, plainText.getBytes());
 			decryptByteArray = RSACoder.decrypt(privateKey, encryptByteArray);
@@ -140,7 +136,37 @@ public class RSACoderTest {
 		
 		System.out.println("明文：" + plainText);
 		System.out.print("公钥加密后：");
-		System.out.println(RSACoder.byteArrayToString(encryptByteArray));
+		System.out.println(RSACoder.byteToHexString(encryptByteArray));
+		
+		System.out.print("私钥解密密文后为：");
+		System.out.println(new String(decryptByteArray));
+	}
+	
+	@Test
+	public void publicDecryptTest() {
+		String publicKeyStr = "";
+		String privateKeyStr = "";
+		RSAPublicKey publicKey = null;
+		RSAPrivateKey privateKey = null;
+		byte[] encryptByteArray = null;
+		byte[] decryptByteArray = null;
+		String plainText = "十年生死两茫茫";
+		
+		try {
+			publicKeyStr = RSACoder.loadKeyStrByFile(new File(testFilePath + publicPath));
+			publicKey = RSACoder.loadPublicKeyByStr(publicKeyStr);
+			privateKeyStr = RSACoder.loadKeyStrByFile(new File(testFilePath + privatePath));
+			privateKey = RSACoder.loadPrivateKeyByStr(privateKeyStr);
+			encryptByteArray = RSACoder.encrypt(privateKey, plainText.getBytes());
+			decryptByteArray = RSACoder.decrypt(publicKey, encryptByteArray);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println("明文：" + plainText);
+		System.out.print("公钥加密后：");
+		System.out.println(RSACoder.byteToHexString(encryptByteArray));
 		
 		System.out.print("私钥解密密文后为：");
 		System.out.println(new String(decryptByteArray));
@@ -165,9 +191,62 @@ public class RSACoderTest {
 			sha.update(input);
 			byte[] output = sha.digest();
 			
-			System.out.println(RSACoder.byteArrayToString(output));
+			System.out.println(RSACoder.byteToHexString(output));
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Test
+	public void bytesArrayTest() {
+		String publicKeyStr = "";
+		String privateKeyStr = "";
+		RSAPublicKey publicKey = null;
+		RSAPrivateKey privateKey = null;
+		byte[] encryptByteArray = null;
+		byte[] decryptByteArray = null;
+		String plainText = "十年生死两茫茫";
+		
+		try {
+			publicKeyStr = RSACoder.loadKeyStrByFile(new File(testFilePath + publicPath));
+			publicKey = RSACoder.loadPublicKeyByStr(publicKeyStr);
+			privateKeyStr = RSACoder.loadKeyStrByFile(new File(testFilePath + privatePath));
+			privateKey = RSACoder.loadPrivateKeyByStr(privateKeyStr);
+			
+			encryptByteArray = RSACoder.encrypt(publicKey, plainText.getBytes());
+			System.out.println("加密后的字节数组：");
+			printByteArray(encryptByteArray);
+			
+			System.out.println("转换为十六进制字符串：");
+			String hexString = RSACoder.byteToHexString(encryptByteArray);
+			System.out.println(hexString);
+			
+			System.out.println("十六进制字符串获取的字节数组：");
+			byte[] hexBytes = hexString.getBytes();
+			printByteArray(hexBytes);
+			
+			System.out.println("（新的）十六进制字符串获取的字节数组：");
+			byte[] newHexBytes = RSACoder.hexStringToByte(hexString);
+			printByteArray(newHexBytes);
+			
+			decryptByteArray = RSACoder.decrypt(privateKey, newHexBytes);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println("明文：" + plainText);
+		
+		System.out.print("私钥解密密文后为：");
+		System.out.println(new String(decryptByteArray));
+	}
+	
+	private void printByteArray(byte[] byteArray) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < byteArray.length; i++) {
+			sb.append(byteArray[i] + " ");
+		}
+		
+		System.out.println(sb.toString());
 	}
 }

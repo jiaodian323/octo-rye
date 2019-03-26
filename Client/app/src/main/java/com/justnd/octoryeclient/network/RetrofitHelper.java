@@ -1,11 +1,14 @@
 package com.justnd.octoryeclient.network;
 
+import android.util.Log;
+
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.justnd.octoryeclient.application.OctoRyeApplication;
 import com.justnd.octoryeclient.network.api.RecommendService;
 import com.justnd.octoryeclient.network.api.SecurityService;
 import com.justnd.octoryeclient.network.api.UserService;
 import com.justnd.octoryeclient.network.auxiliary.ApiConstants;
+import com.justnd.octoryeclient.network.custom.CustomJsonConverterFactory;
 import com.justnd.octoryeclient.utils.CommonUtil;
 
 import java.io.File;
@@ -21,11 +24,20 @@ import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitHelper {
+    /**
+     * @Fields: OKHttp实例对象
+     */
     private static OkHttpClient mOkHttpClient;
+
+    /**
+     * @Fields: 服务器根地址
+     */
     private static String DEFAULT_BASE_URL = ApiConstants.CLOUD_SERVER_URL;
+    /**
+     * @Fields: 调试服务器根地址
+     */
     private static String DEFAULT_DEBUG_BASE_URL = ApiConstants.DEBUG_URL;
 
     private static RecommendService mRecommendService;
@@ -36,36 +48,37 @@ public class RetrofitHelper {
         initOkHttpClient();
     }
 
-    public static RecommendService getBiliTestService () {
+    public static RecommendService getBiliTestService() {
 //        if (mRecommendService == null) {             暂时注释掉是否为空的判断，为测试代码提供便利
-            Retrofit retrofit = buildRetrofit(ApiConstants.RECOMMEND_URL_TEST);
-            mRecommendService = retrofit.create(RecommendService.class);
+        Retrofit retrofit = buildRetrofit(ApiConstants.RECOMMEND_URL_TEST);
+        mRecommendService = retrofit.create(RecommendService.class);
 //        }
 
         return mRecommendService;
     }
 
     /**
-    * @Description: 获取推荐服务的网络接口
-    * @return
-    * @throws
-    * @author Justiniano  Email:jiaodian822@163.com
-    */
-    public static RecommendService getRecommendService () {
+     * @return
+     * @throws
+     * @Description: 获取推荐服务的网络接口
+     * @author Justiniano  Email:jiaodian822@163.com
+     */
+    public static RecommendService getRecommendService() {
 //        if (mRecommendService == null) {             暂时注释掉是否为空的判断，为测试代码提供便利
-            Retrofit retrofit = buildRetrofit();
-            mRecommendService = retrofit.create(RecommendService.class);
+        Log.i("CusRequestConverter", "调用getRecommendService（）");
+        Retrofit retrofit = buildRetrofit();
+        mRecommendService = retrofit.create(RecommendService.class);
 //        }
 
         return mRecommendService;
     }
 
     /**
-    * @Description: 获取用户操作相关的网络接口
-    * @return
-    * @throws
-    * @author Justiniano  Email:jiaodian822@163.com
-    */
+     * @return
+     * @throws
+     * @Description: 获取用户操作相关的网络接口
+     * @author Justiniano  Email:jiaodian822@163.com
+     */
     public static UserService getUserService() {
         if (mUserService == null) {
             Retrofit retrofit = buildRetrofit();
@@ -76,11 +89,11 @@ public class RetrofitHelper {
     }
 
     /**
-    * @Description: 获取安全模块相关的网络接口
-    * @return
-    * @throws
-    * @author Justiniano  Email:jiaodian822@163.com
-    */
+     * @return
+     * @throws
+     * @Description: 获取安全模块相关的网络接口
+     * @author Justiniano  Email:jiaodian822@163.com
+     */
     public static SecurityService getSecurityService() {
         if (mSecurityService == null) {
             Retrofit retrofit = buildRetrofit();
@@ -91,29 +104,29 @@ public class RetrofitHelper {
     }
 
     /**
-    * @Description: 重载创建Retrofit对象接口，使用默认基础URL
-    * @param
-    * @return
-    * @throws
-    * @author Justiniano  Email:jiaodian822@163.com
-    */
+     * @param
+     * @return
+     * @throws
+     * @Description: 重载创建Retrofit对象接口，使用默认根URL和默认的Gson转换器
+     * @author Justiniano  Email:jiaodian822@163.com
+     */
     private static Retrofit buildRetrofit() {
         return buildRetrofit(DEFAULT_DEBUG_BASE_URL);
     }
 
     /**
-    * @Description: 创建Retrofit对象
-    * @param baseUrl 基础URL
-    * @return
-    * @throws
-    * @author Justiniano  Email:jiaodian822@163.com
-    */
+     * @param baseUrl 根URL
+     * @return
+     * @throws
+     * @Description: 创建Retrofit
+     * @author Justiniano  Email:jiaodian822@163.com
+     */
     private static Retrofit buildRetrofit(String baseUrl) {
-         return new Retrofit.Builder()
+        return new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .client(mOkHttpClient)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(CustomJsonConverterFactory.create())
                 .build();
     }
 

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.justnd.octoryeclient.R;
+import com.justnd.octoryeclient.entity.base.BaseBean;
 import com.justnd.octoryeclient.entity.recommond.ArticleDetail;
 import com.justnd.octoryeclient.module.base.RxBaseActivity;
 import com.justnd.octoryeclient.network.RetrofitHelper;
@@ -41,7 +42,7 @@ public class ContentDetailActivity extends RxBaseActivity {
 
     private String contentType;
     private Integer contentId;
-    private ArticleDetail detailBean = new ArticleDetail();
+    private BaseBean<ArticleDetail> detail = new BaseBean<ArticleDetail>();
 
     @Override
     public int getLayoutId() {
@@ -77,31 +78,31 @@ public class ContentDetailActivity extends RxBaseActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(resultBeans -> {
-                    detailBean = resultBeans;
+                    detail = resultBeans;
                     finishTask();
                 });
     }
 
     @Override
     public void finishTask() {
-        mTitleTextView.setText(detailBean.getTitle());
-        String authorName = getString(R.string.authorName_prefix) + detailBean.getAuthor()
+        mTitleTextView.setText(detail.getData().getTitle());
+        String authorName = getString(R.string.authorName_prefix) + detail.getData().getAuthor()
                 .getName();
         mAuthorTextView.setText(authorName);
-        mExtractTextView.setText(detailBean.getExtract());
-        mContentTextView.setText(detailBean.getContent());
+        mExtractTextView.setText(detail.getData().getExtract());
+        mContentTextView.setText(detail.getData().getContent());
 
         Glide.with(ContentDetailActivity.this)
-                .load(detailBean.getHeadImage())
+                .load(detail.getData().getHeadImage())
                 .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .placeholder(R.drawable.bili_default_image_tv)
                 .dontAnimate()
                 .into(mContentTitleImage);
 
-        mAuthorTagView.setUpWithInfo(ContentDetailActivity.this, detailBean.getAuthor().getId(),
-                detailBean.getAuthor().getName(), detailBean.getAuthor().getIntroduction(),
-                detailBean.getHeadImage());
+        mAuthorTagView.setUpWithInfo(ContentDetailActivity.this, detail.getData().getAuthor().getId(),
+                detail.getData().getAuthor().getName(), detail.getData().getAuthor().getIntroduction(),
+                detail.getData().getHeadImage());
         mCollapsingtoolbar.setTitle(getString(R.string.default_content_title));
     }
 

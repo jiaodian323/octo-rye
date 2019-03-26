@@ -16,20 +16,19 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.justnd.octoryeclient.R;
+import com.justnd.octoryeclient.entity.user.UserInfo;
 import com.justnd.octoryeclient.module.base.RxBaseActivity;
 import com.justnd.octoryeclient.network.RetrofitHelper;
 import com.justnd.octoryeclient.utils.SMSUtil;
 import com.justnd.octoryeclient.utils.ToastUtil;
 
-
 import java.lang.ref.WeakReference;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import rx.schedulers.Schedulers;
-import rx.android.schedulers.AndroidSchedulers;
-
 import butterknife.BindView;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * @author Justiniano  Email:jiaodian822@163.com
@@ -81,7 +80,9 @@ public class SignUpActivity extends RxBaseActivity {
         mAuthCode.addTextChangedListener(changedWatcher);
 
         mSendAuthCode.setOnClickListener(v -> {
-            Editable phoneStr = mPhoneNumber.getText();
+            String phoneStr = mPhoneNumber.getText().toString();
+            if (!phoneNumberLegalCheck(phoneStr))
+                return;
 
             signUpCheck(phoneStr.toString());
         });
@@ -118,25 +119,28 @@ public class SignUpActivity extends RxBaseActivity {
 
     /** 
     * @Description: 注册检测，如果手机已注册，则终止验证码流程，如未注册则继续
-    * @param phoneNumberCipher 手机号加密后的密文
+    * @param phoneNumber 发起注册的手机号
     * @return
     * @throws 
     * @author Justiniano  Email:jiaodian822@163.com
     */
-    private void signUpCheck(String phoneNumberCipher) {
+    private void signUpCheck(String phoneNumber) {
+        UserInfo user = new UserInfo();
+        user.setPhoneNumber(phoneNumber);
+
         RetrofitHelper.getUserService()
-                .signUpCheckByPhoneNumber(phoneNumberCipher)
+                .signUpCheck(user)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(s -> {
-                            final boolean isSignedUp = (s.getResult() == 0 ? false : true);
+                            final boolean isSignedUp = (s.getCode() == 0);
 
                             if (isSignedUp) {
-                                // 如已注册，则Toast提示，并退出流程
-                                ToastUtil.showShort(this, s.getMsg());
-                            } else {
                                 // 如未注册，进入发送验证码流程
-                                sendAuthCode(phoneNumberCipher);
+                                sendAuthCode(phoneNumber);
+                            } else {
+                                // 如已注册，则Toast提示，并退出流程
+                                ToastUtil.showShort(this, s.getMessage());
                             }
                         },
                         throwable -> ToastUtil.showShort(this, R.string.error_server_connect));

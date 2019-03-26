@@ -41,5 +41,9 @@
 
     <!--Exception Messages-->
     <string name="error_server_connect">服务器连接错误</string>
+    <string name="exception_security_module_initial">安全模块初始化异常</string>
+    <string name="exception_encrypt">加密异常</string>
 
+    <!--Security Info-->
+    <string name="public_key_base64">null</string>
 </resources>

@@ -1,8 +1,8 @@
 package com.justnd.octoryeclient.entity.recommond;
 
-import java.util.List;
-
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 /**
  * @ClassName: HotPostBean
@@ -12,16 +12,7 @@ import com.google.gson.annotations.SerializedName;
  *
  */
 public class RecommendInfo {
-    private int code;
     private List<ResultBean> result;
-
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
 
     public List<ResultBean> getResult() {
         return result;

@@ -3,6 +3,9 @@ package com.justnd.octoryeclient.application;
 import android.app.Application;
 
 public class OctoRyeApplication extends Application {
+    /**
+    * @Fields: 应用对象实例
+    */
     public static OctoRyeApplication mInstance;
 
     @Override

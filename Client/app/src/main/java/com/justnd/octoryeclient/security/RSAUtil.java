@@ -3,6 +3,7 @@ package com.justnd.octoryeclient.security;
 import android.util.Base64;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.security.InvalidKeyException;
@@ -27,7 +28,12 @@ public class RSAUtil {
     /**
     * @Fields: RSA算法标识字符串
     */
-    private static final String RSA_ALGORITHM = "RSA";
+    private final String RSA_ALGORITHM = "RSA";
+    private final String RSA_PROVIDER = "RSA/None/PKCS1Padding";
+
+    private static final int MAX_ENCRYPT_BLOCK = 117;
+
+    private static final int MAX_DECRYPT_BLOCK = 128;
 
     /**
      * @Description: 加载公钥
@@ -36,11 +42,10 @@ public class RSAUtil {
      * @throws
      * @author Justiniano  Email:jiaodian822@163.com
      */
-    public static String loadPublicKeyByFile(String path) throws Exception {
+    public String loadPublicKeyByFile(String path) throws Exception {
         try {
-            BufferedReader br = new BufferedReader(new FileReader(path
-                    + "/publicKey.keystore"));
-            String readLine = null;
+            BufferedReader br = new BufferedReader(new FileReader(path));
+            String readLine;
             StringBuilder sb = new StringBuilder();
             while ((readLine = br.readLine()) != null) {
                 sb.append(readLine);
@@ -62,7 +67,7 @@ public class RSAUtil {
      * @throws Exception
      *             加载公钥时产生的异常
      */
-    public static RSAPublicKey loadPublicKeyByStr(String publicKeyStr)
+    public RSAPublicKey loadPublicKeyByStr(String publicKeyStr)
             throws Exception {
         try {
             byte[] buffer = Base64.decode(publicKeyStr, Base64.DEFAULT);
@@ -89,18 +94,35 @@ public class RSAUtil {
      * @throws Exception
      *             加密过程中的异常信息
      */
-    public static byte[] encrypt(RSAPublicKey publicKey, byte[] plainTextData)
+    public byte[] encrypt(RSAPublicKey publicKey, byte[] plainTextData)
             throws Exception {
         if (publicKey == null) {
             throw new Exception("加密公钥为空, 请设置");
         }
-        Cipher cipher = null;
+        Cipher cipher;
         try {
             // 使用默认RSA
-            cipher = Cipher.getInstance(RSA_ALGORITHM);
+            cipher = Cipher.getInstance(RSA_PROVIDER);
+            // cipher= Cipher.getInstance("RSA", new BouncyCastleProvider());
             cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-            byte[] output = cipher.doFinal(plainTextData);
-            return output;
+            int dataLen = plainTextData.length;
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            int offset = 0;
+            byte[] cache;
+            int i = 0;
+            while (dataLen - offset > 0) {
+                if (dataLen - offset > MAX_ENCRYPT_BLOCK) {
+                    cache = cipher.doFinal(plainTextData, offset, MAX_ENCRYPT_BLOCK);
+                } else {
+                    cache = cipher.doFinal(plainTextData, offset, dataLen - offset);
+                }
+                out.write(cache, 0, cache.length);
+                i++;
+                offset = i * MAX_ENCRYPT_BLOCK;
+            }
+            byte[] encryptBytes = out.toByteArray();
+            out.close();
+            return encryptBytes;
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("无此加密算法");
         } catch (NoSuchPaddingException e) {
@@ -126,19 +148,35 @@ public class RSAUtil {
      * @throws Exception
      *             解密过程中的异常信息
      */
-    public static byte[] decrypt(RSAPublicKey publicKey, byte[] cipherData)
+    public byte[] decrypt(RSAPublicKey publicKey, byte[] cipherData)
             throws Exception {
         if (publicKey == null) {
             throw new Exception("解密公钥为空, 请设置");
         }
-        Cipher cipher = null;
+        Cipher cipher;
         try {
             // 使用默认RSA
-            cipher = Cipher.getInstance(RSA_ALGORITHM);
+            cipher = Cipher.getInstance(RSA_PROVIDER);
             // cipher= Cipher.getInstance("RSA", new BouncyCastleProvider());
             cipher.init(Cipher.DECRYPT_MODE, publicKey);
-            byte[] output = cipher.doFinal(cipherData);
-            return output;
+            int dataLen = cipherData.length;
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            int offset = 0;
+            byte[] cache;
+            int i = 0;
+            while (dataLen - offset > 0) {
+                if (dataLen - offset > MAX_DECRYPT_BLOCK) {
+                    cache = cipher.doFinal(cipherData, offset, MAX_DECRYPT_BLOCK);
+                } else {
+                    cache = cipher.doFinal(cipherData, offset, dataLen - offset);
+                }
+                out.write(cache, 0, cache.length);
+                i++;
+                offset = i * MAX_DECRYPT_BLOCK;
+            }
+            byte[] plainBytes = out.toByteArray();
+            out.close();
+            return plainBytes;
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("无此解密算法");
         } catch (NoSuchPaddingException e) {

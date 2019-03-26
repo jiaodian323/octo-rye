@@ -6,7 +6,7 @@
 * @EMail jiaodian822@163.com 
 * @date 2019年1月27日 上午11:34:31  
 */
-package com.justnd.octoryeserver.beans;
+package com.justnd.octoryeserver.beans.recommend;
 
 /** 
 * @ClassName: ArticleDetailBean 

@@ -15,7 +15,6 @@ import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,6 +23,7 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.justnd.octoryeserver.dao.UserDao;
 import com.justnd.octoryeserver.domain.User;
+import com.justnd.octoryeserver.servlet.base.BaseServlet;
 
 import net.sf.json.JSONObject;
 
@@ -35,7 +35,7 @@ import net.sf.json.JSONObject;
  * 
  */
 @WebServlet(name = "LoginServlet", urlPatterns=("/user/login"))
-public class LoginServlet extends HttpServlet {
+public class LoginServlet extends BaseServlet {
 	private static final long serialVersionUID = -8874223897408260892L;
 
 	@Autowired

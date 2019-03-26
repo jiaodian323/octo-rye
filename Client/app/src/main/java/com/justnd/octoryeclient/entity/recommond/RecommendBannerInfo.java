@@ -3,6 +3,7 @@ package com.justnd.octoryeclient.entity.recommond;
 import java.util.List;
 
 public class RecommendBannerInfo {
+
     private int code;
     private List<DataBean> data;
 
@@ -21,7 +22,6 @@ public class RecommendBannerInfo {
     public void setData(List<DataBean> data) {
         this.data = data;
     }
-
 
     public static class DataBean {
         private String title;

@@ -1,20 +1,29 @@
-package com.justnd.octoryeclient.entity.user;
+/**   
+* @Title: UserInfo.java 
+* @Package com.justnd.octoryeserver.beans.user 
+* @Description: TODO
+* @author JD 
+* @EMail jiaodian822@163.com 
+* @date 2019年3月22日 下午4:41:55  
+*/
+package com.justnd.octoryeserver.beans.user;
 
-/**
- * @author Justiniano  Email:jiaodian822@163.com
- * @Description:
- * @throws
- * @time 2019/3/8 0008 下午 6:01
- */
-public class UserInfo {
-    private String id;
+/** 
+* @ClassName: UserInfo 
+* @Description: TODO
+* @author JD
+* @date 2019年3月22日 下午4:41:55 
+*  
+*/
+public class UserInfoBean {
+	private String id;
     private String userName;
     private String phoneNumber;
     private String createDate;
     private String profilePicture;
     private String wechat;
     private String weibo;
-    private MobileInfo mobileInfo;
+    private MobileInfoBean mobileInfo;
 
     public String getId() {
         return id;
@@ -72,11 +81,11 @@ public class UserInfo {
         this.weibo = weibo;
     }
 
-    public MobileInfo getMobileInfo() {
+    public MobileInfoBean getMobileInfo() {
         return mobileInfo;
     }
 
-    public void setMobileInfo(MobileInfo mobileInfo) {
+    public void setMobileInfo(MobileInfoBean mobileInfo) {
         this.mobileInfo = mobileInfo;
     }
 }

@@ -24,6 +24,13 @@ public class GsonUtil {
 	
 	private GsonUtil() {}
 	
+	/** 
+	* @Title: getInstance 获取Gson实例
+	* @Description: TODO
+	* @param @return
+	* @return Gson
+	* @throws 
+	*/
 	private static Gson getInstance() {
 		if (gsonInstance == null) {
 			gsonInstance = new GsonBuilder()
@@ -38,7 +45,28 @@ public class GsonUtil {
 		return gsonInstance;
 	}
 	
-	public static String toJsonString(Object obj) {
+	/** 
+	* @Title: objectToJsonStr 将bean类转换为Json字符串
+	* @Description: TODO
+	* @param @param obj
+	* @param @return
+	* @return String
+	* @throws 
+	*/
+	public static String objectToJsonStr(Object obj) {
 		return getInstance().toJson(obj);
+	}
+	
+	/** 
+	* @Title: jsonStrToObject 将json字符串转换成相应对象类
+	* @Description: TODO
+	* @param @param jsonStr
+	* @param @param t
+	* @param @return
+	* @return T
+	* @throws 
+	*/
+	public static <T> T jsonStrToObject(String jsonStr, Class<T> t){
+        return getInstance().fromJson(jsonStr, t);
 	}
 }
