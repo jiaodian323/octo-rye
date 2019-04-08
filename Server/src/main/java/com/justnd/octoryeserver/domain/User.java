@@ -43,6 +43,9 @@ public class User implements Serializable{
 	@Column(name="username", nullable=false, length=50, unique=true)
 	private String userName;
 	
+	@Column(name="nickname",length=20,unique=true)
+	private String nickName;
+	
 	@Column(name="pass", nullable=false)
 	private String password;
 
@@ -58,6 +61,9 @@ public class User implements Serializable{
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "createTime")
 	private Date createTime;
+	
+	@Column(name = "createTimeStamp")
+	private String createTimeStamp;
 	
 	/**
 	 * @return the id
@@ -85,6 +91,20 @@ public class User implements Serializable{
 	 */
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	/**
+	 * @return the nickName
+	 */
+	public String getNickName() {
+		return nickName;
+	}
+
+	/**
+	 * @param nickName the nickName to set
+	 */
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 
 	/**
@@ -141,5 +161,19 @@ public class User implements Serializable{
 	 */
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+
+	/**
+	 * @return the createTimeStamp
+	 */
+	public String getCreateTimeStamp() {
+		return createTimeStamp;
+	}
+
+	/**
+	 * @param createTimeStamp the createTimeStamp to set
+	 */
+	public void setCreateTimeStamp(String createTimeStamp) {
+		this.createTimeStamp = createTimeStamp;
 	}
 }

@@ -1,9 +1,9 @@
 package com.justnd.octoryeclient.module.activity;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -11,10 +11,11 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.justnd.octoryeclient.R;
-import com.justnd.octoryeclient.module.dicovery.DiscoveryFragment;
 import com.justnd.octoryeclient.module.base.RxBaseActivity;
+import com.justnd.octoryeclient.module.dicovery.DiscoveryFragment;
 import com.justnd.octoryeclient.module.home.HomeRecommendedFragment;
 import com.justnd.octoryeclient.module.user.LoginModeFragment;
+import com.justnd.octoryeclient.module.user.MeFragment;
 import com.justnd.octoryeclient.utils.ToastUtil;
 
 import butterknife.BindView;
@@ -28,12 +29,17 @@ public class MainActivity extends RxBaseActivity {
     BottomNavigationView mNavigationView;
 
     private HomeRecommendedFragment mRecommendedFragment;
-
     private Fragment currentFragment;
 
-    private static final String HOME_TAG = "HomeFragment";
-    private static final String DISCOVER_TAG = "DiscoverFragment";
-    private static final String MY_TAG = "MyFragment";
+    /**
+    * @Fields: 是否已登录标志位 0:未登录；1：已登录
+    */
+    private int mLoginStatus = 0;
+
+    public static final String HOME_TAG = "HomeFragment";
+    public static final String DISCOVER_TAG = "DiscoverFragment";
+    public static final String LOGIN_MODE_TAG = "LoginModeFragment";
+    public static final String ME_TAG = "MeFragment";
 
     private long exitTime;
 
@@ -69,7 +75,12 @@ public class MainActivity extends RxBaseActivity {
                         break;
                     case R.id.navigation_my:
                         mToolbarMain.setVisibility(View.GONE);
-                        replaceFragment(MY_TAG);
+                        if (mLoginStatus == 1)
+                            // 已登录
+                            replaceFragment(ME_TAG);
+                        else
+                            // 未登录
+                            replaceFragment(LOGIN_MODE_TAG);
                         break;
                 }
                 return true;
@@ -87,7 +98,7 @@ public class MainActivity extends RxBaseActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.home_fragment_container, mRecommendedFragment, HOME_TAG)
+                .add(R.id.fragment_container, mRecommendedFragment, HOME_TAG)
                 .addToBackStack(null)
                 .show(mRecommendedFragment)
                 .commit();
@@ -109,15 +120,40 @@ public class MainActivity extends RxBaseActivity {
                 case DISCOVER_TAG:
                     currentFragment = DiscoveryFragment.newInstance();
                     break;
-                case MY_TAG:
+                case LOGIN_MODE_TAG:
                     currentFragment = LoginModeFragment.newInstance();
                     break;
+                case ME_TAG:
+                    currentFragment = MeFragment.newInstance();
+                    break;
             }
-            getSupportFragmentManager().beginTransaction().add(R.id.home_fragment_container,
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,
                     currentFragment, tag).commit();
         } else {
             getSupportFragmentManager().beginTransaction().show(currentFragment).commit();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+	protected void onNewIntent(android.content.Intent intent) {
+		super.onNewIntent(intent);
+		setIntent(intent);
+        openMeFragment();
+	}
+
+	private void openMeFragment() {
+        int tagValue = getIntent().getIntExtra(ME_TAG, 0);
+        if (tagValue == 2) {
+            // 打开个人中心
+            replaceFragment(ME_TAG);
+        }
+
+        mLoginStatus = 1;      // 登录状态标志位置为已登录
     }
 
     @Override

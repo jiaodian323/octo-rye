@@ -62,11 +62,19 @@ public class ConstantUtil {
 	*/ 
 	public static final String PRIVATE_KEY_FILE_NAME = "\\privateKey.keystore";
 	
-	public static final String PHONE_NUMBER_ALREADY_SIGNED_UP = "该手机已被注册";
+	public static final String PHONE_NUMBER_ALREADY_SIGNED_UP = "该手机已被注册，不能重复注册";
 	
-	public static final String SUCCUSS_SEND_AUTH_SMS = "成功发送验证码短信";
+	public static final String SUCCESS_SEND_AUTH_SMS = "成功发送验证码短信";
 	
-	public static final String SUCCUSS_SEND_RECOMMENDED = "成功推送热门";
+	public static final String SUCCESS_SEND_RECOMMENDED = "成功推送热门";
 	
-	public static final String SUCCUSS_SEND_ARTICLE_DETAIL = "成功查询文章内容";
+	public static final String SUCCESS_SEND_ARTICLE_DETAIL = "成功查询文章内容";
+	
+	public static final String SUCCESS_SIGN_UP = "注册成功";
+	
+	public static final String FAILED_SIGN_UP = "注册失败";
+	
+	public static final String SUCCESS_LOGIN = "登录成功";
+	
+	public static final String FAILED_LOGIN = "登录失败";
 }

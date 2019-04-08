@@ -36,14 +36,21 @@
     <dimen name="login_mode_btn_text_size">16sp</dimen>
     <dimen name="login_mode_extra_margin">15dp</dimen>
 
+    <!--login activity-->
+    <dimen name="login_btn_margin_top">30dp</dimen>
+
     <!--sign up activity-->
+    <dimen name="sign_up_vertical_margin">20dp</dimen>
     <dimen name="sign_up_horizontal_margin">60dp</dimen>
-    <dimen name="sign_up_title_image_height">200dp</dimen>
+    <dimen name="sign_up_title_image_height">180dp</dimen>
+    <dimen name="sign_up_confirm_btn_margin_top">120dp</dimen>
+    <dimen name="sign_up_confirm_horizontal_margin">40dp</dimen>
     <dimen name="next_button_text_size">18sp</dimen>
     <dimen name="next_button_margin_top">50dp</dimen>
     <dimen name="agreement_text_size">12sp</dimen>
-    <dimen name="drawable_padding_size">20dp</dimen>
-    <dimen name="send_auth_code_text_size">15sp</dimen>
+    <dimen name="drawable_padding_size">10dp</dimen>
+    <dimen name="pass_edit_padding_end_size">35dp</dimen>
+    <dimen name="send_auth_code_text_size">16sp</dimen>
 
     <!--open source-->
     <dimen name="default_general_margin">8dp</dimen>
@@ -96,4 +103,6 @@
     <dimen name="author_info_intro_size">12sp</dimen>
     <dimen name="focus_width">50dp</dimen>
     <dimen name="focus_height">35dp</dimen>
+    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>

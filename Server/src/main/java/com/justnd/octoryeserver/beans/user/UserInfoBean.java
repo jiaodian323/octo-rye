@@ -18,6 +18,7 @@ package com.justnd.octoryeserver.beans.user;
 public class UserInfoBean {
 	private String id;
     private String userName;
+    private String nickName;
     private String phoneNumber;
     private String createDate;
     private String profilePicture;
@@ -39,6 +40,14 @@ public class UserInfoBean {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     public String getPhoneNumber() {

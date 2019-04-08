@@ -57,7 +57,7 @@ public class SignUpCheckServlet extends BaseServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("执行doPost()方法");
-		response.setContentType("application/octet-stream;charset=utf-8");
+		response.setContentType("text/json;charset=utf-8");
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 

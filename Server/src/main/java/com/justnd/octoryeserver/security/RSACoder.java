@@ -51,12 +51,24 @@ public class RSACoder {
 	 */
 	private static final int KEY_SIZE = 1024;
 
+	/** 
+	* @Fields rsaPublicKeyStr : TODO 保存公钥字符串字段
+	*/ 
 	public static String rsaPublicKeyStr;
 
+	/** 
+	* @Fields rsaPrivateKeyStr : TODO 保存私钥字符串字段
+	*/ 
 	public static String rsaPrivateKeyStr;
 
+	/** 
+	* @Fields MAX_ENCRYPT_BLOCK : TODO 分段加密，字节块大小
+	*/ 
 	private static final int MAX_ENCRYPT_BLOCK = 117;
 
+	/** 
+	* @Fields MAX_DECRYPT_BLOCK : TODO 分段解密，字节块大小
+	*/ 
 	private static final int MAX_DECRYPT_BLOCK = 128;
 
 	/**

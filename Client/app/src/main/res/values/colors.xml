@@ -34,6 +34,7 @@
     <!--字体-->
     <color name="font_normal">#555555</color>
     <color name="font_tint">#777777</color>
+    <color name="font_tint_2">#B7B7B7</color>
 
     <!--图标-->
     <color name="icon_normal">#272438</color>

@@ -2,18 +2,12 @@ package com.justnd.octoryeclient.module.user;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 
 import com.justnd.octoryeclient.R;
-import com.justnd.octoryeclient.module.activity.SignUpActivity;
+import com.justnd.octoryeclient.module.activity.LoginActivity;
 import com.justnd.octoryeclient.module.base.RxLazyFragment;
 
 import butterknife.BindView;
@@ -62,7 +56,7 @@ public class LoginModeFragment extends RxLazyFragment {
     View.OnClickListener phoneSignUpListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            SignUpActivity.launch((Activity) mContext);
+            LoginActivity.launch((Activity) mContext);
         }
     };
 }

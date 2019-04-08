@@ -9,6 +9,7 @@ package com.justnd.octoryeclient.entity.user;
 public class UserInfo {
     private String id;
     private String userName;
+    private String nickName;
     private String phoneNumber;
     private String createDate;
     private String profilePicture;
@@ -30,6 +31,14 @@ public class UserInfo {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     public String getPhoneNumber() {

@@ -38,6 +38,7 @@
         <item name="colorControlHighlight">@color/white</item>
         <item name="android:windowTranslucentStatus">true</item>
     </style>
+
     <style name="StartTheme" parent="AppTheme">
         <item name="android:windowBackground">@mipmap/splash_background</item>
     </style>

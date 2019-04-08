@@ -85,7 +85,7 @@ public class RecommendServlet extends BaseServlet {
 
 		BaseBean<RecommendBean> baseBean = new BaseBean<RecommendBean>();
 		baseBean.setCode(ConstantUtil.STATUS_CODE_SUCCESS);
-		baseBean.setMessage(ConstantUtil.SUCCUSS_SEND_RECOMMENDED);
+		baseBean.setMessage(ConstantUtil.SUCCESS_SEND_RECOMMENDED);
 		
 		RecommendBean dataBean = new RecommendBean();
 		List<RecommendBean.ResultBean> results = new ArrayList<>();

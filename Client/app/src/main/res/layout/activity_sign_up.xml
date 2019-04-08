@@ -18,8 +18,7 @@
             android:fitsSystemWindows="true"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleTextAppearance="@style/CollapsingToolbarTitleStyle.About"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:expandedTitleTextAppearance="@style/CollapsingToolbarTitleStyle.About">
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -68,6 +67,7 @@
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginBottom="8dp"
             android:visibility="gone" />
 
@@ -96,6 +96,7 @@
                         android:hint="@string/prompt_phone_number"
                         android:inputType="phone"
                         android:maxLines="1"
+                        android:maxLength="18"
                         android:singleLine="true" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -122,6 +123,7 @@
                             android:imeOptions="actionUnspecified"
                             android:inputType="number"
                             android:maxLines="1"
+                            android:maxLength="10"
                             android:singleLine="true" />
 
                         <TextView
@@ -131,7 +133,8 @@
                             android:layout_gravity="end|center_vertical"
                             android:clickable="true"
                             android:text="@string/send_auth_code"
-                            android:textSize="@dimen/send_auth_code_text_size"/>
+                            android:textSize="@dimen/send_auth_code_text_size"
+                            android:textColor="@color/mask_tags_4"/>
                     </FrameLayout>
 
                 </android.support.design.widget.TextInputLayout>
@@ -152,8 +155,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/default_general_margin"
                     android:gravity="center"
-                    android:text="@string/user_service_agreement_text"
+                    android:text="@string/sign_up_user_service_agreement"
                     android:textSize="@dimen/agreement_text_size"
                     android:textColor="@color/font_tint"/>
 

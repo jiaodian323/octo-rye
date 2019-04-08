@@ -85,7 +85,7 @@ public class ArticleDetailServlet extends BaseServlet {
 		
 		BaseBean<ArticleDetailBean> baseBean = new BaseBean<ArticleDetailBean>();
 		baseBean.setCode(ConstantUtil.STATUS_CODE_SUCCESS);
-		baseBean.setMessage(ConstantUtil.SUCCUSS_SEND_ARTICLE_DETAIL);
+		baseBean.setMessage(ConstantUtil.SUCCESS_SEND_ARTICLE_DETAIL);
 		
 		ArticleDetailBean dataBean = new ArticleDetailBean();
 		dataBean.setType(article.getType().toString());

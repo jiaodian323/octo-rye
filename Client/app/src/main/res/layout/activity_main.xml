@@ -11,7 +11,7 @@
         android:id="@+id/toolbar_main"
         android:layout_width="match_parent"
         android:layout_height="@dimen/default_toolbar_height"
-        android:background="?attr/colorPrimary"
+        android:background="@color/background_light"
         app:popupTheme="@style/AppTheme.PopupOverlay">
         <TextView
             android:id="@+id/toolbar_main_title"
@@ -24,7 +24,7 @@
     </android.support.v7.widget.Toolbar>
 
     <FrameLayout
-        android:id="@+id/home_fragment_container"
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/navigation"

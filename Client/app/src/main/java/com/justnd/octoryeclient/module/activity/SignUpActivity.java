@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -50,6 +51,13 @@ public class SignUpActivity extends RxBaseActivity {
     TextView mSendAuthCode;
     @BindView(R.id.next_step_btn)
     Button mNextStep;
+    @BindView(R.id.sign_up_progress)
+    ProgressBar mProgress;
+
+    /**
+     * @Fields: 向设置密码界面传递电话号码使用该键
+     */
+    public static final String PHONE_EXTRA_KEY = "phoneNumber";
 
     /**
      * @Fields: 重发验证码定时器
@@ -69,13 +77,6 @@ public class SignUpActivity extends RxBaseActivity {
 
     @Override
     public void initViews(Bundle savedInstanceState) {
-        Glide.with(SignUpActivity.this)
-                .load(R.drawable.sign_up_title_img)
-                .centerCrop()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .dontAnimate()
-                .into(mTitleImage);
-
         mPhoneNumber.addTextChangedListener(changedWatcher);
         mAuthCode.addTextChangedListener(changedWatcher);
 
@@ -84,18 +85,25 @@ public class SignUpActivity extends RxBaseActivity {
             if (!phoneNumberLegalCheck(phoneStr))
                 return;
 
-            signUpCheck(phoneStr.toString());
+            signUpCheck(phoneStr);
         });
 
         mNextStep.setOnClickListener(v -> {
+            String phoneStr = mPhoneNumber.getText().toString();
             // ① 再次验证文本框里手机号是否合法
-            if (!phoneNumberLegalCheck(mPhoneNumber.getText().toString()))
+            if (!phoneNumberLegalCheck(phoneStr))
                 return;
-            // ② 查询数据库，手机号是否已注册，如已注册，Toast提示该手机已存在
+            // ② 再次查询数据库，手机号是否已注册，如已注册，Toast提示该手机已存在
+//            signUpCheck(phoneStr.toString());
             // ③ 校验验证码是否正确
-            if (SMSUtil.isAuthCodeCorrect(mPhoneNumber.getText().toString(), mAuthCode.getText()
+            if (SMSUtil.isAuthCodeCorrect(phoneStr, mAuthCode.getText()
                     .toString())) {
-
+                // 启动密码设置界面
+                Intent intent = new Intent(SignUpActivity.this, SignUpConfirmActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra(PHONE_EXTRA_KEY, phoneStr);
+                SignUpActivity.this.startActivity(intent);
+//                SignUpConfirmActivity.launch(this);
             } else {
                 ToastUtil.ShortToast(R.string.error_incorrect_auth_code);
             }
@@ -109,6 +117,14 @@ public class SignUpActivity extends RxBaseActivity {
         getSupportActionBar().setHomeButtonEnabled(true);  // 设置返回键可用
 
         mToolbar.setNavigationOnClickListener(v -> finish());
+
+        // 设置标题栏背景图
+        Glide.with(this)
+                .load(R.drawable.sign_up_title_img)
+                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .dontAnimate()
+                .into(mTitleImage);
     }
 
     public static void launch(Activity activity) {
@@ -117,11 +133,11 @@ public class SignUpActivity extends RxBaseActivity {
         activity.startActivity(intent);
     }
 
-    /** 
+    /**
     * @Description: 注册检测，如果手机已注册，则终止验证码流程，如未注册则继续
     * @param phoneNumber 发起注册的手机号
     * @return
-    * @throws 
+    * @throws
     * @author Justiniano  Email:jiaodian822@163.com
     */
     private void signUpCheck(String phoneNumber) {

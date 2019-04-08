@@ -1,6 +1,8 @@
 package com.justnd.octoryeclient.network.api;
 
 import com.justnd.octoryeclient.entity.base.BaseBean;
+import com.justnd.octoryeclient.entity.user.LoginBean;
+import com.justnd.octoryeclient.entity.user.SignUpInfo;
 import com.justnd.octoryeclient.entity.user.UserInfo;
 
 import retrofit2.http.Body;
@@ -18,14 +20,31 @@ public interface UserService {
     
     /** 
     * @Description: 使用手机号注册
-    * @param userJson 用户信息bean
+    * @param signUp 注册信息bean
     * @return 
     * @throws 
     * @author Justiniano  Email:jiaodian822@163.com
     */
     @POST("s/user/register/signup")
-    Observable<BaseBean<UserInfo>> signUp(@Body UserInfo userJson);
+    Observable<BaseBean> signUp(@Body SignUpInfo signUp);
 
+    /**
+    * @Description: 注册查询
+    * @param
+    * @return
+    * @throws
+    * @author Justiniano  Email:jiaodian822@163.com
+    */
     @POST("s/user/register/signupcheck")
-    Observable<BaseBean> signUpCheck(@Body UserInfo userJson);
+    Observable<BaseBean> signUpCheck(@Body UserInfo user);
+
+    /** 
+    * @Description: 登录请求
+    * @param
+    * @return
+    * @throws 
+    * @author Justiniano  Email:jiaodian822@163.com
+    */
+    @POST("s/user/login")
+    Observable<BaseBean> login(@Body LoginBean login);
 }

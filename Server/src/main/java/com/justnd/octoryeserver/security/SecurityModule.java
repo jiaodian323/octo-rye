@@ -19,8 +19,6 @@ import java.security.interfaces.RSAPublicKey;
 *  
 */
 public class SecurityModule {
-	public static String rsaPublicKeyStr;
-	public static String rsaPrivateKeyStr;
 	public RSAPublicKey rsaPublicKey;
 	public RSAPrivateKey rsaPrivateKey;
 	

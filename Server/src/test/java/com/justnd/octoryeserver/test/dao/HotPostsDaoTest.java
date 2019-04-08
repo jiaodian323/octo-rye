@@ -68,7 +68,7 @@ public class HotPostsDaoTest extends AbstractJUnit4SpringContextTests {
 		Date timeA;
 		try {
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-			timeA = df.parse("2019-3-26");
+			timeA = df.parse("2019-4-30");
 			hotPost.setPostDate(timeA);
 		} catch (ParseException e) {
 			e.printStackTrace();

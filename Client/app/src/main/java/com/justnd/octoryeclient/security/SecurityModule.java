@@ -3,9 +3,11 @@ package com.justnd.octoryeclient.security;
 import android.util.Log;
 
 import com.justnd.octoryeclient.R;
+import com.justnd.octoryeclient.utils.ConstantUtil;
 import com.justnd.octoryeclient.utils.ToastUtil;
 
 import java.security.interfaces.RSAPublicKey;
+import java.util.regex.Pattern;
 
 /**
  * @author Justiniano  Email:jiaodian822@163.com
@@ -122,5 +124,18 @@ public class SecurityModule {
 
     private static byte charToByte(char c) {
         return (byte) "0123456789ABCDEF".indexOf(c);
+    }
+
+    /**
+    * @Description: 判断字符串是否符合密码规则
+    * @param pass
+    * @return
+    * @throws
+    * @author Justiniano  Email:jiaodian822@163.com
+    */
+    public static boolean isPassCorrect(String pass) {
+        return Pattern.compile(ConstantUtil.PASS_REGEX)
+                .matcher(pass)
+                .matches();
     }
 }

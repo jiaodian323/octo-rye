@@ -21,9 +21,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
+import com.justnd.octoryeserver.beans.base.BaseBean;
+import com.justnd.octoryeserver.beans.user.LoginBean;
 import com.justnd.octoryeserver.dao.UserDao;
 import com.justnd.octoryeserver.domain.User;
+import com.justnd.octoryeserver.security.MD5Coder;
 import com.justnd.octoryeserver.servlet.base.BaseServlet;
+import com.justnd.octoryeserver.util.ConstantUtil;
+import com.justnd.octoryeserver.util.GsonUtil;
 
 import net.sf.json.JSONObject;
 
@@ -34,7 +39,7 @@ import net.sf.json.JSONObject;
  * @date 2018年12月2日 下午9:07:01
  * 
  */
-@WebServlet(name = "LoginServlet", urlPatterns=("/user/login"))
+@WebServlet(name = "LoginServlet", urlPatterns=("/s/user/login"))
 public class LoginServlet extends BaseServlet {
 	private static final long serialVersionUID = -8874223897408260892L;
 
@@ -49,16 +54,6 @@ public class LoginServlet extends BaseServlet {
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		// this.userDao = new UserDaoHibernate4();
-		// WebApplicationContext appCtx =
-		// WebApplicationContextUtils.getWebApplicationContext(getServletContext());
-		//
-		// userDao = (UserDao)
-		// BeanFactoryUtils.beanOfTypeIncludingAncestors(appCtx, UserDao.class);
-		//
-		// session = (SessionProvider)
-		// BeanFactoryUtils.beanOfTypeIncludingAncestors(appCtx,
-		// SessionProvider.class);
 		System.out.println("初始化LoginServlet");
 		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
 				getServletContext());
@@ -75,36 +70,62 @@ public class LoginServlet extends BaseServlet {
 		response.setCharacterEncoding("utf-8");
 
 		try (PrintWriter out = response.getWriter()) {
+			
+			String bodyStr = getRequestBodyStr(request);
+			LoginBean login = GsonUtil.jsonStrToObject(bodyStr, LoginBean.class);
 
 			// 获得请求中传来的用户名和密码
-			String username = request.getParameter("Username").trim();
-			String password = request.getParameter("Password").trim();
-			System.out.println("Username=" + username + ",password=" + password);
+			String phoneNumber = login.getPhoneNumber();
+			String password = login.getPassword();
+			System.out.println("PhoneNumber=" + phoneNumber + ",password=" + password);
 
 			// 密码验证结果
-			Boolean verifyResult = verifyLogin(username, password);
+			Boolean verifyResult = verifyLogin(phoneNumber, password);
 
-			Map<String, String> params = new HashMap<>();
-			JSONObject jsonObject = new JSONObject();
-
+			@SuppressWarnings("rawtypes")
+			BaseBean resBean = new BaseBean();
+			
 			if (verifyResult) {
-				params.put("Result", "success");
+				resBean.setCode(1);
+				resBean.setMessage(ConstantUtil.SUCCESS_LOGIN);
 			} else {
-				params.put("Result", "failed");
+				resBean.setCode(0);
+				resBean.setMessage(ConstantUtil.FAILED_LOGIN);
 			}
-
-			jsonObject.put("params", params);
-			out.write(jsonObject.toString());
+			
+			out.write(GsonUtil.objectToJsonStr(resBean));
 			out.close();
-			// request.setAttribute("jsonObject", jsonObject.toString());
 		}
 	}
 
-	private Boolean verifyLogin(String userName, String password) {
-		User user = userDao.findByUsername(userName);
+	/** 
+	* @Title: verifyLogin 
+	* @Description: TODO 查询数据库，对比密码哈希码
+	* @param @param phone
+	* @param @param password
+	* @param @return
+	* @return Boolean
+	* @throws 
+	*/
+	private Boolean verifyLogin(String phone, String password) {
+		User user = userDao.findByPhoneNumber(phone);
+		if (user != null) {
+			System.out.println("in database:phone=" + user.getPhoneNumber() + ",pass=" + user.getPassword()
+			+ ",createTime=" + user.getCreateTimeStamp());
+			String createTime = user.getCreateTimeStamp();
+			String checkedStr = "";
+			try {
+				checkedStr = MD5Coder.encode(password, createTime);
+				System.out.println("checkedStr=" + checkedStr);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			System.out.println("In dataBase=" + user.getPassword());
+			
+			return checkedStr.equals(user.getPassword());
+		}
 
-		// 账户密码验证
-		return null != user && password.equals(user.getPassword());
+		return false;
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
