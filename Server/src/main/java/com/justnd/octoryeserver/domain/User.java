@@ -46,6 +46,9 @@ public class User implements Serializable{
 	@Column(name="nickname",length=20,unique=true)
 	private String nickName;
 	
+	@Column(name = "sex")
+	private int sex;
+	
 	@Column(name="pass", nullable=false)
 	private String password;
 
@@ -64,6 +67,9 @@ public class User implements Serializable{
 	
 	@Column(name = "createTimeStamp")
 	private String createTimeStamp;
+	
+	@Column(name = "background")
+	private String background;
 	
 	/**
 	 * @return the id
@@ -175,5 +181,33 @@ public class User implements Serializable{
 	 */
 	public void setCreateTimeStamp(String createTimeStamp) {
 		this.createTimeStamp = createTimeStamp;
+	}
+
+	/**
+	 * @return the sex
+	 */
+	public int getSex() {
+		return sex;
+	}
+
+	/**
+	 * @param sex the sex to set
+	 */
+	public void setSex(int sex) {
+		this.sex = sex;
+	}
+
+	/**
+	 * @return the background
+	 */
+	public String getBackground() {
+		return background;
+	}
+
+	/**
+	 * @param background the background to set
+	 */
+	public void setBackground(String background) {
+		this.background = background;
 	}
 }

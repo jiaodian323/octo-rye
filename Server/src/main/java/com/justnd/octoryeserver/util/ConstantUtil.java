@@ -77,4 +77,6 @@ public class ConstantUtil {
 	public static final String SUCCESS_LOGIN = "登录成功";
 	
 	public static final String FAILED_LOGIN = "登录失败";
+	
+	public static final String SUCCESS_USER_INFO_QUERY = "成功查询用户信息";
 }

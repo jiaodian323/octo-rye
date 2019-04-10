@@ -32,7 +32,7 @@ public class RetrofitHelper {
     private static OkHttpClient mOkHttpClient;
 
     /**
-     * @Fields: 服务器根地址
+     * @Fields: 云服务器根地址
      */
     private static String DEFAULT_BASE_URL = ApiConstants.CLOUD_SERVER_URL;
     /**

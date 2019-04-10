@@ -6,7 +6,9 @@ import com.justnd.octoryeclient.entity.user.SignUpInfo;
 import com.justnd.octoryeclient.entity.user.UserInfo;
 
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -26,7 +28,7 @@ public interface UserService {
     * @author Justiniano  Email:jiaodian822@163.com
     */
     @POST("s/user/register/signup")
-    Observable<BaseBean> signUp(@Body SignUpInfo signUp);
+    Observable<BaseBean<Integer>> signUp(@Body SignUpInfo signUp);
 
     /**
     * @Description: 注册查询
@@ -46,5 +48,8 @@ public interface UserService {
     * @author Justiniano  Email:jiaodian822@163.com
     */
     @POST("s/user/login")
-    Observable<BaseBean> login(@Body LoginBean login);
+    Observable<BaseBean<Integer>> login(@Body LoginBean login);
+
+    @GET("s/user/info")
+    Observable<BaseBean<UserInfo>> getUserInfo(@Query("userId") int userId);
 }

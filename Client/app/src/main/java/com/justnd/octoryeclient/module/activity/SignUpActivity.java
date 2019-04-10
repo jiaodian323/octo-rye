@@ -85,7 +85,7 @@ public class SignUpActivity extends RxBaseActivity {
             if (!phoneNumberLegalCheck(phoneStr))
                 return;
 
-            signUpCheck(phoneStr);
+            preSendAuthCodeCheck(phoneStr);
         });
 
         mNextStep.setOnClickListener(v -> {
@@ -94,19 +94,7 @@ public class SignUpActivity extends RxBaseActivity {
             if (!phoneNumberLegalCheck(phoneStr))
                 return;
             // ② 再次查询数据库，手机号是否已注册，如已注册，Toast提示该手机已存在
-//            signUpCheck(phoneStr.toString());
-            // ③ 校验验证码是否正确
-            if (SMSUtil.isAuthCodeCorrect(phoneStr, mAuthCode.getText()
-                    .toString())) {
-                // 启动密码设置界面
-                Intent intent = new Intent(SignUpActivity.this, SignUpConfirmActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra(PHONE_EXTRA_KEY, phoneStr);
-                SignUpActivity.this.startActivity(intent);
-//                SignUpConfirmActivity.launch(this);
-            } else {
-                ToastUtil.ShortToast(R.string.error_incorrect_auth_code);
-            }
+            signUpCheck(phoneStr.toString());
         });
     }
 
@@ -134,8 +122,8 @@ public class SignUpActivity extends RxBaseActivity {
     }
 
     /**
-    * @Description: 注册检测，如果手机已注册，则终止验证码流程，如未注册则继续
-    * @param phoneNumber 发起注册的手机号
+    * @Description: 是否已注册检测
+    * @param
     * @return
     * @throws
     * @author Justiniano  Email:jiaodian822@163.com
@@ -149,17 +137,68 @@ public class SignUpActivity extends RxBaseActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(s -> {
-                            final boolean isSignedUp = (s.getCode() == 0);
+                            final boolean isSignedUp = (s.getCode() == 1);
 
                             if (isSignedUp) {
-                                // 如未注册，进入发送验证码流程
-                                sendAuthCode(phoneNumber);
-                            } else {
                                 // 如已注册，则Toast提示，并退出流程
                                 ToastUtil.showShort(this, s.getMessage());
+                            } else {
+                                // 如未注册，则进行验证码检验
+                                authCodeCheck(phoneNumber);
                             }
                         },
                         throwable -> ToastUtil.showShort(this, R.string.error_server_connect));
+    }
+
+    /**
+    * @Description: 发送验证码前进行检测，如果手机已注册，则终止发送验证码流程，如未注册则继续
+    * @param phoneNumber 发起注册的手机号
+    * @return
+    * @throws
+    * @author Justiniano  Email:jiaodian822@163.com
+    */
+    private void preSendAuthCodeCheck(String phoneNumber) {
+        UserInfo user = new UserInfo();
+        user.setPhoneNumber(phoneNumber);
+
+        RetrofitHelper.getUserService()
+                .signUpCheck(user)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(s -> {
+                            final boolean isSignedUp = (s.getCode() == 1);
+
+                            if (isSignedUp) {
+                                // 如已注册，则Toast提示，并退出流程
+                                ToastUtil.showShort(this, s.getMessage());
+                            } else {
+                                // 如未注册，进入发送验证码流程
+                                sendAuthCode(phoneNumber);
+                            }
+                        },
+                        throwable -> ToastUtil.showShort(this, R.string.error_server_connect));
+    }
+
+    /**
+    * @Description: 验证码检验
+    * @param
+    * @return
+    * @throws
+    * @author Justiniano  Email:jiaodian822@163.com
+    */
+    private void authCodeCheck(String phoneNumber) {
+        // ③ 校验验证码是否正确
+        if (SMSUtil.isAuthCodeCorrect(phoneNumber, mAuthCode.getText()
+                .toString())) {
+            // 启动密码设置界面
+            Intent intent = new Intent(SignUpActivity.this, SignUpConfirmActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra(PHONE_EXTRA_KEY, phoneNumber);
+            SignUpActivity.this.startActivity(intent);
+            // SignUpConfirmActivity.launch(this);
+        } else {
+            ToastUtil.ShortToast(R.string.error_incorrect_auth_code);
+        }
     }
 
     /**
@@ -169,7 +208,7 @@ public class SignUpActivity extends RxBaseActivity {
      * @Description: 发送验证码
      * @author Justiniano  Email:jiaodian822@163.com
      */
-    public void sendAuthCode(String phoneNumber) {
+    private void sendAuthCode(String phoneNumber) {
         if (!phoneNumberLegalCheck(phoneNumber))
             return;
 

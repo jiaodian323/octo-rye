@@ -7,4 +7,9 @@
         <attr name="border_overlay" format="boolean" />
     </declare-styleable>
 
+    <declare-styleable name="IconView">
+        <attr name="custom_icon" format="reference" />
+        <attr name="custom_name" format="reference" />
+    </declare-styleable>
+
 </resources>

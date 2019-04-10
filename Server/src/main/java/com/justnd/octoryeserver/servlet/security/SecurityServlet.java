@@ -17,8 +17,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.web.context.support.SpringBeanAutowiringSupport;
-
 import com.justnd.octoryeserver.beans.base.BaseBean;
 import com.justnd.octoryeserver.beans.security.SecurityBean;
 import com.justnd.octoryeserver.security.RSACoder;
@@ -42,8 +40,6 @@ public class SecurityServlet extends BaseServlet {
 	public void init() throws ServletException {
 		super.init();
 		System.out.println("初始化SecurityServlet");
-		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
-				getServletContext());
 	}
 
 	@Override

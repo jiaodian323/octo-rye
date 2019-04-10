@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.justnd.octoryeserver.beans.base.BaseBean;
 import com.justnd.octoryeserver.beans.user.UserInfoBean;
@@ -49,8 +48,6 @@ public class SignUpCheckServlet extends BaseServlet {
 	public void init() throws ServletException {
 		super.init();
 		System.out.println("初始化SignUpCheckServlet");
-		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
-				getServletContext());
 	}
 
 	@Override
@@ -71,10 +68,10 @@ public class SignUpCheckServlet extends BaseServlet {
 			@SuppressWarnings("rawtypes")
 			BaseBean resultBean = new BaseBean();
 			if (isSignedUp(phoneNumber)) {
-				resultBean.setCode(1);
+				resultBean.setCode(ConstantUtil.STATUS_CODE_SUCCESS);
 				resultBean.setMessage(ConstantUtil.PHONE_NUMBER_ALREADY_SIGNED_UP);
 			} else {
-				resultBean.setCode(0);
+				resultBean.setCode(ConstantUtil.STATUS_CODE_FAIL);
 			}
 			out.write(GsonUtil.objectToJsonStr(resultBean));
 			out.close();

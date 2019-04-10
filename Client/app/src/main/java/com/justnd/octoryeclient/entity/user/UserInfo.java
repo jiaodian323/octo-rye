@@ -7,21 +7,23 @@ package com.justnd.octoryeclient.entity.user;
  * @time 2019/3/8 0008 下午 6:01
  */
 public class UserInfo {
-    private String id;
+    private int id;
     private String userName;
     private String nickName;
+    private int sex;
     private String phoneNumber;
     private String createDate;
     private String profilePicture;
     private String wechat;
     private String weibo;
+    private String background;
     private MobileInfo mobileInfo;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -39,6 +41,14 @@ public class UserInfo {
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
+    }
+
+    public int getSex() {
+        return sex;
+    }
+
+    public void setSex(int sex) {
+        this.sex = sex;
     }
 
     public String getPhoneNumber() {
@@ -79,6 +89,14 @@ public class UserInfo {
 
     public void setWeibo(String weibo) {
         this.weibo = weibo;
+    }
+
+    public String getBackground() {
+        return background;
+    }
+
+    public void setBackground(String background) {
+        this.background = background;
     }
 
     public MobileInfo getMobileInfo() {

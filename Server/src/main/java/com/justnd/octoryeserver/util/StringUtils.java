@@ -361,4 +361,14 @@ public class StringUtils {
 			return inputUrl;
 		}
 	}
+	
+	/**
+	 * 使用“*”字符替换除后四位的电话号码
+	 **/
+	public static String convertPhoneNumber(String phoneNumber) {
+		String replaceStr = " **** ";
+		String preStr = phoneNumber.substring(0, 3);
+		String backStr = phoneNumber.substring(7, phoneNumber.length());
+		return preStr + replaceStr + backStr;
+	}
 }

@@ -73,8 +73,8 @@ public class SplashActivity extends RxBaseActivity {
                     // 静态变量保存公钥的Base64编码字符串
                     SecurityModule.mRSAPublicKeyStrBase64 = resultBeans.getPublicKeyString();
                     // 测试代码，返回公钥字符串
-                    if (SecurityModule.mRSAPublicKeyStrBase64 != null)
-                    ToastUtil.ShortToast("成功连接服务器，获取公钥");
+//                    if (SecurityModule.mRSAPublicKeyStrBase64 != null)
+//                    ToastUtil.ShortToast("成功连接服务器，获取公钥");
                     },
                         throwable ->  {ToastUtil.ShortToast(R.string.error_server_connect);
                 Log.i("CusRequestConverter", throwable.getMessage());});

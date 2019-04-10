@@ -13,14 +13,20 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.justnd.octoryeclient.R;
+import com.justnd.octoryeclient.entity.base.BaseBean;
 import com.justnd.octoryeclient.entity.user.LoginBean;
+import com.justnd.octoryeclient.entity.user.UserInfo;
 import com.justnd.octoryeclient.module.base.RxBaseActivity;
+import com.justnd.octoryeclient.module.user.MeFragment;
 import com.justnd.octoryeclient.network.RetrofitHelper;
+import com.justnd.octoryeclient.utils.ConstantUtil;
 import com.justnd.octoryeclient.utils.SMSUtil;
 import com.justnd.octoryeclient.utils.ToastUtil;
 
 import butterknife.BindView;
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public class LoginActivity extends RxBaseActivity {
@@ -50,21 +56,27 @@ public class LoginActivity extends RxBaseActivity {
 
                 RetrofitHelper.getUserService()
                         .login(bean)
+                        .compose(bindToLifecycle())
+                        .flatMap(new Func1<BaseBean<Integer>, Observable<BaseBean<UserInfo>>>() {
+                                     @Override
+                                     public Observable<BaseBean<UserInfo>> call(BaseBean<Integer> integerBaseBean) {
+                                         return handleLoginResponse(integerBaseBean);
+                                     }
+                                 }
+                        )
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(s -> {
-                            if (s.getCode() == 1) {
-                                // 登录成功
-                                ToastUtil.ShortToast(R.string.success_login);
+                            if (s.getCode() == ConstantUtil.STATUS_CODE_SUCCESS) {
+                                UserInfo info = s.getData();
 
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 // 约定键值对的值为2时，启动个人中心界面
                                 intent.putExtra(MainActivity.ME_TAG, 2);
+                                intent.putExtra(MeFragment.NICKNAME_KEY, info.getNickName());
+                                intent.putExtra(MeFragment.PROFILE_PIC_KEY, info.getProfilePicture());
+                                intent.putExtra(MeFragment.BACKGROUND_KEY, info.getBackground());
                                 LoginActivity.this.startActivity(intent);
-
-                            } else {
-                                // 登录失败
-                                ToastUtil.ShortToast(R.string.error_phone_or_pass);
                             }
                         });
             }
@@ -133,5 +145,22 @@ public class LoginActivity extends RxBaseActivity {
         }
 
         return true;
+    }
+
+    private Observable<BaseBean<UserInfo>> handleLoginResponse(BaseBean<Integer> integerBaseBean) {
+        if (integerBaseBean.getCode() == ConstantUtil.STATUS_CODE_SUCCESS) {
+            // 登录成功
+            ToastUtil.ShortToast(R.string.success_login);
+            Integer userId = integerBaseBean.getData();
+
+            // 登录成功后，继续向服务器请求该用户信息
+            return RetrofitHelper.getUserService().getUserInfo(userId);
+        } else if (integerBaseBean.getCode() == ConstantUtil.STATUS_CODE_FAIL) {
+            // 登录失败
+            ToastUtil.ShortToast(R.string.error_phone_or_pass);
+            return null;
+        }
+
+        return null;
     }
 }

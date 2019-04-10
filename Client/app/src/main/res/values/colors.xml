@@ -9,7 +9,6 @@
     <color name="color_tab_title">#777777</color>
     <color name="color_detail_extract">#E5E5E5</color>
     <color name="color_transparent">#00000000</color>
-    <color name="color_lv_selector">#aaeeeeee</color>
     <color name="color_title_1">#EEE5DE</color>
     <!--标签背景颜色-->
     <color name="mask_tags_1">#f45170</color>
@@ -27,9 +26,10 @@
     <color name="mask_tags_13">#8968CD</color>
     <color name="mask_tags_14">#7A378B</color>
 
-    <!--open source-->
+    <!--main-->
     <color name="top_bar">#3B3B3B</color>
-    <color name="main_background">#FFFFFF</color>
+    <color name="default_pre_color">#FFFFFF</color>
+    <color name="default_main_background">#E0E0E0</color>
 
     <!--字体-->
     <color name="font_normal">#555555</color>
@@ -47,7 +47,6 @@
     <color name="black_80">#222222</color>
     <color name="black_alpha_45">#71000000</color>
 
-    <color name="cardView_background">#fffaf0</color>
     <color name="card_view_background">@color/white</color>
 
     <color name="gray_80">#BEBBB4</color>

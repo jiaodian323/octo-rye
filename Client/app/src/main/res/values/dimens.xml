@@ -105,4 +105,13 @@
     <dimen name="focus_height">35dp</dimen>
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+
+    <!--MeFragment-->
+    <dimen name="me_background_min_height">350dp</dimen>
+    <dimen name="me_profile_pic_size">85dp</dimen>
+    <dimen name="me_interest_min_height">120dp</dimen>
+    <dimen name="me_nickname_size">18sp</dimen>
+
+    <!--IconView-->
+    <dimen name="icon_view_default_height">65dp</dimen>
 </resources>

@@ -12,8 +12,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.security.interfaces.RSAPrivateKey;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.justnd.octoryeserver.security.RSACoder;
 
@@ -26,6 +29,13 @@ import com.justnd.octoryeserver.security.RSACoder;
 */
 public class BaseServlet extends HttpServlet {
 	private static final long serialVersionUID = 2212761522044508738L;
+	
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
+				getServletContext());
+	}
 
 	/** 
 	* @Title: getRequestBodyStr 读取请求体字符串
@@ -60,6 +70,11 @@ public class BaseServlet extends HttpServlet {
 		String cipher = sb.toString();
 		System.out.println("密文:" + cipher);
 		String plaintText = "";
+		
+		// 如果密文为空，则直接返回
+		if (cipher == null || cipher.length() == 0)
+			return plaintText;
+		
 		try {
 			System.out.println("私钥：" + RSACoder.rsaPrivateKeyStr);
 			byte[] cipherBytes = RSACoder.hexStringToByte(cipher);

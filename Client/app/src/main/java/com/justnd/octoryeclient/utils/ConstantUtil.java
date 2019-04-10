@@ -1,6 +1,16 @@
 package com.justnd.octoryeclient.utils;
 
 public class ConstantUtil {
+    /**
+     * @Fields STATUS_CODE_FAIL : TODO 失败信息状态码
+     */
+    public static final int STATUS_CODE_FAIL = 0;
+
+    /**
+     * @Fields STATUS_CODE_SUCCESS : TODO 成功信息状态码
+     */
+    public static final int STATUS_CODE_SUCCESS = 1;
+
     public static final String TYPE_ARTICLE = "Article";
     public static final String TYPE_MUSIC = "Music";
     public static final String TYPE_VIDEO = "Video";

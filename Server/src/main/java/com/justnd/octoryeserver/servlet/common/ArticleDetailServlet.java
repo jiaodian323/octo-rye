@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.justnd.octoryeserver.beans.base.BaseBean;
 import com.justnd.octoryeserver.beans.recommend.ArticleDetailBean;
@@ -50,8 +49,6 @@ public class ArticleDetailServlet extends BaseServlet {
 	public void init() throws ServletException {
 		super.init();
 		System.out.println("初始化ContentDetailServlet");
-		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
-				getServletContext());
 	}
 
 	@Override

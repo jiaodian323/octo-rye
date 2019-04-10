@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.justnd.octoryeserver.beans.base.BaseBean;
 import com.justnd.octoryeserver.beans.user.SignUpBean;
@@ -28,6 +27,7 @@ import com.justnd.octoryeserver.security.MD5Coder;
 import com.justnd.octoryeserver.servlet.base.BaseServlet;
 import com.justnd.octoryeserver.util.ConstantUtil;
 import com.justnd.octoryeserver.util.GsonUtil;
+import com.justnd.octoryeserver.util.StringUtils;
 
 /** 
 * @ClassName: RegisterServlet 
@@ -47,9 +47,7 @@ public class SignUpServlet extends BaseServlet {
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		System.out.println("初始化RegisterServlet");
-		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
-				getServletContext());
+		System.out.println("初始化SignUpServlet");
 	}
 
 	@Override
@@ -64,8 +62,12 @@ public class SignUpServlet extends BaseServlet {
 			SignUpBean sign = GsonUtil.jsonStrToObject(bodyStr, SignUpBean.class);
 			
 			User user = new User();
-			user.setUserName(sign.getPhoneNumber());
-			user.setPhoneNumber(sign.getPhoneNumber());
+			String phoneNumber = sign.getPhoneNumber();
+			// 默认用户名为电话号码
+			user.setUserName(phoneNumber);      
+			// 初始昵称为带*号的电话号码
+			user.setNickName(StringUtils.convertPhoneNumber(phoneNumber));      
+			user.setPhoneNumber(phoneNumber);
 			long now = System.currentTimeMillis();
 			String nowStamp = String.valueOf(now);
 			user.setCreateTimeStamp(nowStamp);
@@ -73,11 +75,14 @@ public class SignUpServlet extends BaseServlet {
 			user.setPassword(MD5Coder.encode(sign.getPass(), nowStamp));
 			
 			userDao.save(user);
+			
+			// 存储后，查询用户ID
+			int userId = userDao.findByPhoneNumber(phoneNumber).getId();
 
-			@SuppressWarnings("rawtypes")
-			BaseBean resultBean = new BaseBean();
-			resultBean.setCode(1);
+			BaseBean<Integer> resultBean = new BaseBean<Integer>();
+			resultBean.setCode(ConstantUtil.STATUS_CODE_SUCCESS);
 			resultBean.setMessage(ConstantUtil.SUCCESS_SIGN_UP);
+			resultBean.setData(userId);
 			out.write(GsonUtil.objectToJsonStr(resultBean));
 			out.close();
 		} catch(Exception e) {

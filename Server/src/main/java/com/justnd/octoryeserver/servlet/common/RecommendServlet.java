@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.justnd.octoryeserver.beans.base.BaseBean;
 import com.justnd.octoryeserver.beans.recommend.RecommendBean;
@@ -51,8 +50,6 @@ public class RecommendServlet extends BaseServlet {
 	public void init() throws ServletException {
 		super.init();
 		System.out.println("初始化RecommendServlet");
-		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
-				getServletContext());
 	}
 
 	@Override

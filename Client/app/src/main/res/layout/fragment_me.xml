@@ -1,22 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main_background"
+    android:background="@color/default_main_background"
     tools:context=".module.activity.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="个人中心"
-        android:gravity="center"
-        app:layout_constraintBottom_toTopOf="parent"
-        app:layout_constraintTop_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:clipToPadding="false">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/profile_picture_container"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/me_background_min_height"
+                android:background="@drawable/me_default_background">
+
+                <com.justnd.octoryeclient.widget.customview.CircleImageView
+                    android:id="@+id/profile_picture"
+                    android:layout_width="@dimen/me_profile_pic_size"
+                    android:layout_height="@dimen/me_profile_pic_size"
+                    android:layout_marginTop="@dimen/default_toolbar_height"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/nickname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/default_general_margin"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/me_nickname_size"
+                    android:textColor="@color/font_tint"
+                    app:layout_constraintTop_toBottomOf="@id/profile_picture"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/me_interest_min_height"
+                android:layout_marginTop="@dimen/default_general_margin"
+                android:background="@color/default_pre_color"
+                android:orientation="vertical"
+                android:paddingEnd="?dialogPreferredPadding"
+                android:paddingStart="?dialogPreferredPadding">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/default_general_margin"
+                    android:text="@string/my_collects"
+                    android:textColor="@color/font_tint"
+                    android:textSize="@dimen/default_text_size" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_general_margin"
+                    android:layout_marginBottom="@dimen/default_general_margin"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:drawableTop="@drawable/ic_article"
+                        android:text="@string/article"
+                        android:textColor="@color/font_tint"
+                        android:textSize="@dimen/default_small_text_size"
+                        android:focusable="true"
+                        android:clickable="true"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:drawableTop="@drawable/ic_news"
+                        android:text="@string/news"
+                        android:textColor="@color/font_tint"
+                        android:textSize="@dimen/default_small_text_size"
+                        android:focusable="true"
+                        android:clickable="true"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:drawableTop="@drawable/ic_music"
+                        android:text="@string/music"
+                        android:textColor="@color/font_tint"
+                        android:textSize="@dimen/default_small_text_size"
+                        android:focusable="true"
+                        android:clickable="true"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:drawableTop="@drawable/ic_video"
+                        android:text="@string/video"
+                        android:textColor="@color/font_tint"
+                        android:textSize="@dimen/default_small_text_size"
+                        android:focusable="true"
+                        android:clickable="true"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_general_margin"
+                android:background="@color/default_pre_color"
+                android:orientation="horizontal"
+                android:paddingEnd="?dialogPreferredPadding"
+                android:paddingStart="?dialogPreferredPadding"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_general_margin"
+                    android:layout_marginBottom="@dimen/default_general_margin"
+                    android:gravity="center"
+                    android:drawableStart="@drawable/ic_my_interest"
+                    android:drawablePadding="@dimen/default_general_margin"
+                    android:text="@string/my_interest"
+                    android:textColor="@color/font_tint"
+                    android:textSize="@dimen/default_text_size"/>
+
+                <com.justnd.octoryeclient.widget.CustomEmptyView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginTop="@dimen/default_general_margin"
+                    android:layout_marginBottom="@dimen/default_general_margin">
+
+                </com.justnd.octoryeclient.widget.CustomEmptyView>
+
+                <TextView
+                    android:id="@+id/interest_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/default_general_margin"
+                    android:layout_marginBottom="@dimen/default_general_margin"
+                    android:gravity="center"
+                    android:drawableEnd="@drawable/ic_right_arrow"
+                    android:text="@string/default_interest_count"
+                    android:textColor="@color/font_tint"
+                    android:textSize="@dimen/default_text_size"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
 </android.support.constraint.ConstraintLayout>

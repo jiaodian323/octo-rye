@@ -330,9 +330,12 @@ public class RSACoder {
 	 *             解密过程中的异常信息
 	 */
 	public static byte[] decrypt(RSAPrivateKey privateKey, byte[] cipherData) throws Exception {
-		if (privateKey == null) {
+		if (privateKey == null) 
 			throw new Exception("解密私钥为空, 请设置");
-		}
+		
+		if (cipherData == null) 
+			throw new Exception("密文为空，请检查");
+		
 		Cipher cipher;
 		try {
 			// 使用默认RSA
@@ -383,9 +386,12 @@ public class RSACoder {
 	 *             解密过程中的异常信息
 	 */
 	public static byte[] decrypt(RSAPublicKey publicKey, byte[] cipherData) throws Exception {
-		if (publicKey == null) {
+		if (publicKey == null) 
 			throw new Exception("解密公钥为空, 请设置");
-		}
+		
+		if (cipherData == null) 
+			throw new Exception("密文为空，请检查");
+		
 		Cipher cipher;
 		try {
 			// 使用默认RSA
