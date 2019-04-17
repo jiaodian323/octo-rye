@@ -80,21 +80,25 @@ public class ArticleDaoTest extends AbstractJUnit4SpringContextTests {
 	@Test
 	public void insertTest() {
 
-		Author authorA = authorDaoTest.get(Author.class, 1);
+		Author authorA = authorDaoTest.get(Author.class, 27);
 
 		Article articleA = new Article();
-		articleA.setTitle("这是第10000篇测试文章，测试大文本");
+		articleA.setTitle("祝你下次好运");
 		articleA.setAuthor(authorA); 
 //      Clob content =
 //		Hibernate.getLobCreator(getSession()) //
 //				.createClob("谢霆锋已经有杂志正经八百地对他做深度访问，让他谈感情、谈家庭、谈事业发展，"); // LobHelper
 //		lobHelper = getSession().getLobHelper(); // Clob content =
 //		lobHelper.createClob("谢霆锋的第100次");
-		String clobStr = getStringFromFile("jinlitest.txt");
+		String clobStr = getStringFromFile("祝你下次好运.txt");
 		System.out.println("文章长度" + clobStr.length());
 		System.out.println(clobStr);
 		articleA.setContent(clobStr);
-		articleA.setHeadImage("http://url");
+		articleA.setHeadImage("https://pic.36krcnd.com/201904/11133635/zpuooczoqyqv8n41!heading");
+		articleA.setExtract("临别时，我抱着孩子，看到继小军向我挥手，他说，祝你下次好运。");
+		articleA.setLikeNum(654);
+		articleA.setPageviewCount(98795);
+		articleA.setType(ContentType.Article);
 		Date timeA;
 		try {
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -203,6 +207,15 @@ public class ArticleDaoTest extends AbstractJUnit4SpringContextTests {
 	@Test
 	public void findByPublishTimeTest() {
 
+	}
+	
+	@Test
+	public void deleteAllTest() {
+		List<Article> allArticles = articleDaoTest.findAll(Article.class);
+
+		for (Article article: allArticles) {
+			articleDaoTest.delete(Article.class, article.getId());
+		}
 	}
 
 	public Session getSession() {

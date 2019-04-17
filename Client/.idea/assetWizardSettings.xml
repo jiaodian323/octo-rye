@@ -18,23 +18,12 @@
                                 <PersistentState>
                                   <option name="children">
                                     <map>
-                                      <entry key="clipArt">
-                                        <value>
-                                          <PersistentState>
-                                            <option name="values">
-                                              <map>
-                                                <entry key="paddingPercent" value="20" />
-                                              </map>
-                                            </option>
-                                          </PersistentState>
-                                        </value>
-                                      </entry>
                                       <entry key="clipartAsset">
                                         <value>
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/E:/Android%20Studio/Studio/plugins/android/lib/android.jar!/images/material_design_icons/hardware/ic_keyboard_arrow_right_black_24dp.xml" />
+                                                <entry key="url" value="jar:file:/E:/Android%20Studio/Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_home_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -44,33 +33,7 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="outputName" value="ic_right_arrow" />
-                                    </map>
-                                  </option>
-                                </PersistentState>
-                              </value>
-                            </entry>
-                            <entry key="notification">
-                              <value>
-                                <PersistentState>
-                                  <option name="children">
-                                    <map>
-                                      <entry key="clipartAsset">
-                                        <value>
-                                          <PersistentState>
-                                            <option name="values">
-                                              <map>
-                                                <entry key="url" value="jar:file:/E:/Android%20Studio/Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_visibility_off_black_24dp.xml" />
-                                              </map>
-                                            </option>
-                                          </PersistentState>
-                                        </value>
-                                      </entry>
-                                    </map>
-                                  </option>
-                                  <option name="values">
-                                    <map>
-                                      <entry key="outputName" value="ic_visiblity_off" />
+                                      <entry key="outputName" value="ic_home_black" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -81,44 +44,6 @@
                         <option name="values">
                           <map>
                             <entry key="outputIconType" value="ACTIONBAR" />
-                          </map>
-                        </option>
-                      </PersistentState>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </PersistentState>
-          </value>
-        </entry>
-        <entry key="vectorWizard">
-          <value>
-            <PersistentState>
-              <option name="children">
-                <map>
-                  <entry key="vectorAssetStep">
-                    <value>
-                      <PersistentState>
-                        <option name="children">
-                          <map>
-                            <entry key="clipartAsset">
-                              <value>
-                                <PersistentState>
-                                  <option name="values">
-                                    <map>
-                                      <entry key="url" value="jar:file:/E:/Android%20Studio/Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_assignment_turned_in_black_24dp.xml" />
-                                    </map>
-                                  </option>
-                                </PersistentState>
-                              </value>
-                            </entry>
-                          </map>
-                        </option>
-                        <option name="values">
-                          <map>
-                            <entry key="color" value="696969" />
-                            <entry key="outputName" value="ic_auth" />
-                            <entry key="sourceFile" value="C:\Users\Administrator" />
                           </map>
                         </option>
                       </PersistentState>

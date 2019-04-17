@@ -40,14 +40,27 @@ public class HomeRecommendedFragment extends RxLazyFragment {
 
     public static final String TAG = "HomeRecommendedFG_JD";
 
+    // 测试代码
+    private static int testCount = 0;
+
     private boolean mIsRefreshing = false;
     private SectionedRecyclerViewAdapter mSectionedAdapter;
     private List<BannerEntity> banners = new ArrayList<>();
     private List<RecommendInfo.ResultBean> results = new ArrayList<>();
     private List<RecommendBannerInfo.DataBean> recommendBanners = new ArrayList<>();
 
+    public HomeRecommendedFragment() {
+
+    }
+
     public static HomeRecommendedFragment newInstance() {
-        return new HomeRecommendedFragment();
+        HomeRecommendedFragment fragment = new HomeRecommendedFragment();
+        // 测试代码，给Fragment设置ID,用来测试懒加载
+//        Bundle bundle = new Bundle();
+//        bundle.putInt("id", testCount++);
+//        fragment.setArguments(bundle);
+
+        return fragment;
     }
 
     @Override
@@ -57,15 +70,24 @@ public class HomeRecommendedFragment extends RxLazyFragment {
 
     @Override
     public void finishCreateView(Bundle state) {
+        // 测试代码，给Fragment设置ID,用来测试懒加载
+//        int id = getArguments().getInt("id");
+//        Log.i("SlideTest", "fragment id=" + id + "---in finishCreateView()");
+
         isPrepared = true;
         lazyLoad();
     }
 
     @Override
     protected void lazyLoad() {
-//        if (!isPrepared || !isVisible) {
-//            return;
-//        }
+        // 测试代码，给Fragment设置ID,用来测试懒加载
+//        int id = getArguments().getInt("id");
+//        Log.i("SlideTest", "fragment id=" + id + "---in lazyLoad():isPrepared=" + isPrepared + "," +
+//                "isVisible=" + isVisible);
+
+        if (!isPrepared || !isVisible) {
+            return;
+        }
         initRefreshLayout();
         initRecyclerView();
         isPrepared = false;
@@ -115,7 +137,7 @@ public class HomeRecommendedFragment extends RxLazyFragment {
                 .map(new Func1<BaseBean<RecommendInfo>, List<RecommendInfo.ResultBean>>() {
                     @Override
                     public List<RecommendInfo.ResultBean> call(BaseBean<RecommendInfo>
-                                                                           recommendInfoBaseBean) {
+                                                                       recommendInfoBaseBean) {
                         // 将返回的BaseBean<RecommendInfo>类型转换为，
                         // RecommendInfo内部resultbean数据
                         return recommendInfoBaseBean.getData().getResult();
@@ -200,4 +222,5 @@ public class HomeRecommendedFragment extends RxLazyFragment {
     private void setRecycleNoScroll() {
         mRecyclerView.setOnTouchListener((v, event) -> mIsRefreshing);
     }
+
 }

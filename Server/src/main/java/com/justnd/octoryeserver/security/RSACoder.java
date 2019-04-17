@@ -214,7 +214,7 @@ public class RSACoder {
 	}
 
 	/**
-	 * 公钥加密过程
+	 * 公钥加密过程，分段加密，每次加密117字节
 	 * 
 	 * @param publicKey
 	 *            公钥
@@ -267,7 +267,7 @@ public class RSACoder {
 	}
 
 	/**
-	 * 私钥加密过程
+	 * 私钥加密过程，分段加密，每次加密117字节
 	 * 
 	 * @param privateKey
 	 *            私钥
@@ -319,7 +319,7 @@ public class RSACoder {
 	}
 
 	/**
-	 * 私钥解密过程
+	 * 私钥解密过程，分段解密，每次解密128字节
 	 * 
 	 * @param privateKey
 	 *            私钥
@@ -375,7 +375,7 @@ public class RSACoder {
 	}
 
 	/**
-	 * 公钥解密过程
+	 * 公钥解密过程，分段解密，每次解密128字节
 	 * 
 	 * @param publicKey
 	 *            公钥

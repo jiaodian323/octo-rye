@@ -68,25 +68,25 @@ public class HotPostsDaoTest extends AbstractJUnit4SpringContextTests {
 		Date timeA;
 		try {
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-			timeA = df.parse("2019-4-30");
+			timeA = df.parse("2019-4-17");
 			hotPost.setPostDate(timeA);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		Set<Article> articles = new HashSet<Article>();
-		articles.add(articleDaoTest.get(Article.class, 1));
-		articles.add(articleDaoTest.get(Article.class, 2));
-		articles.add(articleDaoTest.get(Article.class, 3));
-		articles.add(articleDaoTest.get(Article.class, 4));
-		articles.add(articleDaoTest.get(Article.class, 5));
-		articles.add(articleDaoTest.get(Article.class, 6));
-		articles.add(articleDaoTest.get(Article.class, 7));
-		articles.add(articleDaoTest.get(Article.class, 8));
-		articles.add(articleDaoTest.get(Article.class, 20));
-		articles.add(articleDaoTest.get(Article.class, 21));
-		articles.add(articleDaoTest.get(Article.class, 22));
-		articles.add(articleDaoTest.get(Article.class, 23));
-		articles.add(articleDaoTest.get(Article.class, 24));
+		articles.add(articleDaoTest.get(Article.class, 27));
+		articles.add(articleDaoTest.get(Article.class, 28));
+		articles.add(articleDaoTest.get(Article.class, 30));
+		articles.add(articleDaoTest.get(Article.class, 31));
+		articles.add(articleDaoTest.get(Article.class, 32));
+		articles.add(articleDaoTest.get(Article.class, 34));
+		
+//		articles.add(articleDaoTest.get(Article.class, 35));
+//		articles.add(articleDaoTest.get(Article.class, 36));
+//		articles.add(articleDaoTest.get(Article.class, 37));
+//		articles.add(articleDaoTest.get(Article.class, 38));
+//		articles.add(articleDaoTest.get(Article.class, 39));
+//		articles.add(articleDaoTest.get(Article.class, 40));
 		hotPost.setPosts(articles);
 
 		hotPostsDaoTest.save(hotPost);
@@ -149,6 +149,14 @@ public class HotPostsDaoTest extends AbstractJUnit4SpringContextTests {
 			e.printStackTrace();
 		}
 
+	}
+	
+	@Test
+	public void deleteAllTest() {
+		List<HotPosts> list = hotPostsDaoTest.findAll(HotPosts.class);
+		for (HotPosts post: list) {
+			hotPostsDaoTest.delete(HotPosts.class, post.getId());
+		}
 	}
 
 	@Test

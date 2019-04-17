@@ -13,6 +13,7 @@ import android.view.View;
 import com.justnd.octoryeclient.R;
 import com.justnd.octoryeclient.module.base.RxBaseActivity;
 import com.justnd.octoryeclient.module.dicovery.DiscoveryFragment;
+import com.justnd.octoryeclient.module.home.HomeContainerFragment;
 import com.justnd.octoryeclient.module.home.HomeRecommendedFragment;
 import com.justnd.octoryeclient.module.user.LoginModeFragment;
 import com.justnd.octoryeclient.module.user.MeFragment;
@@ -28,7 +29,7 @@ public class MainActivity extends RxBaseActivity {
     @BindView(R.id.navigation)
     BottomNavigationView mNavigationView;
 
-    private HomeRecommendedFragment mRecommendedFragment;
+    private HomeContainerFragment mHomeContainerFragment;
     private Fragment currentFragment;
 
     /**
@@ -36,7 +37,7 @@ public class MainActivity extends RxBaseActivity {
     */
     private int mLoginStatus = 0;
 
-    public static final String HOME_TAG = "HomeFragment";
+    public static final String HOME_TAG = "HomeContainerFragment";
     public static final String DISCOVER_TAG = "DiscoverFragment";
     public static final String LOGIN_MODE_TAG = "LoginModeFragment";
     public static final String ME_TAG = "MeFragment";
@@ -94,16 +95,16 @@ public class MainActivity extends RxBaseActivity {
 
     private void initFragments() {
         Log.i(DEBUG_MAIN_TAG, "initFragments()--");
-        mRecommendedFragment = HomeRecommendedFragment.newInstance();
+        mHomeContainerFragment = HomeContainerFragment.newInstance();
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.fragment_container, mRecommendedFragment, HOME_TAG)
+                .add(R.id.fragment_container, mHomeContainerFragment, HOME_TAG)
                 .addToBackStack(null)
-                .show(mRecommendedFragment)
+                .show(mHomeContainerFragment)
                 .commit();
 
-        currentFragment = mRecommendedFragment;
+        currentFragment = mHomeContainerFragment;
     }
 
     public void replaceFragment(String tag) {
@@ -115,7 +116,7 @@ public class MainActivity extends RxBaseActivity {
         if (currentFragment == null) {
             switch (tag) {
                 case HOME_TAG:
-                    currentFragment = HomeRecommendedFragment.newInstance();
+                    currentFragment = HomeContainerFragment.newInstance();
                     break;
                 case DISCOVER_TAG:
                     currentFragment = DiscoveryFragment.newInstance();
