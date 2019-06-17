@@ -16,9 +16,9 @@ import java.io.IOException;
 import java.io.Reader;
 import java.sql.Clob;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -80,25 +80,25 @@ public class ArticleDaoTest extends AbstractJUnit4SpringContextTests {
 	@Test
 	public void insertTest() {
 
-		Author authorA = authorDaoTest.get(Author.class, 27);
+		Author authorA = authorDaoTest.get(Author.class, 21);
 
 		Article articleA = new Article();
-		articleA.setTitle("祝你下次好运");
-		articleA.setAuthor(authorA); 
-//      Clob content =
-//		Hibernate.getLobCreator(getSession()) //
-//				.createClob("谢霆锋已经有杂志正经八百地对他做深度访问，让他谈感情、谈家庭、谈事业发展，"); // LobHelper
-//		lobHelper = getSession().getLobHelper(); // Clob content =
-//		lobHelper.createClob("谢霆锋的第100次");
-		String clobStr = getStringFromFile("祝你下次好运.txt");
+		articleA.setTitle("老城春天的八年");
+		articleA.setAuthor(authorA);
+		// Clob content =
+		// Hibernate.getLobCreator(getSession()) //
+		// .createClob("谢霆锋已经有杂志正经八百地对他做深度访问，让他谈感情、谈家庭、谈事业发展，"); // LobHelper
+		// lobHelper = getSession().getLobHelper(); // Clob content =
+		// lobHelper.createClob("谢霆锋的第100次");
+		String clobStr = getStringFromFile("老城春天的八年.txt");
 		System.out.println("文章长度" + clobStr.length());
 		System.out.println(clobStr);
 		articleA.setContent(clobStr);
-		articleA.setHeadImage("https://pic.36krcnd.com/201904/11133635/zpuooczoqyqv8n41!heading");
-		articleA.setExtract("临别时，我抱着孩子，看到继小军向我挥手，他说，祝你下次好运。");
+		articleA.setHeadImage("https://img.36krcdn.com/20190607/v2_1559840598577_img_000");
+		articleA.setExtract("终于目送她找到自己的幸福，看来是时候结束一个人的战争了。");
 		articleA.setLikeNum(654);
 		articleA.setPageviewCount(98795);
-		articleA.setType(ContentType.Article);
+		articleA.setType(ContentType.MUSIC);
 		Date timeA;
 		try {
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -111,38 +111,37 @@ public class ArticleDaoTest extends AbstractJUnit4SpringContextTests {
 
 		articleDaoTest.save(articleA);
 
-//		for (int i = 0; i < 5; i++) {
-//			Author author = authorDaoTest.get(Author.class, 1);
-//
-//			Article articleA = new Article();
-//			articleA.setTitle("这是第" + (i + 300) + "篇测试文章");
-//			articleA.setAuthor(author);
-//			// Clob content = Hibernate.getLobCreator(getSession())
-//			// .createClob("谢霆锋已经有杂志正经八百地对他做深度访问，让他谈感情、谈家庭、谈事业发展，");
-//			// LobHelper lobHelper = getSession().getLobHelper();
-//			// Clob content = lobHelper.createClob("谢霆锋的第100次");
-//			articleA.setContent("谢霆锋的第" + (i + 300) + "次");
-//			articleA.setHeadImage("http://url");
-//			Date timeA;
-//			try {
-//				SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//				timeA = df.parse(df.format(new Date()));
-//				articleA.setPublishTime(timeA);
-//			} catch (ParseException e) {
-//				e.printStackTrace();
-//			}
-//			articleA.setTags("test");
-//
-//			articleDaoTest.save(articleA);
-//		}
+		// for (int i = 0; i < 5; i++) {
+		// Author author = authorDaoTest.get(Author.class, 1);
+		//
+		// Article articleA = new Article();
+		// articleA.setTitle("这是第" + (i + 300) + "篇测试文章");
+		// articleA.setAuthor(author);
+		// // Clob content = Hibernate.getLobCreator(getSession())
+		// // .createClob("谢霆锋已经有杂志正经八百地对他做深度访问，让他谈感情、谈家庭、谈事业发展，");
+		// // LobHelper lobHelper = getSession().getLobHelper();
+		// // Clob content = lobHelper.createClob("谢霆锋的第100次");
+		// articleA.setContent("谢霆锋的第" + (i + 300) + "次");
+		// articleA.setHeadImage("http://url");
+		// Date timeA;
+		// try {
+		// SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		// timeA = df.parse(df.format(new Date()));
+		// articleA.setPublishTime(timeA);
+		// } catch (ParseException e) {
+		// e.printStackTrace();
+		// }
+		// articleA.setTags("test");
+		//
+		// articleDaoTest.save(articleA);
+		// }
 
 	}
 
 	@Test
 	public void updateTest() {
-		Article article = new Article();
-		article.setId(20);
-		String str = getStringFromFile("test3.txt");
+		Article article = articleDaoTest.get(Article.class, 51);
+		String str = getStringFromFile("给自己写讣告？.txt");
 		article.setContent(str);
 
 		articleDaoTest.update(article);
@@ -166,20 +165,20 @@ public class ArticleDaoTest extends AbstractJUnit4SpringContextTests {
 
 		printArticleList(allArticles);
 	}
-	
+
 	@Test
 	public void updateAllTest() {
 		Random rand = new Random();
-		
+
 		List<Article> allArticles = articleDaoTest.findAll(Article.class);
-		
+
 		for (int i = 0; i < allArticles.size(); i++) {
 			int typeInt = rand.nextInt(4);
 			ContentType type = getContentType(typeInt);
-			
+
 			Article article = allArticles.get(i);
 			article.setType(type);
-			
+
 			articleDaoTest.update(article);
 		}
 	}
@@ -208,14 +207,36 @@ public class ArticleDaoTest extends AbstractJUnit4SpringContextTests {
 	public void findByPublishTimeTest() {
 
 	}
-	
+
 	@Test
 	public void deleteAllTest() {
 		List<Article> allArticles = articleDaoTest.findAll(Article.class);
 
-		for (Article article: allArticles) {
+		for (Article article : allArticles) {
 			articleDaoTest.delete(Article.class, article.getId());
 		}
+	}
+
+	@Test
+	public void dateToStringTest() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		Date date = new Date();
+		System.out.println(sdf.format(date));
+	}
+
+	@Test
+	public void stringToDate() {
+		String dateStr = "20190415";
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		Date date = null;
+		try {
+			date = sdf.parse(dateStr);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		if (date != null)
+			System.out.println(date);
 	}
 
 	public Session getSession() {
@@ -249,25 +270,25 @@ public class ArticleDaoTest extends AbstractJUnit4SpringContextTests {
 
 		return sb;
 	}
-	
+
 	public ContentType getContentType(int i) {
 		switch (i) {
 		case 0:
-			return ContentType.Article;
+			return ContentType.ARTICLE;
 		case 1:
-			return ContentType.Music;
+			return ContentType.MUSIC;
 		case 2:
-			return ContentType.Video;
+			return ContentType.VIDEO;
 		case 3:
-			return ContentType.Audio;
+			return ContentType.AUDIO;
 		default:
-			return ContentType.Article;
+			return ContentType.ARTICLE;
 		}
 	}
 
 	/**
 	 * @Title: printArticleList @Description: TODO 打印Article列表 @param @param
-	 * list @return void @throws
+	 *         list @return void @throws
 	 */
 	public void printArticleList(List<Article> list) {
 		if (list == null || list.size() == 0) {
@@ -285,8 +306,7 @@ public class ArticleDaoTest extends AbstractJUnit4SpringContextTests {
 	}
 
 	public String getStringFromFile(String fileName) {
-		File file = new File(
-				this.getClass().getClassLoader().getResource("").getPath() + fileName);
+		File file = new File(this.getClass().getClassLoader().getResource("").getPath() + fileName);
 		String str = "";
 		try {
 			FileInputStream fis = new FileInputStream(file);

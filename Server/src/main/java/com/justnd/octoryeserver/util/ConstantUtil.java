@@ -35,22 +35,42 @@ public class ConstantUtil {
 	/** 
 	* @Fields TYPE_ARTICLE : TODO 类型：文章
 	*/ 
-	public static final String TYPE_ARTICLE = "article";
+	public static final String TYPE_ARTICLE = "Article";
 	
 	/** 
 	* @Fields TYPE_MUSIC : TODO 类型：音乐
 	*/ 
-	public static final String TYPE_MUSIC = "music";
+	public static final String TYPE_MUSIC = "Music";
 	
 	/** 
 	* @Fields TYPE_VIDEO : TODO 类型：视频
 	*/ 
-	public static final String TYPE_VIDEO = "video";
+	public static final String TYPE_VIDEO = "Video";
 	
 	/** 
 	* @Fields TYPE_AUDIO : TODO 类型：音频
 	*/ 
-	public static final String TYPE_AUDIO = "audio";
+	public static final String TYPE_AUDIO = "Audio";
+	
+	/** 
+	* @Fields DESC_ARTICLE : TODO 文章类型描述
+	*/ 
+	public static final String DESC_ARTICLE = "文章";
+	
+	/** 
+	* @Fields DESC_MUSIC : TODO 音乐类型描述
+	*/ 
+	public static final String DESC_MUSIC = "音乐";
+	
+	/** 
+	* @Fields DESC_VIDEO : TODO 视频类型描述
+	*/ 
+	public static final String DESC_VIDEO = "视频";
+	
+	/** 
+	* @Fields DESC_AUDIO : TODO 音频类型描述
+	*/ 
+	public static final String DESC_AUDIO = "音频";
 	
 	/** 
 	* @Fields PUBLIC_KEY_FILE_NAME : TODO 公钥文件名

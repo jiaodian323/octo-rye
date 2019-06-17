@@ -9,8 +9,10 @@ import android.util.Log;
 import android.view.View;
 
 import com.justnd.octoryeclient.R;
-import com.justnd.octoryeclient.adapter.section.HomeRecommendBannerSection;
-import com.justnd.octoryeclient.adapter.section.HomeRecommendedSection;
+import com.justnd.octoryeclient.entity.common.ContentType;
+import com.justnd.octoryeclient.module.home.section.HomeMusicSection;
+import com.justnd.octoryeclient.module.home.section.HomeRecommendBannerSection;
+import com.justnd.octoryeclient.module.home.section.HomeArticleSection;
 import com.justnd.octoryeclient.entity.base.BaseBean;
 import com.justnd.octoryeclient.entity.recommond.RecommendBannerInfo;
 import com.justnd.octoryeclient.entity.recommond.RecommendInfo;
@@ -39,6 +41,7 @@ public class HomeRecommendedFragment extends RxLazyFragment {
     CustomEmptyView mCustomEmptyView;
 
     public static final String TAG = "HomeRecommendedFG_JD";
+    private static final String DATE_TAG = "date";
 
     // 测试代码
     private static int testCount = 0;
@@ -50,15 +53,13 @@ public class HomeRecommendedFragment extends RxLazyFragment {
     private List<RecommendBannerInfo.DataBean> recommendBanners = new ArrayList<>();
 
     public HomeRecommendedFragment() {
-
     }
 
-    public static HomeRecommendedFragment newInstance() {
+    public static HomeRecommendedFragment newInstance(String dateStr) {
         HomeRecommendedFragment fragment = new HomeRecommendedFragment();
-        // 测试代码，给Fragment设置ID,用来测试懒加载
-//        Bundle bundle = new Bundle();
-//        bundle.putInt("id", testCount++);
-//        fragment.setArguments(bundle);
+        Bundle bundle = new Bundle();
+        bundle.putString(DATE_TAG, dateStr);
+        fragment.setArguments(bundle);
 
         return fragment;
     }
@@ -82,7 +83,8 @@ public class HomeRecommendedFragment extends RxLazyFragment {
     protected void lazyLoad() {
         // 测试代码，给Fragment设置ID,用来测试懒加载
 //        int id = getArguments().getInt("id");
-//        Log.i("SlideTest", "fragment id=" + id + "---in lazyLoad():isPrepared=" + isPrepared + "," +
+//        Log.i("SlideTest", "fragment id=" + id + "---in lazyLoad():isPrepared=" + isPrepared +
+//        "," +
 //                "isVisible=" + isVisible);
 
         if (!isPrepared || !isVisible) {
@@ -130,16 +132,17 @@ public class HomeRecommendedFragment extends RxLazyFragment {
                             .DataBean> dataBeans) {
                         recommendBanners.addAll(dataBeans);
                         Log.i(TAG, "向服务器发送recommend查询请求");
-                        return RetrofitHelper.getRecommendService().getRecommendedInfo();
+                        String dateStr = getArguments().getString(DATE_TAG);
+                        return RetrofitHelper.getRecommendService().getRecommendedInfo(dateStr);
                     }
                 })
                 .compose(bindToLifecycle())
                 .map(new Func1<BaseBean<RecommendInfo>, List<RecommendInfo.ResultBean>>() {
                     @Override
                     public List<RecommendInfo.ResultBean> call(BaseBean<RecommendInfo>
-                                                                       recommendInfoBaseBean) {
+                                                                                recommendInfoBaseBean) {
                         // 将返回的BaseBean<RecommendInfo>类型转换为，
-                        // RecommendInfo内部resultbean数据
+                        // RecommendInfo内部resultbean数据,然后再转换为实际数据BodyBean列表
                         return recommendInfoBaseBean.getData().getResult();
                     }
                 })
@@ -156,7 +159,7 @@ public class HomeRecommendedFragment extends RxLazyFragment {
         mCustomEmptyView.setVisibility(View.VISIBLE);
         mRecyclerView.setVisibility(View.GONE);
         mCustomEmptyView.setEmptyImage(R.drawable.img_tips_error_load_error);
-        mCustomEmptyView.setEmptyText("客官，您要的鸡汤马上就来~(≧▽≦)");
+        mCustomEmptyView.setEmptyText("客官，请稍后");
 //        SnackbarUtil.showMessage(mRecyclerView, "数据加载失败,请重新加载或者检查网络是否链接");
     }
 
@@ -169,28 +172,31 @@ public class HomeRecommendedFragment extends RxLazyFragment {
         mSectionedAdapter.addSection(new HomeRecommendBannerSection(banners));
         int size = results.size();
         for (int i = 0; i < size; i++) {
-            String type = results.get(i).getType();
+            String type = results.get(i).getStyle();
+            ContentType typeC = ContentType.valueOf(type);
             if (!TextUtils.isEmpty(type)) {
 
-                switch (type) {
-                    case ConstantUtil.TYPE_ARTICLE:
-                        mSectionedAdapter.addSection(new HomeRecommendedSection(
+                switch (typeC) {
+                    case ARTICLE:
+                        mSectionedAdapter.addSection(new HomeArticleSection(
                                 getActivity(),
-                                results.get(i).getHead().getTitle(),
-                                results.get(i).getType(),
-                                results.get(i).getHead().getCount(),
+                                results.get(i).getStyle(),
                                 results.get(i).getBody()));
                         break;
-                    case ConstantUtil.TYPE_MUSIC:
+                    case MUSIC:
+                        mSectionedAdapter.addSection(new HomeMusicSection(
+                                getActivity(),
+                                results.get(i).getStyle(),
+                                results.get(i).getBody()));
                         break;
-                    case ConstantUtil.TYPE_VIDEO:
+                    case VIDEO:
+                        break;
+                    case AUDIO:
                         break;
                     default:
-                        mSectionedAdapter.addSection(new HomeRecommendedSection(
+                        mSectionedAdapter.addSection(new HomeArticleSection(
                                 getActivity(),
-                                results.get(i).getHead().getTitle(),
-                                results.get(i).getType(),
-                                results.get(i).getHead().getCount(),
+                                results.get(i).getStyle(),
                                 results.get(i).getBody()));
                         break;
                 }

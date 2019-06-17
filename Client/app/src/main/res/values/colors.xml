@@ -30,6 +30,7 @@
     <color name="top_bar">#3B3B3B</color>
     <color name="default_pre_color">#FFFFFF</color>
     <color name="default_main_background">#E0E0E0</color>
+    <color name="default_button_color">#3B3B3B</color>
 
     <!--字体-->
     <color name="font_normal">#555555</color>
@@ -60,5 +61,6 @@
     <color name="primary_material_dark">#cddc39</color>
     <color name="background_light">#f8f4f4</color>
     <color name="colorBackground">#2196f3</color>
+    <color name="cutePink">#f43a68</color>
 
 </resources>

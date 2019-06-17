@@ -12,13 +12,14 @@ public class ConstantUtil {
     public static final int STATUS_CODE_SUCCESS = 1;
 
     public static final String TYPE_ARTICLE = "Article";
-    public static final String TYPE_MUSIC = "Music";
+    public static final String TYPE_MUSIC = "MusicTag";
     public static final String TYPE_VIDEO = "Video";
     public static final String TYPE_AUDIO = "Audio";
 
     public static final String EXTRA_CONTENT_TYPE = "extra_content_type";
     public static final String EXTRA_CONTENT_ID = "extra_content_id";
     public static final String EXTRA_IMG_URL = "extra_img_url";
+    public static final String EXTRA_ADD_SOURCE = "add_source";
 
     /**
      * @Fields: 手机号校验正则表达式

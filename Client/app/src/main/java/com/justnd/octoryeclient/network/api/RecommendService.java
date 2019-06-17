@@ -22,7 +22,7 @@ public interface RecommendService {
     * @author Justiniano  Email:jiaodian822@163.com
     */
     @GET("s/show/recommend")
-    Observable<BaseBean<RecommendInfo>> getRecommendedInfo();
+    Observable<BaseBean<RecommendInfo>> getRecommendedInfo(@Query("date") String dateStr);
 
     /**
     * @Description: 获取文章详细内容接口

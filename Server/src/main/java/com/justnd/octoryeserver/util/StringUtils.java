@@ -3,7 +3,9 @@ package com.justnd.octoryeserver.util;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.regex.Matcher;
@@ -11,8 +13,6 @@ import java.util.regex.Pattern;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-
 
 /**
  * 类说明： 字符串操作类
@@ -121,7 +121,8 @@ public class StringUtils {
 	 * @param caseInsensive
 	 * @return
 	 */
-	public static String replaceString(String source, String oldstring, String newstring, boolean caseInsensive) {
+	public static String replaceString(String source, String oldstring, String newstring,
+			boolean caseInsensive) {
 		Matcher matcher = null;
 
 		// 区分大小写
@@ -337,7 +338,8 @@ public class StringUtils {
 		char[] charArray = inputUrl.toCharArray();
 		for (int i = 0; i < charArray.length; i++) {
 			if ((charArray[i] >= 0x4e00) && (charArray[i] <= 0x9fbb)) {
-				inputUrl = inputUrl.replaceFirst(String.valueOf(charArray[i]), URLEncoder.encode(String.valueOf(charArray[i])));
+				inputUrl = inputUrl.replaceFirst(String.valueOf(charArray[i]),
+						URLEncoder.encode(String.valueOf(charArray[i])));
 
 			}
 		}
@@ -361,7 +363,7 @@ public class StringUtils {
 			return inputUrl;
 		}
 	}
-	
+
 	/**
 	 * 使用“*”字符替换除后四位的电话号码
 	 **/
@@ -370,5 +372,18 @@ public class StringUtils {
 		String preStr = phoneNumber.substring(0, 3);
 		String backStr = phoneNumber.substring(7, phoneNumber.length());
 		return preStr + replaceStr + backStr;
+	}
+
+	/**
+	 * @Description: 将日期转为yyyyMMdd格式的字符串
+	 * @param date
+	 *            将被转换的日期
+	 * @return
+	 * @throws @author
+	 *             Justiniano Email:jiaodian822@163.com
+	 */
+	public static String dateToString(Date date) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		return sdf.format(date);
 	}
 }

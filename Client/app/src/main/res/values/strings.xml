@@ -66,8 +66,19 @@
     <string name="news">新闻</string>
     <string name="music">音乐</string>
     <string name="video">视频</string>
+    <string name="audio">音频</string>
     <string name="default_interest_count">0</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--Music-->
+    <string name="play_music">播放音乐</string>
+    <string name="next">下一首</string>
+    <string name="previous">上一首</string>
+    <string name="pause">暂停</string>
+    <string name="music_list">音乐列表：</string>
+    <string name="random_queue_title">随机音乐</string>
+    <string name="error_no_metadata">无法获得元数据</string>
+    <string name="music_buffering">缓冲中</string>
 </resources>

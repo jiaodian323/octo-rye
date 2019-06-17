@@ -16,8 +16,8 @@ package com.justnd.octoryeclient.entity.common;
 *  
 */
 public enum ContentType {
-    Article,
-    Music,
-    Video,
-    Audio;
+    ARTICLE,
+    MUSIC,
+    VIDEO,
+    AUDIO;
 }

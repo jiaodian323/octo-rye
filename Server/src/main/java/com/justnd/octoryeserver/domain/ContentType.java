@@ -16,8 +16,8 @@ package com.justnd.octoryeserver.domain;
 *  
 */
 public enum ContentType {
-    Article,
-    Music,
-    Video,
-    Audio;
+    ARTICLE,
+    MUSIC,
+    VIDEO,
+    AUDIO;
 }

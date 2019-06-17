@@ -111,7 +111,7 @@ public class RetrofitHelper {
      * @author Justiniano  Email:jiaodian822@163.com
      */
     private static Retrofit buildRetrofit() {
-        return buildRetrofit(DEFAULT_BASE_URL);
+        return buildRetrofit(DEFAULT_DEBUG_BASE_URL);
     }
 
     /**

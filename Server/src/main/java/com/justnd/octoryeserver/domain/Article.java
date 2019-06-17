@@ -116,6 +116,54 @@ public class Article implements Serializable {
 	@Column(name = "likeNum", columnDefinition="INT default 0")
 	private Integer likeNum;
 	
+	/** 
+	* @Fields audio_url : TODO 音频URL
+	*/ 
+	@Column(name = "audio_url")
+	private String audio_url;
+	
+	/** 
+	* @Fields audio_platform : TODO 音频平台，以数字字符串代表不同平台
+	*/ 
+	@Column(name = "audio_platform")
+    private String audio_platform;
+	
+    /** 
+    * @Fields music_name : TODO 
+    */ 
+	@Column(name = "music_name")
+    private String music_name;
+	
+    /** 
+    * @Fields audio_platform_icon : TODO 
+    */ 
+	@Column(name = "audio_platform_icon")
+    private String audio_platform_icon;
+    
+    /** 
+    * @Fields audio_platform_name : TODO 
+    */ 
+	@Column(name = "audio_platform_name")
+    private String audio_platform_name;
+    
+    /** 
+    * @Fields audio_author : TODO 
+    */ 
+	@Column(name = "audio_author")
+    private String audio_author;
+    
+    /** 
+    * @Fields audio_album : TODO 
+    */ 
+	@Column(name = "audio_album")
+    private String audio_album;
+    
+    /** 
+    * @Fields audio_cover : TODO 
+    */ 
+	@Column(name = "audio_cover")
+    private String audio_cover;
+	
 	/**
 	 * @return the id
 	 */
@@ -320,6 +368,118 @@ public class Article implements Serializable {
 	 */
 	public void setLikeNum(Integer likeNum) {
 		this.likeNum = likeNum;
+	}
+
+	/**
+	 * @return the audio_url
+	 */
+	public String getAudio_url() {
+		return audio_url;
+	}
+
+	/**
+	 * @param audio_url the audio_url to set
+	 */
+	public void setAudio_url(String audio_url) {
+		this.audio_url = audio_url;
+	}
+
+	/**
+	 * @return the audio_platform
+	 */
+	public String getAudio_platform() {
+		return audio_platform;
+	}
+
+	/**
+	 * @param audio_platform the audio_platform to set
+	 */
+	public void setAudio_platform(String audio_platform) {
+		this.audio_platform = audio_platform;
+	}
+
+	/**
+	 * @return the music_name
+	 */
+	public String getMusic_name() {
+		return music_name;
+	}
+
+	/**
+	 * @param music_name the music_name to set
+	 */
+	public void setMusic_name(String music_name) {
+		this.music_name = music_name;
+	}
+
+	/**
+	 * @return the audio_platform_icon
+	 */
+	public String getAudio_platform_icon() {
+		return audio_platform_icon;
+	}
+
+	/**
+	 * @param audio_platform_icon the audio_platform_icon to set
+	 */
+	public void setAudio_platform_icon(String audio_platform_icon) {
+		this.audio_platform_icon = audio_platform_icon;
+	}
+
+	/**
+	 * @return the audio_platform_name
+	 */
+	public String getAudio_platform_name() {
+		return audio_platform_name;
+	}
+
+	/**
+	 * @param audio_platform_name the audio_platform_name to set
+	 */
+	public void setAudio_platform_name(String audio_platform_name) {
+		this.audio_platform_name = audio_platform_name;
+	}
+
+	/**
+	 * @return the audio_author
+	 */
+	public String getAudio_author() {
+		return audio_author;
+	}
+
+	/**
+	 * @param audio_author the audio_author to set
+	 */
+	public void setAudio_author(String audio_author) {
+		this.audio_author = audio_author;
+	}
+
+	/**
+	 * @return the audio_album
+	 */
+	public String getAudio_album() {
+		return audio_album;
+	}
+
+	/**
+	 * @param audio_album the audio_album to set
+	 */
+	public void setAudio_album(String audio_album) {
+		this.audio_album = audio_album;
+	}
+
+	/**
+	 * @return the audio_cover
+	 */
+	public String getAudio_cover() {
+		return audio_cover;
+	}
+
+	/**
+	 * @param audio_cover the audio_cover to set
+	 */
+	public void setAudio_cover(String audio_cover) {
+		this.audio_cover = audio_cover;
 	}
 
 	/**

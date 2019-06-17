@@ -12,9 +12,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Resource;
@@ -33,6 +35,7 @@ import com.justnd.octoryeserver.dao.impl.ArticleDaoHibernate4;
 import com.justnd.octoryeserver.dao.impl.AuthorDaoHibernate4;
 import com.justnd.octoryeserver.dao.impl.HotPostsDaoHibernate4;
 import com.justnd.octoryeserver.domain.Article;
+import com.justnd.octoryeserver.domain.ContentType;
 import com.justnd.octoryeserver.domain.HotPosts;
 
 /**
@@ -68,25 +71,36 @@ public class HotPostsDaoTest extends AbstractJUnit4SpringContextTests {
 		Date timeA;
 		try {
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-			timeA = df.parse("2019-4-17");
+			timeA = df.parse("2019-6-17");
 			hotPost.setPostDate(timeA);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		Set<Article> articles = new HashSet<Article>();
-		articles.add(articleDaoTest.get(Article.class, 27));
-		articles.add(articleDaoTest.get(Article.class, 28));
-		articles.add(articleDaoTest.get(Article.class, 30));
-		articles.add(articleDaoTest.get(Article.class, 31));
-		articles.add(articleDaoTest.get(Article.class, 32));
-		articles.add(articleDaoTest.get(Article.class, 34));
-		
-//		articles.add(articleDaoTest.get(Article.class, 35));
-//		articles.add(articleDaoTest.get(Article.class, 36));
-//		articles.add(articleDaoTest.get(Article.class, 37));
-//		articles.add(articleDaoTest.get(Article.class, 38));
-//		articles.add(articleDaoTest.get(Article.class, 39));
-//		articles.add(articleDaoTest.get(Article.class, 40));
+//		articles.add(articleDaoTest.get(Article.class, 27));
+//		articles.add(articleDaoTest.get(Article.class, 28));
+//		articles.add(articleDaoTest.get(Article.class, 30));
+//		articles.add(articleDaoTest.get(Article.class, 31));
+//		articles.add(articleDaoTest.get(Article.class, 32));
+//		articles.add(articleDaoTest.get(Article.class, 34));
+
+		 articles.add(articleDaoTest.get(Article.class, 35));
+		 articles.add(articleDaoTest.get(Article.class, 36));
+		 articles.add(articleDaoTest.get(Article.class, 38));
+		 articles.add(articleDaoTest.get(Article.class, 39));
+		 articles.add(articleDaoTest.get(Article.class, 46));
+		 articles.add(articleDaoTest.get(Article.class, 49));
+		 
+//		 articles.add(articleDaoTest.get(Article.class, 37));
+//		 articles.add(articleDaoTest.get(Article.class, 43));
+//		 articles.add(articleDaoTest.get(Article.class, 45));
+//		 articles.add(articleDaoTest.get(Article.class, 47));
+//		 articles.add(articleDaoTest.get(Article.class, 48));
+//		 articles.add(articleDaoTest.get(Article.class, 51));
+//		 articles.add(articleDaoTest.get(Article.class, 52));
+
+		articles.add(articleDaoTest.get(Article.class, 53));
+		articles.add(articleDaoTest.get(Article.class, 54));
 		hotPost.setPosts(articles);
 
 		hotPostsDaoTest.save(hotPost);
@@ -150,67 +164,74 @@ public class HotPostsDaoTest extends AbstractJUnit4SpringContextTests {
 		}
 
 	}
-	
+
 	@Test
 	public void deleteAllTest() {
 		List<HotPosts> list = hotPostsDaoTest.findAll(HotPosts.class);
-		for (HotPosts post: list) {
+		for (HotPosts post : list) {
 			hotPostsDaoTest.delete(HotPosts.class, post.getId());
 		}
 	}
 
 	@Test
 	public void getJsonStrTest() {
-		List<HotPosts> hotPosts = hotPostsDaoTest.findByDate(new Date());
+//		List<HotPosts> hotPosts = hotPostsDaoTest.findByDate(new Date());
+//
+//		if (hotPosts == null || hotPosts.size() == 0)
+//			return;
+//
+//		BaseBean<RecommendBean> baseBean = new BaseBean<RecommendBean>();
+//		baseBean.setCode(0);
+//
+//		RecommendBean dataBean = new RecommendBean();
+//		List<RecommendBean.ResultBean> results = new ArrayList<>();
+//
+//		for (int i = 0; i < ContentType.values().length; i++) {
+//			RecommendBean.ResultBean resultBean = new RecommendBean.ResultBean();
+//			resultBean.setStyle(ContentType.values()[i].getName());
+//			
+//			for (int j = 0; j < hotPosts.size(); j++) {
+//				Iterator<Article> iterator = hotPosts.get(i).getPosts().iterator();
+//				while (iterator.hasNext()) {
+//					Article article = iterator.next();
+//					if (article != null) {
+//						ContentType type = article.getType();
+//						if (type == ContentType.values()[i]) {
+//							RecommendBean.ResultBean.HeadBean resultHeadBean = new RecommendBean.ResultBean.HeadBean();
+//							resultHeadBean.setTitle("热门焦点");
+//							resultBean.setHead(resultHeadBean);
+//							List<RecommendBean.ResultBean.BodyBean> resultBodyBeans = new ArrayList<>();
+//							RecommendBean.ResultBean.BodyBean body = new RecommendBean.ResultBean.BodyBean();
+//							body.setTitle(article.getTitle());
+//							body.setStyle("gm_av");
+//							body.setUp(article.getAuthor().getAuthorName());
+//							body.setCover(article.getHeadImage());
+//							body.setPageViewNum(article.getPageviewCount());
+//							body.setDanmaku(article.getLikeNum().toString());
+//
+//							resultBodyBeans.add(body);
+//						}
+//					}
+//				}
+//			}
+//		}
 		
-		if (hotPosts == null || hotPosts.size() == 0)
-			return;
-
-		BaseBean<RecommendBean> baseBean = new BaseBean<RecommendBean>();
-		baseBean.setCode(0);
 		
-		RecommendBean dataBean = new RecommendBean();
-		List<RecommendBean.ResultBean> results = new ArrayList<>();
-		RecommendBean.ResultBean resultBean = new RecommendBean.ResultBean();
-		resultBean.setType("recommend");
-		RecommendBean.ResultBean.HeadBean resultHeadBean = new RecommendBean.ResultBean.HeadBean();
-		resultHeadBean.setStyle("gm_av");
-		resultHeadBean.setTitle("热门焦点");
-		resultBean.setHead(resultHeadBean);
-		List<RecommendBean.ResultBean.BodyBean> resultBodyBeans = new ArrayList<>();
-		for (int i = 0; i < hotPosts.size(); i++) {
-			Iterator<Article> iterator = hotPosts.get(i).getPosts().iterator();
-			while (iterator.hasNext()) {
-				Article article = iterator.next();
-				if (article != null) {
-					RecommendBean.ResultBean.BodyBean body = new RecommendBean.ResultBean.BodyBean();
-					body.setTitle(article.getTitle());
-					body.setStyle("gm_av");
-					body.setUp(article.getAuthor().getAuthorName());
-					body.setCover(article.getHeadImage());
-					body.setPageViewNum(article.getPageviewCount());
-					body.setDanmaku(article.getLikeNum().toString());
+//		resultBean.setBody(resultBodyBeans);
+//		results.add(resultBean);
+//		dataBean.setResult(results);
+//
+//		baseBean.setData(dataBean);
 
-					resultBodyBeans.add(body);
-				}
-			}
-		}
-		resultBean.setBody(resultBodyBeans);
-		results.add(resultBean);
-		dataBean.setResult(results);
-		
-		baseBean.setData(dataBean);
-
-//		Gson gson = new Gson();
-		Gson gson = new GsonBuilder()
-                .setLenient()// json宽松  
-                .enableComplexMapKeySerialization()//支持Map的key为复杂对象的形式  
-                .serializeNulls() //智能null  
-                .setPrettyPrinting()// 调教格式  
-                .create();  
-		String gsonStr = gson.toJson(baseBean);
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-		System.out.println("GsonStr:" + gsonStr);
+		// Gson gson = new Gson();
+//		Gson gson = new GsonBuilder().setLenient()// json宽松
+//				.enableComplexMapKeySerialization()// 支持Map的key为复杂对象的形式
+//				.serializeNulls() // 智能null
+//				.setPrettyPrinting()// 调教格式
+//				.create();
+//		String gsonStr = gson.toJson(baseBean);
+//		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+//		System.out.println("GsonStr:" + gsonStr);
 	}
 
 	public void printHotPostsString(List<HotPosts> hotPosts) {

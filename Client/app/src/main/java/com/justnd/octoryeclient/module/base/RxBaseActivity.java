@@ -1,19 +1,29 @@
 package com.justnd.octoryeclient.module.base;
 
-import android.content.res.Resources;
-import android.os.Build;
+import android.content.ComponentName;
 import android.os.Bundle;
-import android.view.ViewGroup;
+import android.os.RemoteException;
+import android.support.annotation.NonNull;
+import android.support.v4.media.MediaBrowserCompat;
+import android.support.v4.media.MediaMetadataCompat;
+import android.support.v4.media.session.MediaControllerCompat;
+import android.support.v4.media.session.PlaybackStateCompat;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.justnd.octoryeclient.R;
+import com.justnd.octoryeclient.music.MediaBrowserProvider;
+import com.justnd.octoryeclient.music.MusicService;
+import com.justnd.octoryeclient.utils.ConstantUtil;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public abstract class RxBaseActivity extends RxAppCompatActivity {
+
     private Unbinder bind;
 
     @Override
@@ -30,7 +40,6 @@ public abstract class RxBaseActivity extends RxAppCompatActivity {
         // 初始化ToolBar
         initToolBar();
     }
-
 
     /**
      * 设置布局layout
@@ -85,6 +94,16 @@ public abstract class RxBaseActivity extends RxAppCompatActivity {
      * 设置数据显示
      */
     public void finishTask() {
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 
     @Override

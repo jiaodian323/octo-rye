@@ -1,4 +1,4 @@
-package com.justnd.octoryeclient.widget.adpter;
+package com.justnd.octoryeclient.module.home.adapter;
 
 import android.support.v4.view.ViewPager;
 import android.view.View;

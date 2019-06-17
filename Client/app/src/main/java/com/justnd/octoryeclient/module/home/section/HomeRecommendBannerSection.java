@@ -1,4 +1,4 @@
-package com.justnd.octoryeclient.adapter.section;
+package com.justnd.octoryeclient.module.home.section;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

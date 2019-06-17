@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/default_cardView_margin"
     android:clickable="true"
+    android:focusable="true"
     android:foreground="?attr/selectableItemBackground"
     app:cardBackgroundColor="@color/color_white"
     app:cardCornerRadius="@dimen/card_corner_radius"
@@ -36,18 +37,25 @@
             android:textColor="@color/font_normal"
             android:textSize="@dimen/default_small_text_size" />
 
-        <ImageView
-            android:id="@+id/article_title_image"
+        <FrameLayout
+            android:id="@+id/title_image_container"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/card_image_default_height"
-            android:scaleType="center"
-            android:layout_below="@+id/author_name" />
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/author_name">
+
+            <ImageView
+                android:id="@+id/article_title_image"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/card_image_default_height"
+                android:scaleType="centerInside"
+                android:layout_gravity="center"/>
+        </FrameLayout>
 
         <LinearLayout
             android:id="@+id/layout_extract"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/article_title_image"
+            android:layout_below="@+id/title_image_container"
             android:orientation="horizontal"
             android:layout_marginTop="@dimen/default_recommend_title_margin"
             android:layout_marginBottom="@dimen/default_recommend_title_margin">
@@ -160,59 +168,59 @@
         </RelativeLayout>
 
 
-        <RelativeLayout
-            android:id="@+id/layout_live"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:padding="@dimen/card_title_margin"
-            android:paddingBottom="@dimen/default_general_margin"
-            android:visibility="gone">
+        <!--<RelativeLayout-->
+            <!--android:id="@+id/layout_live"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:padding="@dimen/card_title_margin"-->
+            <!--android:paddingBottom="@dimen/default_general_margin"-->
+            <!--android:visibility="gone">-->
 
-            <TextView
-                android:id="@+id/item_live_up"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="@dimen/video_info_count_text_margin_start"
-                android:gravity="center"
-                android:textColor="@color/black_alpha_45"
-                android:textSize="@dimen/default_small_text_size" />
-
-
-            <TextView
-                android:id="@+id/item_live_online"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="@dimen/video_info_count_text_margin_start"
-                android:drawablePadding="@dimen/default_tiny_margin"
-                android:drawableStart="@drawable/ic_watching"
-                android:gravity="center"
-                android:textColor="@color/black_alpha_45"
-                android:textSize="@dimen/default_tiny_text_size" />
-        </RelativeLayout>
+            <!--<TextView-->
+                <!--android:id="@+id/item_live_up"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentStart="true"-->
+                <!--android:layout_marginStart="@dimen/video_info_count_text_margin_start"-->
+                <!--android:gravity="center"-->
+                <!--android:textColor="@color/black_alpha_45"-->
+                <!--android:textSize="@dimen/default_small_text_size" />-->
 
 
-        <RelativeLayout
-            android:id="@+id/layout_bangumi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:padding="@dimen/card_title_margin"
-            android:paddingBottom="@dimen/default_general_margin"
-            android:visibility="gone">
+            <!--<TextView-->
+                <!--android:id="@+id/item_live_online"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentEnd="true"-->
+                <!--android:layout_marginEnd="@dimen/video_info_count_text_margin_start"-->
+                <!--android:drawablePadding="@dimen/default_tiny_margin"-->
+                <!--android:drawableStart="@drawable/ic_watching"-->
+                <!--android:gravity="center"-->
+                <!--android:textColor="@color/black_alpha_45"-->
+                <!--android:textSize="@dimen/default_tiny_text_size" />-->
+        <!--</RelativeLayout>-->
 
-            <TextView
-                android:id="@+id/item_bangumi_update"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="@dimen/video_info_count_text_margin_start"
-                android:gravity="center"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/default_small_text_size" />
-        </RelativeLayout>
+
+        <!--<RelativeLayout-->
+            <!--android:id="@+id/layout_bangumi"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:padding="@dimen/card_title_margin"-->
+            <!--android:paddingBottom="@dimen/default_general_margin"-->
+            <!--android:visibility="gone">-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/item_bangumi_update"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentStart="true"-->
+                <!--android:layout_marginStart="@dimen/video_info_count_text_margin_start"-->
+                <!--android:gravity="center"-->
+                <!--android:textColor="@color/colorPrimary"-->
+                <!--android:textSize="@dimen/default_small_text_size" />-->
+        <!--</RelativeLayout>-->
 
     </RelativeLayout>
 
