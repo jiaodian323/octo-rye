@@ -30,7 +30,7 @@ import java.util.List;
 public abstract class RxMediaBaseActivity extends RxBaseActivity implements MediaBrowserProvider {
 
     private MediaBrowserCompat mMediaBrowser;
-    private QuickControlsFragment mControlFragment;
+//    private String mPlayingMusicId;
 //    private MusicService.MusicServiceBinder mMusicServiceBinder;
 
 //    private ServiceConnection connection = new ServiceConnection() {
@@ -43,6 +43,14 @@ public abstract class RxMediaBaseActivity extends RxBaseActivity implements Medi
 //            mMusicServiceBinder = (MusicService.MusicServiceBinder) service;
 //        }
 //    };
+
+//    public void setPlayingMusicId(String musicId) {
+//        this.mPlayingMusicId = musicId;
+//    }
+//
+//    public String getPlayingMusicId() {
+//        return mPlayingMusicId;
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +71,7 @@ public abstract class RxMediaBaseActivity extends RxBaseActivity implements Medi
     }
 
     @Override
-    public void initToolBar() {
-    }
+    public void initToolBar() {}
 
     @Override
     protected void onStart() {
@@ -101,10 +108,6 @@ public abstract class RxMediaBaseActivity extends RxBaseActivity implements Medi
         MediaControllerCompat.setMediaController(this, mediaController);
         mediaController.registerCallback(mMediaControllerCallback);
 
-        if (mControlFragment != null) {
-            mControlFragment.onConnected();
-        }
-
         onMediaControllerConnected();
     }
 
@@ -123,14 +126,14 @@ public abstract class RxMediaBaseActivity extends RxBaseActivity implements Medi
                     mMediaBrowser.unsubscribe(mediaId);
                     mMediaBrowser.subscribe(mediaId, mBrowserSubscriptionCallback);
 
-                    try {
-                        Log.i(ConstantUtil.TYPE_MUSIC, "RxMediaBaseActivity.使用SessionToken创建Controller");
-                        connectToSession(mMediaBrowser.getSessionToken());
-                    } catch (RemoteException e) {
-                        Log.i(ConstantUtil.TYPE_MUSIC, "RxMediaBaseActivity.connectToSession()" +
-                                "---------远程调用异常");
-                        e.printStackTrace();
-                    }
+//                    try {
+//                        Log.i(ConstantUtil.TYPE_MUSIC, "RxMediaBaseActivity.使用SessionToken创建Controller");
+//                        connectToSession(mMediaBrowser.getSessionToken());
+//                    } catch (RemoteException e) {
+//                        Log.i(ConstantUtil.TYPE_MUSIC, "RxMediaBaseActivity.connectToSession()" +
+//                                "---------远程调用异常");
+//                        e.printStackTrace();
+//                    }
 
 //                    if (mMediaBrowser.isConnected()) {
 //                        String mediaId = mMediaBrowser.getRoot();
@@ -185,10 +188,13 @@ public abstract class RxMediaBaseActivity extends RxBaseActivity implements Medi
 
                     switch (state.getState()) {
                         case PlaybackStateCompat.STATE_NONE:
+                            Log.i(ConstantUtil.TYPE_MUSIC, "BaseActivity.MediaController.Callback, state:" + state.getState());
                             break;
                         case PlaybackStateCompat.STATE_PLAYING:
+                            Log.i(ConstantUtil.TYPE_MUSIC, "BaseActivity.MediaController.Callback, state:" + state.getState());
                             break;
                         case PlaybackStateCompat.STATE_PAUSED:
+                            Log.i(ConstantUtil.TYPE_MUSIC, "BaseActivity.MediaController.Callback, state:" + state.getState());
                             break;
                         default:
                     }

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -98,7 +99,6 @@ public class SectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         viewTypeCount += VIEW_TYPE_QTY;
     }
 
-
     /**
      * Add a section to this recyclerview with a random tag;
      *
@@ -161,7 +161,7 @@ public class SectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
                         return;
                     }
                 }
-                getSectionForPosition(position).onBindContentViewHolder(holder, getSectionPosition(position));
+//                getSectionForPosition(position).onBindContentViewHolder(holder, getSectionPosition(position));
                 return;
             }
             currentPos += sectionTotal;
@@ -169,6 +169,33 @@ public class SectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         throw new IndexOutOfBoundsException("Invalid position");
     }
 
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List<Object> payloads) {
+        int currentPos = 0;
+        for (Map.Entry<String, Section> entry : sections.entrySet()) {
+            Section section = entry.getValue();
+            if (!section.isVisible()) continue;
+            int sectionTotal = section.getSectionItemsTotal();
+            if (position >= currentPos && position <= (currentPos + sectionTotal - 1)) {
+                if (section.hasHeader()) {
+                    if (position == currentPos) {
+                        getSectionForPosition(position).onBindHeaderViewHolder(holder);
+                        return;
+                    }
+                }
+                if (section.hasFooter()) {
+                    if (position == (currentPos + sectionTotal - 1)) {
+                        getSectionForPosition(position).onBindFooterViewHolder(holder);
+                        return;
+                    }
+                }
+                getSectionForPosition(position).onBindContentViewHolder(holder, position, getSectionPosition(position), payloads);
+                return;
+            }
+            currentPos += sectionTotal;
+        }
+        throw new IndexOutOfBoundsException("Invalid position");
+    }
 
     @Override
     public int getItemCount() {
@@ -270,7 +297,8 @@ public class SectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
             if (!section.isVisible()) continue;
             int sectionTotal = section.getSectionItemsTotal();
             if (position >= currentPos && position <= (currentPos + sectionTotal - 1)) {
-                return position - currentPos - (section.hasHeader() ? 1 : 0);
+                int sectionPosition = position - currentPos - (section.hasHeader() ? 1 : 0);
+                return sectionPosition;
             }
             currentPos += sectionTotal;
         }

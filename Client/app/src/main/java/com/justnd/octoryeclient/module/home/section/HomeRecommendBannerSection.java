@@ -33,7 +33,7 @@ public class HomeRecommendBannerSection extends StatelessSection {
     }
 
     @Override
-    public void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position, int sectionPosition, List<Object> payloads ) {
     }
 
     @Override

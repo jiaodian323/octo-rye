@@ -94,8 +94,10 @@ public class SignUpConfirmActivity extends RxBaseActivity {
     @Override
     public void initToolBar() {
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);  // 左侧添加一个默认的返回图标
-        getSupportActionBar().setHomeButtonEnabled(true);  // 设置返回键可用
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);  // 左侧添加一个默认的返回图标
+            getSupportActionBar().setHomeButtonEnabled(true);  // 设置返回键可用
+        }
 
         mToolbar.setNavigationOnClickListener(v -> finish());
 

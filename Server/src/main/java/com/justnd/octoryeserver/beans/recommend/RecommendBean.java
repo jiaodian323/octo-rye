@@ -127,6 +127,7 @@ public class RecommendBean {
             private String audio_author;
             private String audio_album;
             private String audio_cover;
+            private String audio_duration;
 
             public String getTitle() {
                 return title;
@@ -398,6 +399,20 @@ public class RecommendBean {
 			 */
 			public void setAudio_cover(String audio_cover) {
 				this.audio_cover = audio_cover;
+			}
+
+			/**
+			 * @return the audio_duration
+			 */
+			public String getAudio_duration() {
+				return audio_duration;
+			}
+
+			/**
+			 * @param audio_duration the audio_duration to set
+			 */
+			public void setAudio_duration(String audio_duration) {
+				this.audio_duration = audio_duration;
 			}
         }
     }

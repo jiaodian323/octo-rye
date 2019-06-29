@@ -28,8 +28,8 @@ public class MusicProvider {
     public static final String MEDIA_ID_ROOT = "__ROOT__";
     public static final String MEDIA_ID_MUSICS_BY_GENRE = "__BY_GENRE__";
 
+    private static MusicProvider providerInstance;
     private MusicProviderSource mSource;
-
     private final ConcurrentMap<String, MutableMediaMetadata> mMusicListById;
 
     enum State {
@@ -42,11 +42,23 @@ public class MusicProvider {
         void onMusicCatalogReady(boolean success);
     }
 
-    public MusicProvider() {
-        this(new RemoteJSONSource());
+    /**
+    * @Description: 设置为单例模式，提供唯一数据访问对象，以防止MusicService服务被意外
+     *              销毁后，丢失之前的音乐库信息
+    * @param
+    * @return
+    * @throws
+    * @author Justiniano
+    */
+    public static MusicProvider getInstance() {
+        if (providerInstance == null) {
+            providerInstance = new MusicProvider(SimpleMusicProviderSource.getInstance());
+        }
+
+        return providerInstance;
     }
 
-    public MusicProvider(MusicProviderSource source) {
+    private MusicProvider(MusicProviderSource source) {
         mSource = source;
         mMusicListById = new ConcurrentHashMap<>();
     }
@@ -60,16 +72,12 @@ public class MusicProvider {
     }
 
     public List<MediaMetadataCompat> getAllMusics() {
-        if (mMusicListById != null) {
-            List<MediaMetadataCompat> allMusics = new ArrayList<>();
-            for (MutableMediaMetadata m : mMusicListById.values()) {
-                allMusics.add(m.metadata);
-            }
-
-            return allMusics;
+        List<MediaMetadataCompat> allMusics = new ArrayList<>();
+        for (MutableMediaMetadata m : mMusicListById.values()) {
+            allMusics.add(m.metadata);
         }
 
-        return null;
+        return allMusics;
     }
 
     public boolean isInitialized() {
@@ -101,7 +109,6 @@ public class MusicProvider {
         @Override
         protected State doInBackground(Void... params) {
             MusicProvider provider = providerReference.get();
-
             provider.retrieveMedia();
 //            provider.addMedia();
             return provider.mCurrentState;
@@ -138,7 +145,7 @@ public class MusicProvider {
     public List<MediaBrowserCompat.MediaItem> getChildren(String mediaId, Resources resources) {
         List<MediaBrowserCompat.MediaItem> mediaItems = new ArrayList<>();
 
-//        if (!MediaIDHelper.isBrowseable(mediaId)) {
+//        if (!MusicIDHelper.isBrowseable(mediaId)) {
 //            return mediaItems;
 //        }
 
@@ -151,7 +158,7 @@ public class MusicProvider {
 ////            }
 //
 //        } else if (mediaId.startsWith(MEDIA_ID_MUSICS_BY_GENRE)) {
-//            String genre = MediaIDHelper.getHierarchy(mediaId)[1];
+//            String genre = MusicIDHelper.getHierarchy(mediaId)[1];
         for (MediaMetadataCompat metadata : getAllMusics()) {
             mediaItems.add(createMediaItem(metadata));
         }
@@ -185,7 +192,7 @@ public class MusicProvider {
         // on where the music was selected from (by artist, by genre, random, etc)
         //我们可以基于在音乐类型的选择（由艺术家、流派、随机、等）构建适当的音乐队列
 //        String genre = metadata.getString(MediaMetadataCompat.METADATA_KEY_GENRE);
-//        String hierarchyAwareMediaID = MediaIDHelper.createMediaID(
+//        String hierarchyAwareMediaID = MusicIDHelper.createMediaID(
 //                metadata.getDescription().getMediaId(), MEDIA_ID_MUSICS_BY_GENRE, genre);
 //        MediaMetadataCompat copy = new MediaMetadataCompat.Builder(metadata)
 //                .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, hierarchyAwareMediaID)

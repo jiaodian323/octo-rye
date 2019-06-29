@@ -71,12 +71,13 @@ public class HotPostsDaoTest extends AbstractJUnit4SpringContextTests {
 		Date timeA;
 		try {
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-			timeA = df.parse("2019-6-17");
+			timeA = df.parse("2019-7-31");
 			hotPost.setPostDate(timeA);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		Set<Article> articles = new HashSet<Article>();
+		// Article
 //		articles.add(articleDaoTest.get(Article.class, 27));
 //		articles.add(articleDaoTest.get(Article.class, 28));
 //		articles.add(articleDaoTest.get(Article.class, 30));
@@ -84,12 +85,12 @@ public class HotPostsDaoTest extends AbstractJUnit4SpringContextTests {
 //		articles.add(articleDaoTest.get(Article.class, 32));
 //		articles.add(articleDaoTest.get(Article.class, 34));
 
-		 articles.add(articleDaoTest.get(Article.class, 35));
-		 articles.add(articleDaoTest.get(Article.class, 36));
-		 articles.add(articleDaoTest.get(Article.class, 38));
-		 articles.add(articleDaoTest.get(Article.class, 39));
-		 articles.add(articleDaoTest.get(Article.class, 46));
-		 articles.add(articleDaoTest.get(Article.class, 49));
+//		 articles.add(articleDaoTest.get(Article.class, 35));
+//		 articles.add(articleDaoTest.get(Article.class, 36));
+//		 articles.add(articleDaoTest.get(Article.class, 38));
+//		 articles.add(articleDaoTest.get(Article.class, 39));
+//		 articles.add(articleDaoTest.get(Article.class, 46));
+//		 articles.add(articleDaoTest.get(Article.class, 49));
 		 
 //		 articles.add(articleDaoTest.get(Article.class, 37));
 //		 articles.add(articleDaoTest.get(Article.class, 43));
@@ -98,9 +99,20 @@ public class HotPostsDaoTest extends AbstractJUnit4SpringContextTests {
 //		 articles.add(articleDaoTest.get(Article.class, 48));
 //		 articles.add(articleDaoTest.get(Article.class, 51));
 //		 articles.add(articleDaoTest.get(Article.class, 52));
+		 
+		 articles.add(articleDaoTest.get(Article.class, 55));
+		 articles.add(articleDaoTest.get(Article.class, 58));
+		 articles.add(articleDaoTest.get(Article.class, 59));
+		 articles.add(articleDaoTest.get(Article.class, 60));
+		 articles.add(articleDaoTest.get(Article.class, 61));
 
-		articles.add(articleDaoTest.get(Article.class, 53));
-		articles.add(articleDaoTest.get(Article.class, 54));
+		 // Music
+//		articles.add(articleDaoTest.get(Article.class, 53));
+//		articles.add(articleDaoTest.get(Article.class, 54));
+		
+		articles.add(articleDaoTest.get(Article.class, 56));
+		articles.add(articleDaoTest.get(Article.class, 57));
+		
 		hotPost.setPosts(articles);
 
 		hotPostsDaoTest.save(hotPost);
@@ -129,13 +141,13 @@ public class HotPostsDaoTest extends AbstractJUnit4SpringContextTests {
 
 	@Test
 	public void deleteMethodATest() {
-		HotPosts needToDelete = hotPostsDaoTest.get(HotPosts.class, 3);
+		HotPosts needToDelete = hotPostsDaoTest.get(HotPosts.class, 176);
 		hotPostsDaoTest.delete(needToDelete);
 	}
 
 	@Test
 	public void deleteMethodBTest() {
-		hotPostsDaoTest.delete(HotPosts.class, 12);
+		hotPostsDaoTest.delete(HotPosts.class, 176);
 	}
 
 	@Test

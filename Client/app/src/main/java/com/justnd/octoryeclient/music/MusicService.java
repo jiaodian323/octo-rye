@@ -1,14 +1,13 @@
 package com.justnd.octoryeclient.music;
 
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.media.MediaBrowserCompat;
@@ -28,9 +27,9 @@ import com.justnd.octoryeclient.music.playback.LocalPlayback;
 import com.justnd.octoryeclient.music.playback.PlaybackManager;
 import com.justnd.octoryeclient.music.playback.QueueManager;
 import com.justnd.octoryeclient.utils.ConstantUtil;
+import com.justnd.octoryeclient.utils.DebugTagUtil;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -62,18 +61,18 @@ public class MusicService extends MediaBrowserServiceCompat implements
 
     private final DelayedStopHandler mDelayedStopHandler = new DelayedStopHandler(this);
 
-    private static final int STOP_DELAY = 30000;
+    private static final int STOP_DELAY = 30000;   // 初始设定为30000，测试时使用10000代替
 
     private BroadcastReceiver mAddMusicSourceReceiver;
 //    private MusicServiceBinder mBinder = new MusicServiceBinder();
 
     @Override
     public void onCreate() {
-        Log.i(ConstantUtil.TYPE_MUSIC, "MusicService.onCreate()--------");
+        Log.i(DebugTagUtil.FULLSCREEN_ACTIVITY_TAG, "MusicService.onCreate()--------");
         super.onCreate();
 
-        mProviderSource = new SimpleMusicProviderSource();
-        mMusicProvider = new MusicProvider(mProviderSource);
+        mProviderSource = SimpleMusicProviderSource.getInstance();
+        mMusicProvider = MusicProvider.getInstance();
 
 //        mMusicProvider.retrieveMediaAsync(null /* Callback */);
 
@@ -110,10 +109,13 @@ public class MusicService extends MediaBrowserServiceCompat implements
 
         //开始一个新的MediaSession
         mSession = new MediaSessionCompat(this, "MusicService");
-        setSessionToken(mSession.getSessionToken());
+        MediaSessionCompat.Token token = mSession.getSessionToken();
+        setSessionToken(token);
         mSession.setCallback(mPlaybackManager.getMediaSessionCallback());
         mSession.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS |
                 MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
+
+        Log.i(DebugTagUtil.FULLSCREEN_ACTIVITY_TAG, "MusicService onCreate()中设置token:" + token.hashCode());
 
 //        Context context = getApplicationContext();
 //        Intent intent = new Intent(context, NowPlayingActivity.class);
@@ -128,6 +130,8 @@ public class MusicService extends MediaBrowserServiceCompat implements
 
     @Override
     public int onStartCommand(Intent startIntent, int flags, int startId) {
+        Log.i(DebugTagUtil.FULLSCREEN_ACTIVITY_TAG, "MusicService.onStartCommand()" +
+                "--------startId:" + startId);
         if (startIntent != null) {
             String action = startIntent.getAction();
             String command = startIntent.getStringExtra(CMD_NAME);
@@ -151,12 +155,20 @@ public class MusicService extends MediaBrowserServiceCompat implements
         return START_STICKY;
     }
 
+    @Override
+    public void onTrimMemory(int level) {
+        Log.i(DebugTagUtil.FULLSCREEN_ACTIVITY_TAG, "MusicService-----onTrimMemory()");
+        super.onTrimMemory(level);
+    }
+
     /*
      * Handle case when user swipes the app away from the recents apps list by
      * stopping the service (and any ongoing playback).
      */
     @Override
     public void onTaskRemoved(Intent rootIntent) {
+        Log.i(DebugTagUtil.FULLSCREEN_ACTIVITY_TAG, "MusicService-----onTaskRemoved()" +
+                "----此中调用stopSelf()");
         super.onTaskRemoved(rootIntent);
         stopSelf();
     }
@@ -169,6 +181,7 @@ public class MusicService extends MediaBrowserServiceCompat implements
     @Override
     public void onDestroy() {
         // Service is being killed, so make sure we release our resources
+        Log.i(DebugTagUtil.FULLSCREEN_ACTIVITY_TAG, "MusicService-----onDestroy()----被销毁");
         mPlaybackManager.handleStopRequest(null);
         unregisterReceivers();
 
@@ -220,6 +233,8 @@ public class MusicService extends MediaBrowserServiceCompat implements
 
     @Override
     public void onPlaybackStart() {
+        Log.i(DebugTagUtil.FULLSCREEN_ACTIVITY_TAG, "MusicService.onPlaybackStart()" +
+                "-----这里会自启动MusicService");
         mSession.setActive(true);
 
         mDelayedStopHandler.removeCallbacksAndMessages(null);
@@ -238,6 +253,7 @@ public class MusicService extends MediaBrowserServiceCompat implements
      */
     @Override
     public void onPlaybackStop() {
+        Log.i(DebugTagUtil.FULLSCREEN_ACTIVITY_TAG, "MusicService.onPlaybackStop()-----");
         mSession.setActive(false);
         // Reset the delayed stop handler, so after STOP_DELAY it will be executed again,
         // potentially stopping the service.
@@ -285,7 +301,7 @@ public class MusicService extends MediaBrowserServiceCompat implements
                 Log.i(ConstantUtil.TYPE_MUSIC, "source维护的list大小：" + mProviderSource.sourceSize());
                 mProviderSource.add(bodyBean.getMusic_name(), bodyBean.getAudio_album(),
                         bodyBean.getAudio_author(), "", bodyBean.getAudio_url(),
-                        bodyBean.getAudio_cover());
+                        bodyBean.getAudio_cover(), bodyBean.getAudio_duration());
                 mMusicProvider.updateSource(mProviderSource);
                 notifyChildrenChanged(MEDIA_ID_ROOT);
             }
@@ -316,11 +332,13 @@ public class MusicService extends MediaBrowserServiceCompat implements
 
         @Override
         public void handleMessage(Message msg) {
+            Log.i(DebugTagUtil.FULLSCREEN_ACTIVITY_TAG, "MusicService-----收到Handler消息");
             MusicService service = mWeakReference.get();
             if (service != null && service.mPlaybackManager.getPlayback() != null) {
                 if (service.mPlaybackManager.getPlayback().isPlaying()) {
                     return;
                 }
+                Log.i(DebugTagUtil.FULLSCREEN_ACTIVITY_TAG, "MusicService-----stopSelf()");
                 service.stopSelf();
             }
         }

@@ -50,6 +50,7 @@
             android:label="@string/action_login" />
         <activity android:name=".module.activity.SignUpActivity" />
         <activity android:name=".module.activity.SignUpConfirmActivity" />
+        <activity android:name=".module.activity.FullScreenPlayerActivity" />
 
         <service
             android:name=".music.MusicService">

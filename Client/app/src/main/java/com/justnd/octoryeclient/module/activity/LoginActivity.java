@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +21,7 @@ import com.justnd.octoryeclient.module.base.RxBaseActivity;
 import com.justnd.octoryeclient.module.user.MeFragment;
 import com.justnd.octoryeclient.network.RetrofitHelper;
 import com.justnd.octoryeclient.utils.ConstantUtil;
+import com.justnd.octoryeclient.utils.DebugTagUtil;
 import com.justnd.octoryeclient.utils.SMSUtil;
 import com.justnd.octoryeclient.utils.ToastUtil;
 
@@ -100,6 +102,11 @@ public class LoginActivity extends RxBaseActivity {
             Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             LoginActivity.this.startActivity(intent);
+
+            // 测试代码
+//            Intent intent = new Intent(LoginActivity.this, FullScreenPlayerActivity.class);
+//            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            LoginActivity.this.startActivity(intent);
         });
 
         mLogin.setOnClickListener(loginListener);
@@ -108,8 +115,10 @@ public class LoginActivity extends RxBaseActivity {
     @Override
     public void initToolBar() {
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);  // 左侧添加一个默认的返回图标
-        getSupportActionBar().setHomeButtonEnabled(true);  // 设置返回键可用
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);  // 左侧添加一个默认的返回图标
+            getSupportActionBar().setHomeButtonEnabled(true);  // 设置返回键可用
+        }
 
         mToolbar.setNavigationOnClickListener(v -> finish());
 
@@ -162,5 +171,35 @@ public class LoginActivity extends RxBaseActivity {
         }
 
         return null;
+    }
+
+    @Override
+    public void onStart() {
+        Log.i(DebugTagUtil.FULLSCREEN_ACTIVITY_TAG, "LoginActivity----------onStart()");
+        super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        Log.i(DebugTagUtil.FULLSCREEN_ACTIVITY_TAG, "LoginActivity----------onResume()");
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        Log.i(DebugTagUtil.FULLSCREEN_ACTIVITY_TAG, "LoginActivity----------onPause()");
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        Log.i(DebugTagUtil.FULLSCREEN_ACTIVITY_TAG, "LoginActivity----------onStop()");
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        Log.i(DebugTagUtil.FULLSCREEN_ACTIVITY_TAG, "LoginActivity----------onDestroy()");
+        super.onDestroy();
     }
 }

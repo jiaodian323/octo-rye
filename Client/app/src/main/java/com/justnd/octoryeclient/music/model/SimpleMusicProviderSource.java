@@ -54,21 +54,43 @@ public class SimpleMusicProviderSource implements MusicProviderSource {
 //    }
 
 //    private List<MediaMetadataCompat> mData = new ArrayList<>();
+    private  static SimpleMusicProviderSource sourceInstance;
+
+    private SimpleMusicProviderSource() {}
+
+    /**
+     * @Description: 设置为单例模式，提供唯一数据访问对象，以防止MusicService服务被意外
+     *              销毁后，丢失之前的音乐库信息
+     * @param
+     * @return
+     * @throws
+     * @author Justiniano
+     */
+    public static SimpleMusicProviderSource getInstance() {
+        if (sourceInstance == null) {
+            sourceInstance = new SimpleMusicProviderSource();
+        }
+
+        return  new SimpleMusicProviderSource();
+    }
+
     private Map<String, MediaMetadataCompat> mData = new HashMap<>();
 
     public void add(String title, String album, String artist, String genre, String source,
-                    String iconUrl) {
+                    String iconUrl, String duration) {
         String id = String.valueOf(source.hashCode());
+        long durationMs = Long.valueOf(duration) * 1000;
 
         if (!mData.containsKey(id)) {
             mData.put(id, new MediaMetadataCompat.Builder()
-                    .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, id)
                     .putString(MusicProviderSource.CUSTOM_METADATA_TRACK_SOURCE, source)
+                    .putString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID, id)
                     .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, album)
                     .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, artist)
                     .putString(MediaMetadataCompat.METADATA_KEY_GENRE, genre)
                     .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ART_URI, iconUrl)
                     .putString(MediaMetadataCompat.METADATA_KEY_TITLE, title)
+                    .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, durationMs)
                     .build());
         }
     }

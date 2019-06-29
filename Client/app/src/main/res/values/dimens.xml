@@ -120,4 +120,13 @@
 
     <!--IconView-->
     <dimen name="icon_view_default_height">65dp</dimen>
+
+    <!--FullScreenActivity-->
+    <dimen name="album_img_width">300dp</dimen>
+    <dimen name="album_img_height">280dp</dimen>
+    <dimen name="album_img_horizontal_margin">20dp</dimen>
+    <dimen name="album_img_top_margin">60dp</dimen>
+    <dimen name="full_screen_controller_height">55dp</dimen>
+    <dimen name="controllers_margin_bottom">15dp</dimen>
+    <dimen name="seekBar_text_size">10sp</dimen>
 </resources>

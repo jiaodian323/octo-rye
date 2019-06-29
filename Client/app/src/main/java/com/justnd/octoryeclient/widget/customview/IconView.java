@@ -19,14 +19,14 @@ import com.justnd.octoryeclient.R;
  * @time 2019/4/9 0009 上午 11:03
  */
 public class IconView extends LinearLayout {
-    private ImageView mIcon;
-    private TextView mName;
+    ImageView mIcon;
+    TextView mName;
 
-    private int icon_id;
-    private int name_id;
+    int icon_id;
+    int name_id;
 
-    private final Integer DEFAULT_ICON = android.R.drawable.ic_dialog_info;
-    private final Integer DEFAULT_NAME = android.R.string.unknownName;
+    final Integer DEFAULT_ICON = android.R.drawable.ic_dialog_info;
+    final Integer DEFAULT_NAME = android.R.string.unknownName;
 
     public IconView(Context context) {
         this(context, null);

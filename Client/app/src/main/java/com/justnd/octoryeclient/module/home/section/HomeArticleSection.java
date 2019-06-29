@@ -5,9 +5,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,12 +16,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.justnd.octoryeclient.R;
 import com.justnd.octoryeclient.entity.recommond.RecommendInfo;
 import com.justnd.octoryeclient.module.activity.ContentDetailActivity;
-import com.justnd.octoryeclient.utils.ConstantUtil;
-import com.justnd.octoryeclient.utils.DisplayUtil;
-import com.justnd.octoryeclient.utils.ToastUtil;
 import com.justnd.octoryeclient.widget.Sectioned.StatelessSection;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -37,21 +31,21 @@ public class HomeArticleSection extends StatelessSection {
     private String title;
     private String type;
     private static final String TYPE_ACTIVITY = "activity";
-    private List<RecommendInfo.ResultBean.BodyBean> datas = new ArrayList<>();
+    private List<RecommendInfo.ResultBean.BodyBean> mDatas;
     private final Random mRandom;
 
     public HomeArticleSection(Context context, String type,
                               List<RecommendInfo.ResultBean.BodyBean> datas) {
-        super(R.layout.layout_home_aticle_boby);
+        super(R.layout.layout_home_aticle_body);
         this.mContext = context;
         this.type = type;
-        this.datas = datas;
+        this.mDatas = datas;
         mRandom = new Random();
     }
 
     @Override
     public int getContentItemsTotal() {
-        return datas.size();
+        return mDatas.size();
     }
 
     @Override
@@ -60,9 +54,9 @@ public class HomeArticleSection extends StatelessSection {
     }
 
     @Override
-    public void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position, int sectionPosition, List<Object> payloads) {
         ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
-        final RecommendInfo.ResultBean.BodyBean bodyBean = datas.get(position);
+        final RecommendInfo.ResultBean.BodyBean bodyBean = mDatas.get(sectionPosition);
 
         itemViewHolder.mArticleTitle.setText(bodyBean.getTitle());
         String authorText = mContext.getString(R.string.authorName_prefix) + bodyBean

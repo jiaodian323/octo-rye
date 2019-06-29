@@ -164,6 +164,9 @@ public class Article implements Serializable {
 	@Column(name = "audio_cover")
     private String audio_cover;
 	
+	@Column(name = "audio_durationS")
+	private String audio_durationS;
+	
 	/**
 	 * @return the id
 	 */
@@ -480,6 +483,20 @@ public class Article implements Serializable {
 	 */
 	public void setAudio_cover(String audio_cover) {
 		this.audio_cover = audio_cover;
+	}
+
+	/**
+	 * @return the audio_durationS
+	 */
+	public String getAudio_durationS() {
+		return audio_durationS;
+	}
+
+	/**
+	 * @param audio_durationS the audio_durationS to set
+	 */
+	public void setAudio_durationS(String audio_durationS) {
+		this.audio_durationS = audio_durationS;
 	}
 
 	/**

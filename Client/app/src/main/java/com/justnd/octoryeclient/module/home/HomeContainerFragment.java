@@ -20,8 +20,9 @@ public class HomeContainerFragment extends RxLazyFragment {
     @BindView(R.id.viewpager)
     ViewPager mViewPager;
 
-    public HomeContainerFragment() {
-    }
+    private Context mAttachedContext;
+
+    public HomeContainerFragment() {}
 
     @Override
     public int getLayoutResId() {
@@ -62,8 +63,7 @@ public class HomeContainerFragment extends RxLazyFragment {
 
     // TODO: Rename and change types and number of parameters
     public static HomeContainerFragment newInstance() {
-        HomeContainerFragment fragment = new HomeContainerFragment();
-        return fragment;
+        return new HomeContainerFragment();
     }
 
     @Override

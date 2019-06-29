@@ -202,7 +202,7 @@ public class QueueManager {
 //                    if (currentMusic == null) {
 //                        return;
 //                    }
-//                    String currentPlayingId = MediaIDHelper.extractMusicIDFromMediaID(
+//                    String currentPlayingId = MusicIDHelper.extractMusicIDFromMediaID(
 //                            currentMusic.getDescription().getMediaId());
 //                    if (musicId.equals(currentPlayingId)) {
 //                        mListener.onMetadataChanged(mMusicProvider.getMusic(currentPlayingId));

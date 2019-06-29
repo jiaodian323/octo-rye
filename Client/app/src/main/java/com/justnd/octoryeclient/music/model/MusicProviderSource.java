@@ -26,7 +26,7 @@ public interface MusicProviderSource {
     Iterator<MediaMetadataCompat> iterator();
 
     void add(String title, String album, String artist, String genre, String source,
-             String iconUrl);    // , long trackNumber, long totalTrackCount, long durationMs
+             String iconUrl, String durationS);    // , long trackNumber, long totalTrackCount,
 
     int sourceSize();
 

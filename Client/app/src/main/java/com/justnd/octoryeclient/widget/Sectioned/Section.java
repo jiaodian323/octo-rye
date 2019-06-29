@@ -3,6 +3,8 @@ package com.justnd.octoryeclient.widget.Sectioned;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import java.util.List;
+
 public abstract class Section {
     public enum State {
         LOADING, LOADED, FAILED
@@ -203,15 +205,15 @@ public abstract class Section {
      * Loading view or Failed view, depending on the current state of the section
      *
      * @param holder ViewHolder for the Content of this Section
-     * @param position position of the item in the Section, not in the RecyclerView
+     * @param sectionPosition position of the item in the Section, not in the RecyclerView
      */
-    public final void onBindContentViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public final void onBindContentViewHolder(RecyclerView.ViewHolder holder, int position, int sectionPosition, List<Object> payloads) {
         switch (state) {
             case LOADING:
                 onBindLoadingViewHolder(holder);
                 break;
             case LOADED:
-                onBindItemViewHolder(holder, position);
+                onBindItemViewHolder(holder, position, sectionPosition, payloads);
                 break;
             case FAILED:
                 onBindFailedViewHolder(holder);
@@ -309,9 +311,9 @@ public abstract class Section {
      * Bind the data to the ViewHolder for an Item of this Section
      *
      * @param holder ViewHolder for the Item of this Section
-     * @param position position of the item in the Section, not in the RecyclerView
+     * @param sectionPosition position of the item in the Section, not in the RecyclerView
      */
-    public abstract void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position);
+    public abstract void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position, int sectionPosition, List<Object> payloads);
 
 
     /**

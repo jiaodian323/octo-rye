@@ -123,6 +123,7 @@ public class RecommendInfo {
             private String audio_author;
             private String audio_album;
             private String audio_cover;
+            private String audio_duration;
 
             @Override
             public int describeContents() {
@@ -139,7 +140,7 @@ public class RecommendInfo {
                 dest.writeString(audio_author);
                 dest.writeString(audio_album);
                 dest.writeString(audio_cover);
-
+                dest.writeString(audio_duration);
             }
 
             public static final Parcelable.Creator<BodyBean> CREATOR = new Creator<BodyBean>() {
@@ -159,9 +160,9 @@ public class RecommendInfo {
                     body.audio_author = in.readString();
                     body.audio_album = in.readString();
                     body.audio_cover = in.readString();
+                    body.audio_duration = in.readString();
                     return body;
                 }
-
             };
 
             public String getTitle() {
@@ -434,6 +435,18 @@ public class RecommendInfo {
              */
             public void setAudio_cover(String audio_cover) {
                 this.audio_cover = audio_cover;
+            }
+
+            /**
+             * @return the audio_duration
+             */
+            public String getAudio_duration() { return audio_duration; }
+
+            /**
+             * @param audio_duration the audio_duration to set
+             */
+            public void setAudio_duration(String audio_duration) {
+                this.audio_duration = audio_duration;
             }
         }
     }

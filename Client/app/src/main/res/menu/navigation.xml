@@ -14,6 +14,16 @@
         android:title="@string/title_discovery" />
 
     <item
+        android:id="@+id/navigation_music_interface"
+        android:icon="@null"
+        android:title=""/>
+
+    <item
+        android:id="@+id/navigation_book_store"
+        android:icon="@drawable/selector_bottom_navi_book_store"
+        android:title="@string/title_book_store" />
+
+    <item
         android:id="@+id/navigation_my"
         android:icon="@drawable/selector_bottom_navi_my"
         android:title="@string/title_my" />

@@ -83,22 +83,22 @@ public class ArticleDaoTest extends AbstractJUnit4SpringContextTests {
 		Author authorA = authorDaoTest.get(Author.class, 21);
 
 		Article articleA = new Article();
-		articleA.setTitle("老城春天的八年");
+		articleA.setTitle("影院自救运动");
 		articleA.setAuthor(authorA);
 		// Clob content =
 		// Hibernate.getLobCreator(getSession()) //
 		// .createClob("谢霆锋已经有杂志正经八百地对他做深度访问，让他谈感情、谈家庭、谈事业发展，"); // LobHelper
 		// lobHelper = getSession().getLobHelper(); // Clob content =
 		// lobHelper.createClob("谢霆锋的第100次");
-		String clobStr = getStringFromFile("老城春天的八年.txt");
+		String clobStr = getStringFromFile("影院自救运动.txt");
 		System.out.println("文章长度" + clobStr.length());
 		System.out.println(clobStr);
 		articleA.setContent(clobStr);
-		articleA.setHeadImage("https://img.36krcdn.com/20190607/v2_1559840598577_img_000");
-		articleA.setExtract("终于目送她找到自己的幸福，看来是时候结束一个人的战争了。");
+		articleA.setHeadImage("https://pic.36krcnd.com/201906/27014304/vba56fbykad4bkbc!heading");
+		articleA.setExtract("《八佰》、《少年的你》临时撤档，《伟大的愿望》突然更名为《小小的愿望》");
 		articleA.setLikeNum(654);
 		articleA.setPageviewCount(98795);
-		articleA.setType(ContentType.MUSIC);
+		articleA.setType(ContentType.ARTICLE);
 		Date timeA;
 		try {
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -108,6 +108,14 @@ public class ArticleDaoTest extends AbstractJUnit4SpringContextTests {
 			e.printStackTrace();
 		}
 		articleA.setTags("test");
+		if (articleA.getType() == ContentType.MUSIC) {
+			articleA.setMusic_name("");
+			articleA.setAudio_album("");
+			articleA.setAudio_author("");
+			articleA.setAudio_url("");
+			articleA.setAudio_cover("");
+			articleA.setAudio_durationS("");
+		}
 
 		articleDaoTest.save(articleA);
 

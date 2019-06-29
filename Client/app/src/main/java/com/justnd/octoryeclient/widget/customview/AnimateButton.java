@@ -22,7 +22,7 @@ import com.justnd.octoryeclient.R;
 public class AnimateButton extends AppCompatButton {
 
     private int width;
-    private int heigh;
+    private int height;
 
     private GradientDrawable backDrawable;
 
@@ -51,7 +51,7 @@ public class AnimateButton extends AppCompatButton {
     private void init(Context context) {
         isMorphing = false;
         backDrawable = new GradientDrawable();
-        int colorDrawable=context.getColor(R.color.default_button_color);
+        int colorDrawable = context.getColor(R.color.default_button_color);
         backDrawable.setColor(colorDrawable);
         backDrawable.setCornerRadius(20);
         setBackground(backDrawable);
@@ -68,13 +68,13 @@ public class AnimateButton extends AppCompatButton {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         int widthSize = MeasureSpec.getSize(widthMeasureSpec);
-        int heighMode = MeasureSpec.getMode(heightMeasureSpec);
-        int heighSize = MeasureSpec.getSize(heightMeasureSpec);
+        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
         if (widthMode == MeasureSpec.EXACTLY) {
             width = widthSize;
         }
-        if (heighMode == MeasureSpec.EXACTLY) {
-            heigh = heighSize;
+        if (heightMode == MeasureSpec.EXACTLY) {
+            height = heightSize;
         }
     }
 
@@ -82,7 +82,7 @@ public class AnimateButton extends AppCompatButton {
         isMorphing = true;
 
         setText("");
-        ValueAnimator valueAnimator = ValueAnimator.ofInt(width, heigh);
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(width, height);
 
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -91,11 +91,11 @@ public class AnimateButton extends AppCompatButton {
                 int leftOffset = (width - value) / 2;
                 int rightOffset = width - leftOffset;
 
-                backDrawable.setBounds(leftOffset, 0, rightOffset, heigh);
+                backDrawable.setBounds(leftOffset, 0, rightOffset, height);
             }
         });
         ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(backDrawable, "cornerRadius", 20,
-                heigh / 2);
+                height / 2);
 
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.setDuration(500);
@@ -117,7 +117,7 @@ public class AnimateButton extends AppCompatButton {
 
     public void regainBackground() {
         setVisibility(VISIBLE);
-        backDrawable.setBounds(0, 0, width, heigh);
+        backDrawable.setBounds(0, 0, width, height);
         backDrawable.setCornerRadius(24);
         setBackground(backDrawable);
         isMorphing = false;

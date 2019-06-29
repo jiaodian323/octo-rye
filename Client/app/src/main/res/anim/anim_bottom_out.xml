@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--有些长机型设置toYDelta=100%p时，底下会留一些黑边，故适当增加其属性至120%p-->
+    <translate
+        android:fromYDelta="0"
+        android:toYDelta="120%p"
+        android:duration="200"
+        />
+</set>

@@ -40,8 +40,7 @@ public class HomeFragmentAdapter extends FragmentStatePagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         // 得到缓存的fragment
         HomeRecommendedFragment fragment = (HomeRecommendedFragment) super.instantiateItem
-                (container,
-                        position);
+                (container, position);
         Log.i("AdapterTest", String.valueOf(position));
 //        WeakReference<Fragment> weak = new WeakReference<Fragment>(fragment);
 //        registeredFragments.put(position, weak);

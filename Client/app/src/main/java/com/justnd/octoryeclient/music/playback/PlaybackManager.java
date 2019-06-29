@@ -145,7 +145,7 @@ public class PlaybackManager implements Playback.Callback {
         if (mediaId == null) {
             return;
         }
-//        String musicId = MediaIDHelper.extractMusicIDFromMediaID(mediaId);
+//        String musicId = MusicIDHelper.extractMusicIDFromMediaID(mediaId);
 //        int favoriteIcon = mMusicProvider.isFavorite(musicId) ?
 //                R.drawable.ic_star_on : R.drawable.ic_star_off;
 //        Bundle customActionExtras = new Bundle();
@@ -324,7 +324,7 @@ public class PlaybackManager implements Playback.Callback {
 //                if (currentMusic != null) {
 //                    String mediaId = currentMusic.getDescription().getMediaId();
 //                    if (mediaId != null) {
-//                        String musicId = MediaIDHelper.extractMusicIDFromMediaID(mediaId);
+//                        String musicId = MusicIDHelper.extractMusicIDFromMediaID(mediaId);
 //                        mMusicProvider.setFavorite(musicId, !mMusicProvider.isFavorite(musicId));
 //                    }
 //                }

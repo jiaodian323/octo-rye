@@ -135,6 +135,7 @@ public class RecommendServlet extends BaseServlet {
 								body.setAudio_author(article.getAudio_author());
 								body.setAudio_album(article.getAudio_album());
 								body.setAudio_cover(article.getAudio_cover());
+								body.setAudio_duration(article.getAudio_durationS());
 							}
 
 							resultBodyBeans.add(body);
@@ -155,7 +156,6 @@ public class RecommendServlet extends BaseServlet {
 
 		return gsonStr;
 	}
-
 	
 	/** 
 	* @Title: stringToDate 

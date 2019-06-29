@@ -95,6 +95,22 @@ public abstract class RxBaseActivity extends RxAppCompatActivity {
      */
     public void finishTask() {
     }
+    
+    /** 
+    * @Description: 释放资源
+    * @param 
+    * @return 
+    * @throws 
+    * @author Justiniano
+    */
+    public void release() {}
+    
+    @Override
+    public void finish() {
+        super.finish();
+    }
+    
+    
 
     @Override
     protected void onStart() {

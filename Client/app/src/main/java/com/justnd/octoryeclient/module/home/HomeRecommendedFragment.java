@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.justnd.octoryeclient.R;
 import com.justnd.octoryeclient.entity.common.ContentType;
+import com.justnd.octoryeclient.module.activity.MainActivity;
 import com.justnd.octoryeclient.module.home.section.HomeMusicSection;
 import com.justnd.octoryeclient.module.home.section.HomeRecommendBannerSection;
 import com.justnd.octoryeclient.module.home.section.HomeArticleSection;
@@ -19,6 +20,7 @@ import com.justnd.octoryeclient.entity.recommond.RecommendInfo;
 import com.justnd.octoryeclient.module.base.RxLazyFragment;
 import com.justnd.octoryeclient.network.RetrofitHelper;
 import com.justnd.octoryeclient.utils.ConstantUtil;
+import com.justnd.octoryeclient.utils.DebugTagUtil;
 import com.justnd.octoryeclient.widget.CustomEmptyView;
 import com.justnd.octoryeclient.widget.Sectioned.SectionedRecyclerViewAdapter;
 import com.justnd.octoryeclient.widget.banner.BannerEntity;
@@ -100,7 +102,27 @@ public class HomeRecommendedFragment extends RxLazyFragment {
         mSectionedAdapter = new SectionedRecyclerViewAdapter();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mSectionedAdapter);
-        setRecycleNoScroll();
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+//                Log.i(DebugTagUtil.NAVIGATION_TEST, "--------------------------------------");
+//                LinearLayoutManager layoutManager =
+//                        (LinearLayoutManager) recyclerView.getLayoutManager();
+//                int firstCompletelyVisibleItemPosition =
+//                        layoutManager.findFirstCompletelyVisibleItemPosition();
+//                Log.i(DebugTagUtil.NAVIGATION_TEST,
+//                        "firstCompletelyVisibleItemPosition: " + firstCompletelyVisibleItemPosition);
+//                MainActivity father = (MainActivity) getActivity();
+//                if (firstCompletelyVisibleItemPosition == 1) {
+//                    father.mNavigationView.setVisibility(View.INVISIBLE);
+//                } else {
+//                    father.mNavigationView.setVisibility(View.VISIBLE);
+//                }
+            }
+        });
+//        setRecycleNoScroll();
     }
 
     @Override
@@ -140,7 +162,7 @@ public class HomeRecommendedFragment extends RxLazyFragment {
                 .map(new Func1<BaseBean<RecommendInfo>, List<RecommendInfo.ResultBean>>() {
                     @Override
                     public List<RecommendInfo.ResultBean> call(BaseBean<RecommendInfo>
-                                                                                recommendInfoBaseBean) {
+                                                                       recommendInfoBaseBean) {
                         // 将返回的BaseBean<RecommendInfo>类型转换为，
                         // RecommendInfo内部resultbean数据,然后再转换为实际数据BodyBean列表
                         return recommendInfoBaseBean.getData().getResult();
@@ -184,10 +206,12 @@ public class HomeRecommendedFragment extends RxLazyFragment {
                                 results.get(i).getBody()));
                         break;
                     case MUSIC:
+                        Log.i(ConstantUtil.TYPE_MUSIC,
+                                "In Fragment, adapter:" + mSectionedAdapter.hashCode());
                         mSectionedAdapter.addSection(new HomeMusicSection(
                                 getActivity(),
                                 results.get(i).getStyle(),
-                                results.get(i).getBody()));
+                                results.get(i).getBody(), mSectionedAdapter));
                         break;
                     case VIDEO:
                         break;
@@ -225,8 +249,8 @@ public class HomeRecommendedFragment extends RxLazyFragment {
         mSectionedAdapter.removeAllSections();
     }
 
-    private void setRecycleNoScroll() {
-        mRecyclerView.setOnTouchListener((v, event) -> mIsRefreshing);
-    }
+//    private void setRecycleNoScroll() {
+//        mRecyclerView.setOnTouchListener((v, event) -> mIsRefreshing);
+//    }
 
 }

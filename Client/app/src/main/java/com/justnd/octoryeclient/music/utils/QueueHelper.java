@@ -37,7 +37,7 @@ public class QueueHelper {
     public static List<MediaSessionCompat.QueueItem> getPlayingQueue(MusicProvider musicProvider) {
 
         // extract the browsing hierarchy from the media ID:
-//        String[] hierarchy = MediaIDHelper.getHierarchy(mediaId);
+//        String[] hierarchy = MusicIDHelper.getHierarchy(mediaId);
 //
 //        if (hierarchy.length != 2) {
 //            return null;
@@ -142,7 +142,7 @@ public class QueueHelper {
 
             // We create a hierarchy-aware mediaID, so we know what the queue is about by looking
             // at the QueueItem media IDs.
-//            String hierarchyAwareMediaID = MediaIDHelper.createMediaID(
+//            String hierarchyAwareMediaID = MusicIDHelper.createMediaID(
 //                    track.getDescription().getMediaId(), categories);
 //
 //            MediaMetadataCompat trackCopy = new MediaMetadataCompat.Builder(track)
@@ -235,7 +235,7 @@ public class QueueHelper {
 //            long currentPlayingQueueId = controller.getPlaybackState().getActiveQueueItemId();
 //            String currentPlayingMediaId = controller.getMetadata().getDescription()
 //                    .getMediaId();
-//            String itemMusicId = MediaIDHelper.extractMusicIDFromMediaID(
+//            String itemMusicId = MusicIDHelper.extractMusicIDFromMediaID(
 //                    queueItem.getDescription().getMediaId());
 //            if (queueItem.getQueueId() == currentPlayingQueueId
 //                    && currentPlayingMediaId != null

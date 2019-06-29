@@ -3,6 +3,7 @@
     <string name="octorye_title">同人</string>
     <string name="title_home">首页</string>
     <string name="title_discovery">发现</string>
+    <string name="title_book_store">书店</string>
     <string name="title_my">我</string>
     <string name="default_content_title">文章</string>
     <string name="author_section">作者</string>
@@ -74,11 +75,15 @@
 
     <!--Music-->
     <string name="play_music">播放音乐</string>
-    <string name="next">下一首</string>
-    <string name="previous">上一首</string>
+    <string name="skip_next">下一首</string>
+    <string name="skip_previous">上一首</string>
     <string name="pause">暂停</string>
     <string name="music_list">音乐列表：</string>
     <string name="random_queue_title">随机音乐</string>
     <string name="error_no_metadata">无法获得元数据</string>
     <string name="music_buffering">缓冲中</string>
+    <string name="loading">加载中</string>
+    <string name="background_image_str">Background image for album art</string>
+    <string name="no_songs_to_show">没有正在播放的歌曲</string>
+
 </resources>
